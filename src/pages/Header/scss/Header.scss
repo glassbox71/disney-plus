@@ -2,6 +2,12 @@
 
 .Header {
   width: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
   aspect-ratio: 1920/ 100;
   display: flex;
   justify-content: space-between;
@@ -9,7 +15,13 @@
   padding: 0 3%;
   position: fixed;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 9999;
+
+  &.active {
+    background: #02172a;
+  }
 
   .Header-left {
     display: flex;

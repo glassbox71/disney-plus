@@ -1,9 +1,24 @@
 import { Link } from 'react-router-dom';
 import './scss/Header.scss';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="Header">
+    <div className={`Header pullInner ${isScrolled ? 'active' : ''} `}>
       <div className="Header-left">
         <h1 className="logo">
           <Link to="void">
