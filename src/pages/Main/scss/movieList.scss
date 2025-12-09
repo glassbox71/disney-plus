@@ -1,0 +1,61 @@
+@use '../../../App.scss' as rs;
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.marginUp {
+  margin-top: -140px !important;
+}
+.movieList {
+  padding-left: 4%;
+  padding-bottom: 80px;
+
+  .movieThumbnail {
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+
+    &.row {
+      aspect-ratio: 360/200;
+    }
+
+    &.col {
+      aspect-ratio: 3/4;
+    }
+    img {
+      width: 100%;
+    }
+
+    .movieTitle {
+      position: absolute;
+      @include rs.font(2rem, 600, #fff);
+      bottom: 16px;
+      right: 16px;
+      text-shadow: -1px -1px 0 #02172a, 1px -1px 0 #02172a, -1px 1px 0 #02172a, 1px 1px 0 #02172a;
+    }
+  }
+
+  .progressBar {
+    width: 72%;
+    aspect-ratio: 260/4;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+
+    .now {
+      background: #33ddff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: max-content;
+      display: inline-block;
+      color: transparent;
+    }
+  }
+}
