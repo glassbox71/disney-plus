@@ -55,6 +55,11 @@ video {
   margin: 0 auto;
 }
 
+.pullInner {
+  margin: 0 auto;
+  max-width: 1920px;
+}
+
 /* TODO 반응형 해상도 */
 
 @media screen and (max-width: 1400px) {
