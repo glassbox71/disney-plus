@@ -17,38 +17,32 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  transition: ease 0.5s;
   z-index: 9999;
-
   &.active {
     background: #02172a;
   }
-
   .Header-left {
     display: flex;
     gap: 40px;
     align-items: center;
-
     h1 {
       aspect-ratio: 103/56;
     }
   }
-
   .Header-right {
     display: flex;
     align-items: center;
   }
-
   .LinkBtn {
     padding: 8px 20px;
     display: inline-block;
     @include rs.font(2rem, 400, #fff);
     line-height: 150%;
     letter-spacing: -0.5px;
-
     &.Kids {
       display: inline-flex;
       align-items: center;
-
       &::after {
         content: '';
         width: 18px;
@@ -61,7 +55,6 @@
         background-size: contain;
       }
     }
-
     &.MyProfile {
       width: 56px;
       aspect-ratio: 1/1;
@@ -71,13 +64,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
       img {
         width: 150%;
         max-width: 200%;
         height: auto;
       }
-
       &:hover {
         border: 2px solid #fff;
       }
