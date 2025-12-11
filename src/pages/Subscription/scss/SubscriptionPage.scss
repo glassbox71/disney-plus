@@ -1,1 +1,44 @@
 @use '../../../App.scss' as rs;
+
+.subscriptionBg {
+    background: linear-gradient(180deg, #0A1A26 0%, #0C7471 60%, rgba(0, 209, 197, 0.9) 100%);
+    height: auto;
+    padding-top: 15.6rem;
+    align-content: center;
+    justify-items: center;
+
+    .subscriptionWrap {
+        background-color: #25272C;
+        width: 86.8rem;
+        // width: 45%;
+        aspect-ratio: 1.0093;
+        border-radius: 1.6rem;
+        padding: 4rem 7rem;
+        margin-bottom: 4rem;
+
+        .contentWrap {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+        }
+
+        .disneyContentWrap {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+        }
+
+        .ex {
+            @include rs.font(1.2rem, 400, #fff);
+            text-align: center;
+            margin-top: 2rem;
+
+
+            span {
+                @include rs.font(1.2rem, 400, #ddd);
+                border-bottom: 1px solid #ddd;
+            }
+        }
+
+    }
+}
