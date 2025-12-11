@@ -1,0 +1,14 @@
+@use '../../../App.scss' as rs;
+
+.UpcomingList {
+  .movieThumbnail {
+    position: relative;
+  }
+
+  .logo {
+    position: absolute;
+    bottom: 0;
+    border: 1px solid red;
+    display: none;
+  }
+}

@@ -1,12 +1,5 @@
 @use '../../../App.scss' as rs;
 
-.swiper-slide {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-direction: column;
-}
-
 .marginUp {
   margin-top: -140px !important;
 }
@@ -14,23 +7,36 @@
   padding-left: 4%;
   padding-bottom: 80px;
 
+  a {
+    width: 100%;
+    &.flex {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-direction: column;
+    }
+  }
+
   .movieThumbnail {
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     position: relative;
-
     &.row {
       aspect-ratio: 360/200;
     }
-
     &.col {
       aspect-ratio: 3/4;
     }
     img {
       width: 100%;
+      transition: ease 0.3s;
     }
-
+    &:hover {
+      img {
+        transform: scale(1.1);
+      }
+    }
     .movieTitle {
       position: absolute;
       @include rs.font(2rem, 600, #fff);
@@ -52,7 +58,6 @@
       background: #33ddff;
       position: absolute;
       top: 0;
-      left: 0;
       height: max-content;
       display: inline-block;
       color: transparent;

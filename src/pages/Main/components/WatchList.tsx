@@ -24,7 +24,7 @@ const WatchList = () => {
           {NowWatchListData.map((el) => {
             return (
               <SwiperSlide>
-                <Link to="void">
+                <Link className="flex" to="void">
                   <div className="movieThumbnail row">
                     <img
                       src={`https://image.tmdb.org/t/p/w500/${el.backdrop_path}`}

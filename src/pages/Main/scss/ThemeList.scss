@@ -1,0 +1,82 @@
+@use '../../../App.scss' as rs;
+
+$Theme: disney, pixar, marvel, starwars, NGC, hulu, fx;
+$image-root: '../../../../public/images/main/theme/';
+$Theme-sizes: (
+  disney: (
+    width: 113px,
+    height: 47px,
+  ),
+  pixar: (
+    width: 103px,
+    height: 23px,
+  ),
+  marvel: (
+    width: 125px,
+    height: 50px,
+  ),
+  starwars: (
+    width: 100px,
+    height: 50px,
+  ),
+  NGC: (
+    width: 140px,
+    height: 42px,
+  ),
+  hulu: (
+    width: 97px,
+    height: 50px,
+  ),
+  fx: (
+    width: 92px,
+    height: 50px,
+  ),
+);
+
+.ThemeList {
+  background: linear-gradient(
+    180deg,
+    rgba(2, 23, 42, 0.6) 4%,
+    rgba(12, 48, 64, 0.6) 16%,
+    rgba(47, 131, 139, 0.55) 53%,
+    rgba(12, 48, 64, 0.56) 81%,
+    rgba(2, 23, 42, 0.6) 100%
+  );
+  nav {
+    margin-bottom: 90px;
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 80px;
+
+      li {
+        width: 120px;
+        height: 80px;
+        cursor: pointer;
+
+        @each $Theme, $size-map in $Theme-sizes {
+          &.#{$Theme} {
+            $brand-width: map-get($size-map, width); // Map에서 width 값을 가져옴
+            $brand-height: map-get($size-map, height); // Map에서 height 값을 가져옴
+
+            width: $brand-width;
+            height: $brand-height;
+
+            background: url('#{$image-root}#{$Theme}.svg') no-repeat center center;
+
+            &:hover {
+              background: url('#{$image-root}#{$Theme}_active.svg') no-repeat center center;
+              opacity: 0.5;
+            }
+          }
+
+          &.#{$Theme}.active {
+            background: url('#{$image-root}#{$Theme}_active.svg') no-repeat center center;
+            background-size: contain;
+          }
+        }
+      }
+    }
+  }
+}
