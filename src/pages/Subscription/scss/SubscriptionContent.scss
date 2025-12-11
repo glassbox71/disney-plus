@@ -99,5 +99,9 @@
         letter-spacing: -2.5%;
         line-height: 1;
         cursor: pointer;
+
+        &:hover {
+            background: #f4f4f4;
+        }
     }
 }

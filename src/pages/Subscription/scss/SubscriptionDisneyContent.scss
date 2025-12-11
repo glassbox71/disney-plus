@@ -98,5 +98,10 @@
         @include rs.font(1.6rem, 600, #333);
         letter-spacing: -2.5%;
         line-height: 1;
+        cursor: pointer;
+
+        &:hover {
+            background: #f4f4f4;
+        }
     }
 }

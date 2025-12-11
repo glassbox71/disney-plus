@@ -1,0 +1,40 @@
+import { useState } from "react";
+import SubscriptionTitle from './components/SubscriptionTitle'
+import './scss/SubscriptionPage.scss'
+import SubscriptionToggle from './components/SubscriptionToggle'
+import SubscriptionContent from './components/SubscriptionContent'
+import SubscriptionDisneyContent from './components/SubscriptionDisneyContent'
+
+const SubscriptionPage = () => {
+    const [activeBtn, setActiveBtn] = useState("bundle")
+    return (
+        <div className='subscriptionBg pullInner'>
+            <div className="subscriptionWrap">
+                <SubscriptionTitle />
+                <SubscriptionToggle activeBtn={activeBtn} setActiveBtn={setActiveBtn} />
+
+                {activeBtn === "bundle" && (
+                    <div className="contentWrap">
+                        <SubscriptionContent price="21,000" wavve="웨이브" num="37" wavves="& 웨이브" wavveImg="/images/subscription/wavveLogo.png" />
+                        <SubscriptionContent price="18,000" num="23" wavve={""} wavves={""} wavveImg={""} />
+                    </div>
+                )}
+
+                {activeBtn === "disney" && (
+                    <div className="disneyContentWrap">
+                        <SubscriptionDisneyContent title="프리미엄" price="21,500" priceDes="139,000"
+                            des1="최대 4K UHD & HDR 화질" des2="최대 Dolby Atomos 오디오" des3="최대 4대 기기 동시 스트리밍"
+                        />
+                        <SubscriptionDisneyContent title="스탠다드" price="9,900" priceDes="99,000"
+                            des1="최대 1080p Full HD" des2="최대 5.1 사운드" des3="2대 기기 동시 스트리밍"
+                        />
+                    </div>
+                )}
+
+                <p className='ex'>디즈니에서 구독하게 되는 멤버십은 <span>만 19세 이상</span>만 구독 가능하며, <span>회원님의 가구에 연동된 기기에서만 이용할 수 있습니다.</span></p>
+            </div>
+        </div>
+    )
+}
+
+export default SubscriptionPage
