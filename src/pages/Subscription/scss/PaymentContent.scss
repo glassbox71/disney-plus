@@ -1,0 +1,91 @@
+@use '../../../App.scss' as rs;
+
+.payContentWrap {
+    background: rgba(255, 255, 255, 0.1);
+    margin-top: 2rem;
+    border-radius: 8px;
+    max-width: 448px;
+    // width: 73%;
+    aspect-ratio: 1.378;
+    align-content: center;
+    text-align: center;
+    padding: 4rem;
+    margin-bottom: 3rem;
+
+    .imgBox {
+        display: flex;
+        gap: 1.6rem;
+        text-align: center;
+        align-items: center;
+        justify-self: center;
+
+        >div {
+            width: 71px;
+            height: 40px;
+            align-content: center;
+        }
+
+        .disney {
+            width: 71px;
+            height: 40px;
+            // margin-right: 1.6rem;
+        }
+
+        .tving {
+            width: 62px;
+            height: 16px;
+            // margin-right: 1.6rem;
+        }
+
+        .wavve {
+            width: 75px;
+            height: 16px;
+        }
+
+        .none {
+            display: none;
+        }
+    }
+
+    .title {
+        @include rs.font(2.2rem, 700, #fff);
+        margin-top: 1.6rem;
+        padding-bottom: 1.6rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        text-align: center;
+    }
+
+    .price {
+        margin: 3rem 0;
+        text-align: center;
+
+        .priceTitle {
+            @include rs.font(1.4rem, 600, #fff);
+        }
+
+        .priceDes {
+            @include rs.font(1.2rem, 400, #ddd);
+            margin-top: 0.8rem;
+
+        }
+    }
+
+    .desWrap {
+        text-align: start;
+
+        p {
+            @include rs.font(1.2rem, 400, #fff);
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+
+            img {
+                margin-right: 8px;
+
+            }
+        }
+    }
+
+
+}

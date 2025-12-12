@@ -1,0 +1,36 @@
+@use "../../../App.scss" as rs;
+
+.paymentBg {
+    background: linear-gradient(180deg, #0A1A26 0%, #0C7471 60%, rgba(0, 209, 197, 0.9) 100%);
+    height: auto;
+    padding: 19.4rem 0 8.6rem;
+
+
+
+    .paymentWrap {
+        padding-top: 10rem;
+        background: #25272C;
+        border-radius: 16px;
+        max-width: 618px;
+        // width: 37%;
+        margin: 0 auto;
+        height: 80rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .payTitle {
+            @include rs.font (2.8rem, 500, #fff);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+
+
+    }
+}

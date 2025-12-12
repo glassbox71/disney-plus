@@ -1,0 +1,99 @@
+@use "../../../App.scss" as rs;
+
+.paymentRadioBtnWrap {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-content: center;
+    margin: 0 auto;
+    justify-content: center;
+
+
+    .radioBtn {
+        width: 22rem;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        padding: 3rem 2rem;
+        gap: 1rem;
+        white-space: nowrap;
+        position: relative;
+
+        p {
+            @include rs.font (1.8rem, 500, #fff);
+            line-height: 120%;
+        }
+
+        &.active {
+            background: rgba($color: #33ddff, $alpha: 0.1);
+            border: 1px solid #33ddff;
+
+            input[type="radio"] {
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: none;
+                // background: #33DDFF;
+                border: 1px solid #33DDFF;
+                position: relative;
+                cursor: pointer;
+
+                &::after {
+                    content: "";
+                    width: 13.2px;
+                    height: 12.2px;
+                    background: #33DDFF;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 49.9%;
+                    left: 52.3%;
+                    transform: translate(-50%, -50%) scale(0);
+                    transition: ease 0.2s;
+
+                }
+
+                &:checked::after {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+
+            }
+
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: none;
+            border: 1px solid #fff;
+            position: relative;
+            cursor: pointer;
+
+        }
+
+
+        .salePer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4FB5C9;
+            border-radius: 4px;
+            padding: 0.5rem;
+
+            p {
+                @include rs.font (1.2rem, 500, #fff);
+                letter-spacing: -2.5%;
+
+            }
+        }
+
+
+    }
+
+
+
+}

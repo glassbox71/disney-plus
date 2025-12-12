@@ -1,0 +1,23 @@
+@use '../../../App.scss' as rs;
+
+.payBtnWrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+
+    button {
+        background: #ddd;
+        width: 70%;
+        height: 5.6rem;
+        border-radius: 8px;
+        padding: 1.2rem 3rem;
+        box-shadow: 0 2px 6px rgb(0, 0, 0, 0.15);
+
+        p {
+            @include rs.font(1.6rem, 600, #888);
+        }
+
+    }
+}
