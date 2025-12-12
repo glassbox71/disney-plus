@@ -1,0 +1,25 @@
+@use '../../../App.scss' as rs;
+
+.profileBox {
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+
+  .profileBoxTitle {
+    font-size: 2rem;
+    font-weight: 400;
+    padding: 1rem 3rem;
+    align-items: center;
+    line-height: 150%;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  .profileBoxChild {
+    align-items: center;
+  }
+}

@@ -1,0 +1,103 @@
+@use '../../../App.scss' as rs;
+
+.profileCreationBg {
+  background: #0A1A26;
+  // height: 100vh;
+  // height: auto;
+  padding: 10rem;
+  align-content: center;
+  justify-items: center;
+
+  .profileCreateWrap {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 6rem;
+    align-items: center;
+    line-height: 150%;
+
+    .profileCreateBoxWrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      min-width: 570px;
+
+      .profileCreateBox {
+        padding: 1.5rem 3rem;
+      }
+
+      .profileBoxContent {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+
+        &.bottomLine {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+        }
+
+        >div {
+          display: flex;
+
+        }
+
+        .fontSize14 {
+          font-size: 1.4rem;
+          font-weight: 400;
+          line-height: 150%;
+          color: #ddd;
+        }
+
+        &.membershipChange {
+          >div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .membershipMoreWrap {
+              display: flex;
+              align-items: center;
+
+              .membershipMore {
+                width: 3rem;
+                height: 3rem;
+                display: block;
+                background-image: url(../../../../public/icon/mainArrow.svg);
+                background-repeat: no-repeat;
+                background-position: center;
+              }
+            }
+          }
+        }
+
+        .profileBoxSubTitle {
+          font-size: 1.8rem;
+          font-weight: 400;
+          line-height: 150%;
+        }
+      }
+    }
+
+    .profileCreateBtnwrap {
+
+      >a {
+        display: flex;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        background: rgba(255, 255, 255, 0.10);
+        backdrop-filter: blur(12px);
+        align-items: center;
+        padding: 1.2rem 1.6rem;
+        width: 13rem;
+        justify-content: center;
+
+        .profileCreateBtn {
+          color: white;
+          font-size: 2rem;
+          font-weight: 500;
+          background: none;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
