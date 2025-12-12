@@ -13,8 +13,8 @@ const MainPage = () => {
       <WatchList />
       <RecommendedForYou />
       <ThemeList />
-      <GenreList genreId="16" title="애니메이션" />
       <UpcomingList />
+      <GenreList genreId="16" title="애니메이션" />
       <GenreList genreId="10749" title="로맨스" />
     </section>
   );
