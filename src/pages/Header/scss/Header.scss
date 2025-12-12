@@ -2,12 +2,10 @@
 
 .Header {
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0) 100%);
   aspect-ratio: 1920/ 100;
   display: flex;
   justify-content: space-between;
@@ -19,30 +17,37 @@
   transform: translateX(-50%);
   transition: ease 0.5s;
   z-index: 9999;
+
   &.active {
     background: #02172a;
   }
+
   .Header-left {
     display: flex;
     gap: 40px;
     align-items: center;
+
     h1 {
       aspect-ratio: 103/56;
     }
   }
+
   .Header-right {
     display: flex;
     align-items: center;
   }
+
   .LinkBtn {
     padding: 8px 20px;
     display: inline-block;
     @include rs.font(2rem, 400, #fff);
     line-height: 150%;
     letter-spacing: -0.5px;
+
     &.Kids {
       display: inline-flex;
       align-items: center;
+
       &::after {
         content: '';
         width: 18px;
@@ -55,7 +60,14 @@
         background-size: contain;
       }
     }
-    &.MyProfile {
+
+
+  }
+
+  .MyProfileDepth {
+    position: relative;
+
+    .MyProfile {
       width: 56px;
       aspect-ratio: 1/1;
       border-radius: 50%;
@@ -64,14 +76,60 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       img {
         width: 150%;
         max-width: 200%;
         height: auto;
       }
+
       &:hover {
         border: 2px solid #fff;
       }
     }
+
+    .ProfileDropdown {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      position: absolute;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      width: 19rem;
+      top: 110%;
+      right: 0;
+      background: #25272C;
+      overflow: hidden;
+
+      >li {
+        display: flex;
+        height: 60px;
+        padding: 0 20px;
+        align-items: center;
+        @include rs.font(1.6rem, 400, #fff);
+        background-color: inherit;
+
+        &:hover {
+          background-color: #2D2F36;
+          // cursor: pointer
+        }
+
+        button {
+          @include rs.font(1.6rem, 400, #bbb);
+        }
+
+      }
+
+      &.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+
+
   }
 }
