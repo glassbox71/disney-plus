@@ -6,6 +6,19 @@
     width: inherit;
     height: inherit;
 
+    &::-webkit-scrollbar {
+      width: 8px;
+      // height: ;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #33ddff;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1); // 배경
+      border-radius: 4px;
+    }
+
     .authTop {
       margin-bottom: 4rem;
     }
@@ -29,6 +42,7 @@
           margin-bottom: 2rem;
           > div {
             > label {
+              position: relative;
               font-size: 1.4rem;
               color: #ddd;
 
@@ -41,6 +55,47 @@
                 padding: 1.6rem;
                 margin: 4px 0;
                 color: #fff;
+              }
+
+              span {
+                display: inline-block;
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: 50%;
+                right: 4%;
+                background: url(../../../../public/icon/pwHideIcon.svg) no-repeat center;
+
+                &.active {
+                  background: url(../../../../public/icon/pwShowIcon.svg) no-repeat center;
+                }
+              }
+            }
+
+            .validMsg {
+              font-size: 1.2rem;
+              margin-top: 4px;
+
+              &.valid {
+                color: #39ff14;
+              }
+              &.invalid {
+                color: #ff2e2e;
+              }
+            }
+
+            &.idWrap {
+              &.valid {
+                input {
+                  border: 1px solid #39ff14;
+                }
+              }
+
+              &.invalid {
+                input {
+                  border: 1px solid #ff2e2e;
+                }
               }
             }
 
@@ -116,6 +171,19 @@
 
                 .pwText {
                   font-size: 1.2rem;
+                }
+              }
+            }
+            // 비밀번호 확인 필드
+            &.confirmPwWrap {
+              &.valid {
+                input {
+                  border: 1px solid #39ff14;
+                }
+              }
+              &.invalid {
+                input {
+                  border: 1px solid #ff2e2e;
                 }
               }
             }

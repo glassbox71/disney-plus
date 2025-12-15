@@ -3,15 +3,23 @@
 
 import { useEffect, useState } from 'react';
 import { useKidsStore } from '../../../store/useKidsStore';
+import type { KidsModeInfo } from '../../../types/IAuth';
 import '../scss/KidsMode.scss';
 
-const KidsMode = ({ title, subTitle }) => {
+interface KidsModeProps {
+  title: string;
+  subTitle: string;
+  onKidsModeChange: (data: KidsModeInfo) => void;
+  initialData?: KidsModeInfo;
+}
+
+const KidsMode = ({ title, subTitle, onKidsModeChange, initialData }: KidsModeProps) => {
   const { years, months, date, initYears, initMonth, initDate } = useKidsStore();
 
   // 드롭다운 선택 상태
-  const [selectedYear, setSelectedYear] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(initialData?.year || null);
+  const [selectedMonth, setSelectedMonth] = useState(initialData?.month || null);
+  const [selectedDate, setSelectedDate] = useState(initialData?.date || null);
 
   // 토글 체크 상태
   const [isActive, setIsActive] = useState(false);
@@ -23,6 +31,18 @@ const KidsMode = ({ title, subTitle }) => {
   const toggleDropdown = (type: 'year' | 'month' | 'date') => {
     setOpenDropdown(openDropdown === type ? null : type);
   };
+
+  // 데이터 변경 시 부모 컴포넌트에 전달
+  useEffect(() => {
+    if (onKidsModeChange) {
+      onKidsModeChange({
+        isActive,
+        year: selectedYear,
+        month: selectedMonth,
+        date: selectedDate,
+      });
+    }
+  }, [isActive, selectedYear, selectedMonth, selectedDate]);
 
   useEffect(() => {
     initYears();
@@ -79,7 +99,7 @@ const KidsMode = ({ title, subTitle }) => {
                   <li
                     key={month}
                     onClick={() => {
-                      setSelectedMonth(month);
+                      setSelectedMonth(Number(month));
                       setOpenDropdown(null);
                     }}>
                     {month}
@@ -98,7 +118,7 @@ const KidsMode = ({ title, subTitle }) => {
                   <li
                     key={d}
                     onClick={() => {
-                      setSelectedDate(d);
+                      setSelectedDate(Number(d));
                       setOpenDropdown(null);
                     }}>
                     {d}
