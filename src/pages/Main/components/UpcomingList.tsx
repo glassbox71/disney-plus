@@ -41,9 +41,6 @@ const UpcomingList = () => {
                       alt={`${el.title} 썸네일`}
                     />
                   </div>
-                  <div className="logo">
-                    <img src={`http://image.tmdb.org/t/p/original${el.logo}`} alt={el.title} />
-                  </div>
                 </Link>
               </SwiperSlide>
             );
