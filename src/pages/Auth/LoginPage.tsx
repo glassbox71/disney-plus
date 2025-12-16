@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [isComplete, setIsComplete] = useState(false);
 
   return (
-    <div className="bg">
+    <div className="loginPage normal bg">
       <div className="authWrap">
         {!isComplete ? (
           <div className="loginWrap">

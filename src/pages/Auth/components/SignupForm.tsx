@@ -38,6 +38,13 @@ const SignupForm = ({ onComplete }: SignupProps) => {
   const [pwStrength, setPwStrength] = useState(0);
   const [pwLabel, setPwLabel] = useState('');
 
+  // 가입하기 버튼 활성화
+  const isFormValid =
+    email.trim() !== '' &&
+    password.trim() !== '' &&
+    confirmPassword.trim() !== '' &&
+    password === confirmPassword;
+
   // 키즈 모드 정보 상태
   const [kidsModeData, setKidsModeData] = useState<KidsModeInfo>({
     isActive: false,
@@ -319,7 +326,11 @@ const SignupForm = ({ onComplete }: SignupProps) => {
         </p>
       </form>
 
-      <button className="signupBtn" form="signupForm" type="submit">
+      <button
+        className={`signupBtn ${!isFormValid ? 'disabled' : 'active'}`}
+        form="signupForm"
+        type="submit"
+        disabled={!isFormValid}>
         가입하기
       </button>
 

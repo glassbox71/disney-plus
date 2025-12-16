@@ -11,7 +11,7 @@ const SignupPage = () => {
   const [isComplete, setIsComplete] = useState(false);
 
   return (
-    <div className="bg">
+    <div className="signupPage normal bg">
       <div className="authWrap">
         {!isComplete ? (
           <div className="scrollWrap">

@@ -1,8 +1,6 @@
 @use '../../../App.scss' as rs;
 .bg {
-  width: 100%;
   height: calc(var(--vh, 1vh) * 100);
-  background: linear-gradient(180deg, #0a1a26 0%, #0c7471 60%, #00d1c5 100%);
 
   .authWrap {
     display: flex;
@@ -40,6 +38,7 @@
       .authText {
         font-size: 1.4rem;
         line-height: 1.6;
+        color: #ddd;
       }
     }
 
@@ -114,7 +113,7 @@
           align-items: center;
           justify-content: center;
 
-          span {
+          > span {
             display: block;
             width: 16px;
             height: 16px;

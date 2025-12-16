@@ -8,16 +8,15 @@
 
     &::-webkit-scrollbar {
       width: 8px;
-      // height: ;
     }
     &::-webkit-scrollbar-thumb {
-      background: #33ddff;
-      border-radius: 4px;
-    }
-    &::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1); // 배경
       border-radius: 4px;
     }
+    // &::-webkit-scrollbar-track {
+    //   background: rgba(255, 255, 255, 0.1); // 배경
+    //   border-radius: 4px;
+    // }
 
     .authTop {
       margin-bottom: 4rem;
@@ -298,10 +297,18 @@
       margin: 20px 0;
       cursor: pointer;
 
-      &:hover {
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(12px);
+      &.disabled {
+        background: #ddd;
+        color: #888;
+        cursor: not-allowed;
+      }
+
+      &.active {
+        &:hover {
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(12px);
+        }
       }
     }
   }
