@@ -193,5 +193,64 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     set({ seasonMovies: mapped });
   },
 
+  // 영화 & 시리즈 통합 검색
+  onSearchMultiRaw: async (keyword: string, companyId: string) => {
+    const genreMap = await get().getGenreMap();
 
+    const [movieRes, tvRes] = await Promise.all([
+      fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=ko-KR&with_companies=${companyId}&&query=${encodeURIComponent(
+          keyword
+        )}`
+      ),
+      fetch(
+        `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=ko-KR&with_companies=${companyId}&&query=${encodeURIComponent(
+          keyword
+        )}`
+      ),
+    ]);
+
+    const movieData = await movieRes.json();
+    const tvData = await tvRes.json();
+
+    const normalize = (item, type: 'movie' | 'tv') => ({
+      ...item,
+      media_type: type,
+      title: item.title || item.name,
+      genreNames: (item.genre_ids || [])
+        .map((id) => genreMap[id])
+        .filter((name): name is string => !!name),
+    });
+
+    return [
+      ...(movieData.results || []).map((m: any) => normalize(m, 'movie')),
+      ...(tvData.results || []).map((t: any) => normalize(t, 'tv')),
+    ];
+  },
+
+  // 검색어 → 장르 키워드 매칭
+  matchGenresByKeyword: async (keyword: string) => {
+    const genres = await get().onFetchGenres();
+    const lower = keyword.toLowerCase();
+
+    return genres.filter((genre) => genre.name.toLowerCase().includes(lower));
+  },
+
+  // 여러 장르 기반 fallback 영화 가져오기
+  fetchMoviesByGenres: async (genres: { id: number; name: string }[]) => {
+    const genreMap = await get().getGenreMap();
+    let results: Movie[] = [];
+
+    const topGenres = genres.slice(0, 2); // 최대 2개만
+
+    const responses = await Promise.all(topGenres.map((genre) => get().onfetchCate(genre.id)));
+
+    responses.flat().forEach((movie: Movie) => {
+      if (!results.some((m) => m.id === movie.id)) {
+        results.push(movie);
+      }
+    });
+
+    return results;
+  },
 }));
