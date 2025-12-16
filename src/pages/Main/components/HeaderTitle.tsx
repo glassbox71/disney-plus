@@ -1,7 +1,7 @@
 import '../scss/HeaderTitle.scss';
 
 interface headerTItleProps {
-  mainTitle: string;
+  mainTitle: string | number;
 }
 
 const HeaderTitle = ({ mainTitle }: headerTItleProps) => {
