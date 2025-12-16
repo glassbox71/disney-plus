@@ -5,7 +5,7 @@ import RecommendedForYou from './components/RecommendedForYou';
 import ThemeList from './components/ThemeList';
 import UpcomingList from './components/UpcomingList';
 import GenreList from './components/GenreList';
-import SeasonMovie from './components/SeasonMovie';
+import SeasonList from './components/SeasonList';
 import Top10List from './components/Top10List';
 
 // 12: "모험"
@@ -32,14 +32,14 @@ const MainPage = () => {
     <section className="MainPage normal">
       <MainScreen />
       <WatchList />
-      <Top10List title="현재 인기 영화 TOP 10" />
-      <GenreList genreId="27" title="공포" />
       <RecommendedForYou />
       <ThemeList />
-      <UpcomingList />
+      <Top10List title="현재 인기 영화 TOP 10" />
+      <GenreList genreId="53" title="액션" />
       <GenreList genreId="16" title="애니메이션" />
-      <SeasonMovie />
+      <SeasonList />
       <GenreList genreId="10749" title="로맨스" />
+      <UpcomingList />
     </section>
   );
 };

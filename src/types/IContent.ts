@@ -31,10 +31,12 @@ export interface Theme extends MediaBase {
 //TODO 시즌 타입
 export interface SeasonData {
   title: string;
+  id: number;
   keywordId?: string;
   genreId?: string;
   startDate: string;
   endDate: string;
+  poster_path: string;
   type: 'keyword' | 'genre';
 }
 
