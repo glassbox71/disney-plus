@@ -1,0 +1,57 @@
+@use '../../../App.scss' as rs;
+
+.footer {
+  background: linear-gradient(180deg, #02172a 22%, #022f48 55%, #00a39b 100%);
+  height: 480px;
+  color: #fff;
+
+  // &.kidsMode {
+  //   background: linear-gradient(180deg, #002f3e 22%, #022f48 55%, #00a39b 100%);
+  // }
+  > .inner {
+    display: flex;
+    height: inherit;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: space-between;
+    padding: 7rem 0; // margin-bottom: 10px;
+
+    > div {
+      margin-bottom: 6rem;
+    }
+    .footerLogo {
+      img {
+        width: 18rem;
+      }
+    }
+    .infoWrap {
+      width: 80%;
+      .infoList {
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        li {
+          margin-left: 4rem;
+          button {
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+
+    .footerBottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.4rem;
+      font-weight: 300;
+      line-height: 1.6;
+      div,
+      p {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
