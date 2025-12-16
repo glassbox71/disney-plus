@@ -4,13 +4,11 @@ import { useMovieStore } from '../../../store/useMovieStore';
 import HeaderTitle from './HeaderTitle';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
+import type { title } from '../../../types/IContent';
 
 //TODO 탑10 리스트
 
-interface Top10Props {
-  title: string | number;
-}
-const Top10List = ({ title }: Top10Props) => {
+const Top10List = ({ title }: title) => {
   const { onFetchTOP, Top } = useMovieStore();
 
   useEffect(() => {
@@ -19,7 +17,6 @@ const Top10List = ({ title }: Top10Props) => {
     }
   }, [Top, onFetchTOP]);
 
-  console.log('Top', Top);
   return (
     <section className="Top10List">
       <HeaderTitle mainTitle={title} />
@@ -29,10 +26,12 @@ const Top10List = ({ title }: Top10Props) => {
             <SwiperSlide>
               <Link to="void">
                 <div className={`movieThumbnail TopNumber number${1 + i}`}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${el.poster_path}`}
-                    alt={`${el.title} 썸네일`}
-                  />
+                  <div className="imgBox">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${el.poster_path}`}
+                      alt={`${el.title} 썸네일`}
+                    />
+                  </div>
                 </div>
               </Link>
             </SwiperSlide>
@@ -43,7 +42,4 @@ const Top10List = ({ title }: Top10Props) => {
   );
 };
 
-
-
-
-export default Top10List
+export default Top10List;

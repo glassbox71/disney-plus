@@ -8,6 +8,7 @@
   .TopNumber {
     position: relative;
     margin-left: 170px;
+    border-radius: 8px;
 
     &::before {
       content: '';
@@ -56,6 +57,22 @@
       content: '10';
       left: -60px;
       font-size: 180px;
+    }
+
+    .imgBox {
+      border-radius: 8px;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        vertical-align: middle;
+        object-fit: cover;
+        transition: ease 0.3s;
+      }
+    }
+
+    &:hover .imgBox img {
+      transform: scale(1.1);
     }
   }
 }
