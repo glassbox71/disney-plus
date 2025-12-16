@@ -57,7 +57,7 @@ const Header = () => {
             </Link>
           </h1>
           <nav>
-            <Link className="LinkBtn" to="void">
+            <Link className="LinkBtn" to="/">
               홈
             </Link>
             <Link className="LinkBtn" to="/movie">
