@@ -45,6 +45,8 @@ export interface MovieState {
   genres: Genre[];
   category: Record<string, Movie[]>;
   isLoading: boolean;
+  Top: Movie[];
+  onFetchTOP: () => Promise<void>;
   onFetchUpcoming: () => Promise<void>;
   onFetchGenres: () => Promise<[]>;
   getGenreMap: () => Promise<Record<number, string>>;
