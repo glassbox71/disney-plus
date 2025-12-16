@@ -52,7 +52,7 @@ const Header = () => {
       <>
         <div className="Header-left">
           <h1 className="logo">
-            <Link to="void">
+            <Link to="/">
               <img src="/images/logo.svg" alt="로고" />
             </Link>
           </h1>
@@ -110,20 +110,6 @@ const Header = () => {
           </div>
         </div>
       </>
-      {/* ) : (
-        <>
-          <div className="Header-left">
-            <h1 className="logo">
-              <Link to="/">
-                <img src="/images/logo.svg" alt="로고" />
-              </Link>
-            </h1>
-          </div>
-          <div className="Header-right">
-            <Link to="/void">로그인</Link>
-          </div>
-        </>
-      )} */}
     </div>
   );
 };
