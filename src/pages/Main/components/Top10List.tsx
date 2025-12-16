@@ -4,7 +4,7 @@ import { useMovieStore } from '../../../store/useMovieStore';
 import HeaderTitle from './HeaderTitle';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
-import type { title } from '../../../types/IContent';
+import type { title } from '../../../types/IMovie';
 
 //TODO 탑10 리스트
 

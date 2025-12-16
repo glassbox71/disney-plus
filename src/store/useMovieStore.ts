@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Movie, MovieState, SeasonData } from '../types/IContent';
+import type { Movie, MovieState, SeasonData } from '../types/IMovie';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 

@@ -2,7 +2,7 @@ import '../scss/movieList.scss';
 import { useEffect } from 'react';
 import HeaderTitle from './HeaderTitle';
 import { useMovieStore } from '../../../store/useMovieStore';
-import type { title } from '../../../types/IContent';
+import type { title } from '../../../types/IMovie';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
 
