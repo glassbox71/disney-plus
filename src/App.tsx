@@ -13,6 +13,8 @@ import ProfileEditPage from './pages/ProfileEdit/ProfileEditPage';
 import MainMovie from './pages/Main/MainMovie';
 import MainSeries from './pages/Main/MainSeries';
 import MainOriginal from './pages/Main/MainOriginal';
+import SearchPage from './pages/Search/SearchPage';
+import Footer from './pages/Footer/Footer';
 
 function App() {
   const { initAuth } = useAuthStore();
@@ -35,7 +37,9 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/profile/edit" element={<ProfileEditPage />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
