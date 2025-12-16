@@ -1,0 +1,61 @@
+@use '../../../App.scss' as rs;
+
+.Top10List {
+  margin-left: 4%;
+  padding: 100px 0;
+  border: 1px solid red;
+
+  .TopNumber {
+    position: relative;
+    margin-left: 170px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -45px;
+      top: 50%;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      color: rgba(255, 255, 255, 0.6);
+      font-family: 'Rubik Doodle Shadow';
+      font-size: 200px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+      letter-spacing: -6.5px;
+    }
+
+    &.number1::before {
+      content: '1';
+    }
+    &.number2::before {
+      content: '2';
+    }
+    &.number3::before {
+      content: '3';
+    }
+    &.number4::before {
+      content: '4';
+    }
+    &.number5::before {
+      content: '5';
+    }
+    &.number6::before {
+      content: '6';
+    }
+    &.number7::before {
+      content: '7';
+    }
+    &.number8::before {
+      content: '8';
+    }
+    &.number9::before {
+      content: '9';
+    }
+    &.number10::before {
+      content: '10';
+      left: -60px;
+      font-size: 180px;
+    }
+  }
+}
