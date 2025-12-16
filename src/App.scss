@@ -167,6 +167,9 @@ button {
   font-display: swap;
 }
 
+//TODO font Rubik Doodle Shadow
+@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&family=Jua&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@100..900&family=Rubik+Doodle+Shadow&display=swap');
+
 //TODO mixin
 @mixin font($fs: 1.6rem, $fw: 400, $color: $base) {
   font-size: $fs;
