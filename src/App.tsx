@@ -20,6 +20,7 @@ import ProfileCreatePageInfo from './pages/ProfileCreate/ProfileCreatePageInfo';
 import SubComplete from './pages/Subscription/components/SubComplete';
 import KidsMainPage from './pages/KidsMain/KidsMainPage';
 import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
+import SearchPage from './pages/Search/SearchPage';
 
 function App() {
   const { initAuth } = useAuthStore();
