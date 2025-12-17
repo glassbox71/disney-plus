@@ -10,7 +10,6 @@ import SignupPage from './pages/Auth/SignupPage';
 import { useAuthStore } from './store/useAuthStore';
 import { useEffect } from 'react';
 import ProfileEditPage from './pages/ProfileEdit/ProfileEditPage';
-import SearchPage from './pages/Search/SearchPage';
 import Footer from './pages/Footer/Footer';
 import MainMovie from './pages/Main/MainMovie';
 import MainSeries from './pages/Main/MainSeries';
@@ -18,6 +17,7 @@ import MainOriginal from './pages/Main/MainOriginal';
 import ProfileSelectPage from './pages/ProfileSelect/ProfileSelectPage';
 import ProfileCreatePageImage from './pages/ProfileCreate/ProfileCreatePageImage';
 import ProfileCreatePageInfo from './pages/ProfileCreate/ProfileCreatePageInfo';
+import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
 
 function App() {
   const { initAuth } = useAuthStore();
@@ -34,6 +34,7 @@ function App() {
         <Route path="/movie" element={<MainMovie />} />
         <Route path="/series" element={<MainSeries />} />
         <Route path="/original" element={<MainOriginal />} />
+        <Route path="/play/:type/:id" element={<VideoPlayer />} />
         <Route path="/subscription" element={<SubscriptionPage />} />
         <Route path="/profile/setting" element={<ProfileSettingPage />} />
         <Route path="/signup" element={<SignupPage />} />
