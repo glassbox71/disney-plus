@@ -56,12 +56,12 @@ const Header = () => {
         <>
           <div className="Header-left">
             <h1 className="logo">
-              <Link to="void">
+              <Link to="/">
                 <img src="/images/logo.svg" alt="로고" />
               </Link>
             </h1>
             <nav>
-              <Link className="LinkBtn" to="void">
+              <Link className="LinkBtn" to="/">
                 홈
               </Link>
               <Link className="LinkBtn" to="/movie">
