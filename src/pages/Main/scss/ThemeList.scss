@@ -41,6 +41,7 @@ $Theme-sizes: (
   max-width: 1920px;
   margin: 0 auto;
   aspect-ratio: 1920/570;
+  border: 1px solid transparent;
   .menu {
     margin-bottom: 90px;
 
@@ -148,6 +149,7 @@ $Theme-sizes: (
           aspect-ratio: 323/480;
           border-radius: 8px;
           overflow: hidden;
+          border: 1px solid green;
 
           a {
             width: 100%;
@@ -162,9 +164,16 @@ $Theme-sizes: (
           img {
             max-width: 100%;
             width: 100%;
+            height: 100%;
             vertical-align: middle;
             object-fit: cover;
             object-position: center;
+            border: 1px solid blue;
+            transition: ease 0.3s;
+          }
+
+          &:hover img {
+            transform: scale(1.1);
           }
         }
       }
