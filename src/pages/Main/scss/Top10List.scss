@@ -1,28 +1,36 @@
 @use '../../../App.scss' as rs;
 
 .Top10List {
-  margin-left: 4%;
   padding: 100px 0;
+  padding-left: 4%;
   border: 1px solid red;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 23, 42, 0.6) 4%,
+    rgba(12, 48, 64, 0.6) 16%,
+    rgba(47, 131, 139, 0.55) 53%,
+    rgba(12, 48, 64, 0.56) 81%,
+    rgba(2, 23, 42, 0.6) 100%
+  );
 
   .TopNumber {
     position: relative;
-    margin-left: 170px;
+    margin-left: 130px;
     border-radius: 8px;
 
     &::before {
       content: '';
       position: absolute;
-      left: -45px;
-      top: 50%;
+      left: -30px;
+      bottom: 0;
       z-index: -1;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -0%);
       color: rgba(255, 255, 255, 0.6);
       font-family: 'Rubik Doodle Shadow';
-      font-size: 200px;
+      font-size: 260px;
       font-style: normal;
       font-weight: 400;
-      line-height: 140%;
+      line-height: 80%;
       letter-spacing: -6.5px;
     }
 
@@ -46,17 +54,6 @@
     }
     &.number7::before {
       content: '7';
-    }
-    &.number8::before {
-      content: '8';
-    }
-    &.number9::before {
-      content: '9';
-    }
-    &.number10::before {
-      content: '10';
-      left: -60px;
-      font-size: 180px;
     }
 
     .imgBox {

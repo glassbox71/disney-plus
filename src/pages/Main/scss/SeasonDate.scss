@@ -2,6 +2,14 @@
 
 .SeasonList {
   padding: 60px 0 60px 4%;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 23, 42, 0.6) 4%,
+    rgba(12, 48, 64, 0.6) 16%,
+    rgba(47, 131, 139, 0.55) 53%,
+    rgba(12, 48, 64, 0.56) 81%,
+    rgba(2, 23, 42, 0.6) 100%
+  );
 
   h2 {
     color: #fff;
@@ -73,6 +81,7 @@
   h3 {
     margin-top: 50px;
     display: flex;
+    align-items: center;
     @include rs.font(2.4rem, 500, #fff);
     margin-bottom: 20px;
 
@@ -129,11 +138,19 @@
       height: 100%;
       border-radius: 4px;
       overflow: hidden;
-    }
-    img {
-      height: 100%;
-      vertical-align: middle;
-      object-fit: cover;
+      border: 1px solid orange;
+
+      img {
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        object-fit: cover;
+        transition: ease 0.3s;
+      }
+
+      &:hover img {
+        transform: scale(1.1);
+      }
     }
   }
 }

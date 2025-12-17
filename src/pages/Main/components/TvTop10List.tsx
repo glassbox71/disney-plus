@@ -1,34 +1,34 @@
 import '../scss/Top10List.scss';
 import { useEffect } from 'react';
-import { useMovieStore } from '../../../store/useMovieStore';
 import HeaderTitle from './HeaderTitle';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
 import type { title } from '../../../types/IMovie';
+import { useTvStore } from '../../../store/useTvStore';
 
 //TODO 탑10 리스트
 
-const Top10List = ({ title }: title) => {
-  const { onFetchTOP, Top } = useMovieStore();
+const TvTop10List = ({ title }: title) => {
+  const { onFetchTopTV, TopTV } = useTvStore();
 
   useEffect(() => {
-    if (Top.length === 0) {
-      onFetchTOP();
+    if (TopTV.length === 0) {
+      onFetchTopTV();
     }
-  }, [Top, onFetchTOP]);
+  }, [TopTV, onFetchTopTV]);
 
   return (
-    <section className="Top10List">
+    <section className="TvTop10List Top10List">
       <HeaderTitle mainTitle={title} />
       <Swiper slidesPerView={4.2} spaceBetween={20} className="mySwiper">
-        {Top.slice(0, 7).map((el, i) => (
+        {TopTV.slice(0, 7).map((el, i) => (
           <SwiperSlide>
             <Link to="void">
               <div className={`movieThumbnail TopNumber number${1 + i}`}>
                 <div className="imgBox">
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${el.poster_path}`}
-                    alt={`${el.title} 썸네일`}
+                    alt={`${el.name} 썸네일`}
                   />
                 </div>
               </div>
@@ -40,4 +40,4 @@ const Top10List = ({ title }: title) => {
   );
 };
 
-export default Top10List;
+export default TvTop10List;

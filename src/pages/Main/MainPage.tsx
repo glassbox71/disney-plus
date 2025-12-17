@@ -1,6 +1,6 @@
+import './scss/MainPage.scss';
 import MainScreen from './components/MainScreen';
 import WatchList from './components/WatchList';
-import './scss/MainPage.scss';
 import RecommendedForYou from './components/RecommendedForYou';
 import ThemeList from './components/ThemeList';
 import UpcomingList from './components/UpcomingList';
@@ -36,7 +36,7 @@ const MainPage = () => {
       <RecommendedForYou />
       <ThemeList />
       <LatestList title="새로 올라온 콘텐츠" />
-      <Top10List title="현재 인기 영화 TOP 10" />
+      <Top10List title="현재 인기 영화 TOP 7" />
       <GenreList genreId="53" title="액션" />
       <GenreList genreId="16" title="애니메이션" />
       <SeasonList />

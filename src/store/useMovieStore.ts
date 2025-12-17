@@ -40,7 +40,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     // console.log('onFetchGenres 타입 확인', data.genres);
     return data.genres;
   },
-
   //TODO 장르 한글 맴
   getGenreMap: async () => {
     let genres = get().genres;
@@ -54,8 +53,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
       return acc;
     }, {} as Record<number, string>);
   },
-
-  // =========================
   // TODO 곧 개봉
   onFetchUpcoming: async () => {
     const genreMap = await get().getGenreMap();
@@ -82,7 +79,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
     set({ movies: extra });
   },
-
   //TODO TOP10
   onFetchTOP: async () => {
     const genreMap = await get().getGenreMap();
@@ -101,7 +97,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
     set({ Top: TopMOV });
   },
-
   //TODO 최신개봉작
   onfetchLatest: async () => {
     const resLatest = await fetch(
@@ -114,7 +109,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
     console.log('dataLatest', data);
   },
-  // =========================
   // TODO 카테고리
   onfetchCate: async (genreId) => {
     if (get().category[genreId]) return;
@@ -137,8 +131,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
       },
     }));
   },
-
-  // =========================
   // TODO 테마 (ThemeList 전용)
   onfetchTheme: async (companyId: string) => {
     set({ isLoading: true });
@@ -167,24 +159,15 @@ export const useMovieStore = create<MovieState>((set, get) => ({
       set({ isLoading: false });
     }
   },
-
-  // =========================
   // TODO 시즌 (다른 컴포넌트용)
   onfetchSeason: async (seasonData: SeasonData) => {
     const genreMap = await get().getGenreMap();
-
     let apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=ko-KR`;
-
     console.log('기본', apiUrl);
     const aa = await fetch(apiUrl);
     const dd = await aa.json();
     console.log('가공', dd.results);
 
-    // if (seasonData.keywordId) {
-    //   // 쉼표(,)를 파이프(|)로 대체하여 키워드를 OR 조건으로 검색하도록 합니다.
-    //   const orKeywords = seasonData.keywordId.replace(/,/g, '|');
-    //   apiUrl += `&with_keywords=${orKeywords}`;
-    // }
     if (seasonData.genreId) {
       apiUrl += `&with_genres=${seasonData.genreId}`;
     }
@@ -225,7 +208,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     //  theme  → seasonMovies
     set({ seasonMovies: mapped });
   },
-
   // 영화 & 시리즈 통합 검색
   onSearchMultiRaw: async (keyword: string, companyId: string) => {
     const genreMap = await get().getGenreMap();
@@ -242,10 +224,8 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         )}`
       ),
     ]);
-
     const movieData = await movieRes.json();
     const tvData = await tvRes.json();
-
     const normalize = (item, type: 'movie' | 'tv') => ({
       ...item,
       media_type: type,
@@ -265,25 +245,20 @@ export const useMovieStore = create<MovieState>((set, get) => ({
   matchGenresByKeyword: async (keyword: string) => {
     const genres = await get().onFetchGenres();
     const lower = keyword.toLowerCase();
-
     return genres.filter((genre) => genre.name.toLowerCase().includes(lower));
   },
 
   // 여러 장르 기반 fallback 영화 가져오기
   fetchMoviesByGenres: async (genres: { id: number; name: string }[]) => {
     const genreMap = await get().getGenreMap();
-    let results: Movie[] = [];
-
+    const results: Movie[] = [];
     const topGenres = genres.slice(0, 2); // 최대 2개만
-
     const responses = await Promise.all(topGenres.map((genre) => get().onfetchCate(genre.id)));
-
     responses.flat().forEach((movie: Movie) => {
       if (!results.some((m) => m.id === movie.id)) {
         results.push(movie);
       }
     });
-
     return results;
   },
 }));

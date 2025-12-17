@@ -1,16 +1,24 @@
 export interface TV {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  release_date: string;
-  vote_average: number;
   adult: boolean;
+  backdrop_path: string;
+  first_air_date: string;
   genre_ids: number[];
+  id: number;
+  name: string;
+  origin_country: [];
+  original_language: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
 }
 
-export interface useTvStore {
-  TopTv: TV[];
-  onFetchTopTV: () => Promise<[]>;
+export interface ITVStore {
+  UpComingTv: TV[];
+  RatedTv: TV[];
+  TopTV: TV[];
+  onFetchNewTV: () => Promise<void>;
+  onFetchRated: () => Promise<void>;
+  onFetchTopTV: () => Promise<void>;
 }
