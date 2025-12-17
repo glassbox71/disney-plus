@@ -1,0 +1,70 @@
+@use '../../../App.scss' as rs;
+
+
+.subBg {
+    height: 100vh;
+    background: linear-gradient(180deg, #0A1A26 0%, #0C7471 60%, rgba(0, 209, 197, 0.9) 100%);
+
+    .subCompleteWrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+        padding: 6rem 5rem;
+        position: fixed;
+        width: 56rem;
+        height: 72rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 16px;
+        background: #25272c;
+        color: #fff;
+
+
+        >.subTop {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            // gap: 20px;
+
+
+            .subLogo {
+                display: flex;
+                // align-items: center;
+                justify-content: center;
+                margin-bottom: 2rem;
+
+                img {
+                    filter: drop-shadow(0 4px 24px rgba(255, 255, 255, 0.4));
+                }
+            }
+
+            >.subTitle {
+                @include rs.font (2.8rem, 500, #fff);
+            }
+        }
+
+        >button {
+            width: 40rem;
+            height: 4.8rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid rgba($color: #fff, $alpha: 0.2);
+            background-color: rgba($color: #fff, $alpha: 0.1);
+            color: #fff;
+            line-height: 4.8rem;
+            font-weight: 500;
+
+            &:hover {
+                // background: #33ddff;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(12px);
+            }
+        }
+    }
+}

@@ -39,6 +39,7 @@ function App() {
         <Route path="/original" element={<MainOriginal />} />
         <Route path="/play/:type/:id" element={<VideoPlayer />} />
         <Route path="/subscription" element={<SubscriptionPage />} />
+        <Route path="/subscription/success" element={<SubComplete />} />
         <Route path="/profile/setting" element={<ProfileSettingPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />

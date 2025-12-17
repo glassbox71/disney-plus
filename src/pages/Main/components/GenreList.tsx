@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import HeaderTitle from './HeaderTitle';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMovieStore } from '../../../store/useMovieStore';
 
 interface GenreListProps {
