@@ -331,6 +331,17 @@ export const ThemeListNavData = [
   { title: 'fx', text: '한계를 뛰어넘는 이야기의 세계', companyId: '711' },
 ];
 
+//TODO 키즈 테마별 영화
+export const KidsThemeListNavData = [
+  { title: 'micikeyMouse', text: '천방지축 미키마우스와 친구들', companyId: '337' },
+  { title: 'princessFairy', text: '반짝반짝 빛나는 공주와 요정', companyId: '3' },
+  // { title: 'disneyJr', text: '마블 유니버스로 떠나보세요', companyId: '7505' },
+  { title: 'car', text: '자동차 친구들의 신나는 레이스', companyId: '1' },
+  { title: 'action', text: '용감하게 떠나보는 모험', companyId: '7521' },
+  { title: 'pooh', text: '푸와 친구들의 달콤한 하루', companyId: '43' },
+  // { title: 'originals', text: '한계를 뛰어넘는 이야기의 세계', companyId: '711' },
+]
+
 //TODO 시즌별 영화
 export const SeasonNavData = [
   // 1. 겨울 1

@@ -16,18 +16,22 @@
     .swiper-slide {
       position: relative;
     }
+
     .basic {
       background: url(../../../../public/images/movieScreen1.jpg);
       @include bg();
     }
+
     .movie {
       background: url(../../../../public/images/main/movieScreen2.jpg);
       @include bg();
     }
+
     .series {
       background: url(../../../../public/images/main/movieScreen1.jpg);
       @include bg();
     }
+
     .original {
       background: url(../../../../public/images/main/movieScreen3.jpg);
       @include bg();
@@ -46,6 +50,7 @@
         height: 158px;
         width: auto;
         margin-bottom: 40px;
+
         &.movie {
           background: url('../../../../public/images/main/mainTItle.png');
           background-repeat: no-repeat;
@@ -77,6 +82,7 @@
           justify-content: center;
           align-items: center;
           border-radius: 4px;
+
           &::before {
             display: inline-block;
             @include rs.font(1.4rem, 500, #fff);
@@ -122,6 +128,7 @@
               content: '12세 이상 관람가';
             }
           }
+
           &.age15 {
             background-color: rgba(220, 115, 23, 0.6);
             border: 1px solid rgba(220, 115, 23, 0.2);
@@ -131,6 +138,7 @@
               content: '15세 이상 관람가';
             }
           }
+
           &.age18 {
             background-color: rgba(226, 0, 0, 0.6);
             border: 1px solid rgba(220, 115, 23, 0.2);
@@ -195,11 +203,9 @@
     z-index: 1;
     background: #ffffff;
     background: #ffffff;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(2, 23, 42, 0.5) 20%,
-      rgba(2, 23, 42, 1) 80%
-    );
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(2, 23, 42, 0.5) 20%,
+        rgba(2, 23, 42, 1) 80%);
   }
 }

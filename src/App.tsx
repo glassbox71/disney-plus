@@ -17,6 +17,8 @@ import MainOriginal from './pages/Main/MainOriginal';
 import ProfileSelectPage from './pages/ProfileSelect/ProfileSelectPage';
 import ProfileCreatePageImage from './pages/ProfileCreate/ProfileCreatePageImage';
 import ProfileCreatePageInfo from './pages/ProfileCreate/ProfileCreatePageInfo';
+import SubComplete from './pages/Subscription/components/SubComplete';
+import KidsMainPage from './pages/KidsMain/KidsMainPage';
 import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
 
 function App() {
@@ -36,6 +38,7 @@ function App() {
         <Route path="/original" element={<MainOriginal />} />
         <Route path="/play/:type/:id" element={<VideoPlayer />} />
         <Route path="/subscription" element={<SubscriptionPage />} />
+        <Route path="/subscription/success" element={<SubComplete />} />
         <Route path="/profile/setting" element={<ProfileSettingPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -44,6 +47,7 @@ function App() {
         <Route path="/profile/select" element={<ProfileSelectPage />} />
         <Route path="profile/create/image" element={<ProfileCreatePageImage />} />
         <Route path="profile/create/info" element={<ProfileCreatePageInfo />} />
+        <Route path="kids" element={<KidsMainPage />} />
       </Routes>
       <Footer />
     </div>

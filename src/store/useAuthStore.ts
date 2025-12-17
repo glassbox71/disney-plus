@@ -11,6 +11,7 @@ import {
 import { auth, googleProvider, db } from '../api/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { AuthState, KidsModeInfo, UserData } from '../types/IAuth';
+import { useSubStore } from './useSubStore';
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
@@ -46,6 +47,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         userData = userDoc.data() as UserData;
       }
       set({ user: firebaseUser, userData, loading: false, isLogin: true });
+
+      //Firestore에서 membership만 가져와서 subStore로 복구
+      // await useSubStore.getState().fetchMembership(firebaseUser.uid);
     });
   },
 

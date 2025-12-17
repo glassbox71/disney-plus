@@ -1,5 +1,17 @@
+export interface SubPlan {
+    key: string;
+    logo: string;
+    title: string;
+    price: string;
+    year_price: string;
+    des1: string;
+    des2: string;
+    des3: string;
+    tving_logo?: string;
+    wavve_logo?: string;
+}
 
-export const subscription = [
+export const subscription: SubPlan[] = [
     {
         key: "프리미엄",
         logo: "/images/logo.svg",
@@ -45,3 +57,11 @@ export const subscription = [
     }
 
 ]
+
+export const payErrorMsg = {
+    owner: "성명을 정확히 입력해주세요.",
+    cardNo: "올바른 카드번호 형식을 입력해주세요.",
+    exp: "유효한 만료일을 입력해주세요.",
+    pw2: "카드 비밀번호가 올바르지 않습니다.",
+    birth: "유효한 생년월일을 입력하세요",
+}

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import HeaderTitle from './HeaderTitle';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMovieStore } from '../../../store/useMovieStore';
 
 interface GenreListProps {
@@ -13,6 +13,7 @@ interface GenreListProps {
 //TODO 재사용 가능한 장르 콘텐츠 목록
 const GenreList = ({ genreId, title }: GenreListProps) => {
   const { movies, category, onfetchCate } = useMovieStore();
+  const { kids } = useParams();
 
   const GenreMovies = category[genreId] || [];
 
@@ -38,7 +39,7 @@ const GenreList = ({ genreId, title }: GenreListProps) => {
           return (
             <SwiperSlide>
               <Link className="" to={`/play/movie/${el.id}`}>
-                <div className="col movieThumbnail">
+                <div className={`col movieThumbnail ${kids ? 'kids' : ''}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${el.poster_path}`}
                     alt={`${el.title} 썸네일`}

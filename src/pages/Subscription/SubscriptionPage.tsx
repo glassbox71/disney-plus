@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubscriptionTitle from './components/SubscriptionTitle'
 import './scss/SubscriptionPage.scss'
 import Toggle from './components/Toggle'
 import SubscriptionContent from './components/SubscriptionContent'
 import SubscriptionDisneyContent from './components/SubscriptionDisneyContent'
+import { useAuthStore } from "../../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const SubscriptionPage = () => {
-    const [activeBtn, setActiveBtn] = useState("bundle")
+    const [activeBtn, setActiveBtn] = useState("bundle");
+    const isLogin = useAuthStore((a) => a.isLogin);
+    const loading = useAuthStore((s) => s.loading);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading && !isLogin) {
+            navigate("/login", { replace: true });
+        }
+    }, [loading, isLogin, navigate])
+
+    if (!isLogin) return null;
+
     return (
         <div className='subscriptionBg pullInner'>
             <div className="subscriptionWrap">
