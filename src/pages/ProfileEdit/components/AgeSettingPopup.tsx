@@ -36,6 +36,7 @@ const AgeSettingPopup = ({ onClose }: AgeSettingPopupProps) => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
+  
   useEffect(() => {
     if (currentProfile) {
       setSelectedAge(currentProfile.contentLimit);

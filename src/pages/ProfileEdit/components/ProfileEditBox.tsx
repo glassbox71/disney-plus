@@ -5,12 +5,8 @@ import AgeSettingPopup from './AgeSettingPopup';
 import { useProfileStore } from '../../../store/useProfileStore';
 import '../scss/ProfileEditBox.scss';
 
-interface ProfileEditBoxProps {
-  contentLimit: number;
-  onChangeContentLimit: (value: number) => void;
-}
 
-const ProfileEditBox = ({ contentLimit, onChangeContentLimit }: ProfileEditBoxProps) => {
+const ProfileEditBox =() => {
   const { currentProfile, selectProfile } = useProfileStore();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 

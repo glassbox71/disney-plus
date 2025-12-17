@@ -12,27 +12,34 @@ export interface Profile {
 
 interface ProfileState {
   profiles: Profile[];
-  // 현재 적용중&수정중인 프로필
+
+  // 임시 작업용 (생성/수정) 수정중인 프로필
   currentProfile: Profile | null;
 
-  // 현재 생성중인 프로필
-  initCurrentProfile: () => void;
+  // 현재 내가 선택한 들어간 프로필 시청중인거
+  activeProfileId: string | null;
+  setActiveProfile: (id: string) => void;
 
-  // 최초 프로필 디폴트값
+  // 초기화
+  initCurrentProfile: () => void;
   initDefaultProfiles: () => void;
-  // 프로필 선택
+  resetCurrentProfile: () => void;
+
+  // 수정할 프로필 선택
   selectProfile: (profile: Profile) => void;
 
-  // 프로필 추가
+  // 확정된 프로필 저장
   addProfile: (profile: Profile) => void;
-  // 프로필 수정
   updateProfile: (id: string, data: Partial<Profile>) => void;
-  // 프로필 이미지 선택
-  setProfileImage: (image: string) => void;
 
+  // 수정중인 프로필 정보
+  setProfileName: (name: string) => void;
+  setProfileImage: (image: string) => void;
   setContentLimit: (limit: number) => void;
 
   // 프로필 삭제
+  deleteProfile: (id: string) => void;
+
   resetProfiles: () => void;
 }
 
@@ -42,7 +49,17 @@ export const useProfileStore = create<ProfileState>()(
       profiles: [],
       currentProfile: null,
 
-      // 새로운 프로필 생성
+      activeProfileId: null,
+
+      // 아이디로 프로필 구분
+      setActiveProfile: (id) =>
+        set({
+          activeProfileId: id,
+        }),
+
+      resetCurrentProfile: () => set({ currentProfile: null }),
+
+      // 생성/수정 진입 시 항상 새로 만듦
       initCurrentProfile: () =>
         set({
           currentProfile: {
@@ -55,8 +72,7 @@ export const useProfileStore = create<ProfileState>()(
           },
         }),
 
-      // 초반 디폴트값으로 생성되는 프로필
-      initDefaultProfiles: () => {
+      initDefaultProfiles: () =>
         set((state) => {
           if (state.profiles.length > 0) return state;
 
@@ -80,48 +96,57 @@ export const useProfileStore = create<ProfileState>()(
               },
             ],
           };
-        });
-      },
-
-      // 선택한 프로필
-      selectProfile: (profile) => {
-        set({ currentProfile: profile });
-      },
-
-      // 프로필 추가
-      addProfile: (profile) => {
-        set((state) => ({
-          profiles: [...state.profiles, profile],
-        }));
-      },
-
-      updateProfile: (id, data) => {
-        set((state) => ({
-          profiles: state.profiles.map((p) => (p.id === id ? { ...p, ...data } : p)),
-        }));
-      },
-
-      setProfileImage: (image) =>
-        set((state) => {
-          if (!state.currentProfile) return state;
-
-          return {
-            currentProfile: {
-              ...state.currentProfile,
-              image,
-            },
-          };
         }),
 
+      // 반드시 복사본으로 세팅
+      selectProfile: (profile) =>
+        set({
+          currentProfile: { ...profile },
+        }),
+
+      addProfile: (profile) =>
+        set((state) => ({
+          profiles: [...state.profiles, profile],
+          currentProfile: null,
+        })),
+
+      updateProfile: (id, data) =>
+        set((state) => ({
+          profiles: state.profiles.map((p) => (p.id === id ? { ...p, ...data } : p)),
+          currentProfile: null,
+        })),
+
+      // 수정중인 프로필 변경사항
+      setProfileName: (name) =>
+        set((state) =>
+          state.currentProfile ? { currentProfile: { ...state.currentProfile, name } } : state
+        ),
+
+      setProfileImage: (image) =>
+        set((state) =>
+          state.currentProfile ? { currentProfile: { ...state.currentProfile, image } } : state
+        ),
+
       setContentLimit: (limit) =>
+        set((state) =>
+          state.currentProfile
+            ? {
+                currentProfile: {
+                  ...state.currentProfile,
+                  contentLimit: limit,
+                },
+              }
+            : state
+        ),
+
+      deleteProfile: (id) =>
         set((state) => {
-          if (!state.currentProfile) return state;
+          const target = state.profiles.find((p) => p.id === id);
+          if (target?.isDefault) return state;
 
           return {
-            currentProfile: {
-              ...state.currentProfile,
-              contentLimit: limit,
-            },
+            profiles: state.profiles.filter((p) => p.id !== id),
+            currentProfile: state.currentProfile?.id === id ? null : state.currentProfile,
           };
         }),
 
@@ -130,8 +155,6 @@ export const useProfileStore = create<ProfileState>()(
         currentProfile: null,
       }),
     }),
-    {
-      name: 'profile-storage',
-    }
+    { name: 'profile-storage' }
   )
 );

@@ -2,23 +2,33 @@ import React, { useEffect, useState } from 'react';
 import ProfileTitle from '../ProfileSetting/components/ProfileTitle';
 import { useProfileStore, type Profile } from '../../store/useProfileStore';
 import './scss/ProfileSelectPage.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProfileSelectEdit from './components/ProfileSelectEdit';
 
 const ProfileSelectPage = () => {
-  const { profiles, initDefaultProfiles, selectProfile } = useProfileStore();
+  const { profiles, initDefaultProfiles, selectProfile, resetCurrentProfile, setActiveProfile } =
+    useProfileStore();
 
   const [mode, setMode] = useState<'select' | 'edit'>('select');
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     initDefaultProfiles();
+    console.log(profiles);
   }, []);
+
+  const handleSelectProfile = (profile: Profile) => {
+    setActiveProfile(profile.id);
+    navigate('/');
+  };
+
+  const handleSelectEdit = (profile: Profile) => {
+    selectProfile({ ...profile });
+  };
 
   const handleEditMode = () => {
     setMode('edit');
-  };
-  const handleSelectEdit = (profile: Profile) => {
-    selectProfile(profile);
   };
 
   return (
@@ -34,7 +44,9 @@ const ProfileSelectPage = () => {
                   <div
                     className="profile"
                     key={profile.id}
-                    onClick={() => handleSelectEdit(profile)}>
+                    onClick={() =>
+                      mode === 'select' ? handleSelectProfile(profile) : handleSelectEdit(profile)
+                    }>
                     <Link to="/void" className="profileImgBox">
                       <img src={profile.image} alt={profile.name} />
                     </Link>
@@ -45,7 +57,7 @@ const ProfileSelectPage = () => {
                 ))}
                 <div className="addNewProfile">
                   <div className="addProfileImgBox">
-                    <Link to="/profile/create/image">
+                    <Link to="/profile/create/image" onClick={() => resetCurrentProfile()}>
                       <img src="/icon/plusIcon.svg" alt="계정 추가 아이콘" />
                     </Link>
                   </div>

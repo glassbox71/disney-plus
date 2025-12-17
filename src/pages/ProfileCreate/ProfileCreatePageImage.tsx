@@ -29,17 +29,11 @@ const ProfileCreatePageImage: React.FC = () => {
   const handleNext = () => {
     navigate('/profile/create/info');
   };
-
   useEffect(() => {
     if (!currentProfile) {
       initCurrentProfile();
-      return;
     }
-
-    if (!currentProfile.image && profileImages.length > 0) {
-      setProfileImage(profileImages[0].src);
-    }
-  }, [currentProfile, initCurrentProfile, setProfileImage]);
+  }, [currentProfile, initCurrentProfile]);
 
   return (
     <div className="profileImageBg pullInner">

@@ -1,13 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileTitle from '../ProfileSetting/components/ProfileTitle';
 import './scss/ProfileEditPage.scss';
 import ProfileEditBox from './components/ProfileEditBox';
 import { useProfileStore } from '../../store/useProfileStore';
 import { useNavigate } from 'react-router-dom';
+import ProfileDeletePopup from './components/ProfileDeletePopup';
 
 const ProfileEditPage = () => {
-  const { currentProfile, updateProfile } = useProfileStore();
+  const { profiles, activeProfileId, currentProfile, selectProfile, updateProfile, deleteProfile } =
+    useProfileStore();
   const navigate = useNavigate();
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  useEffect(() => {
+    if (!activeProfileId) return;
+    const profile = profiles.find((p) => p.id === activeProfileId);
+    if (profile) selectProfile(profile);
+  }, [activeProfileId, profiles, selectProfile]);
 
   const handleComplete = () => {
     if (!currentProfile) return;
@@ -17,7 +27,7 @@ const ProfileEditPage = () => {
       image: currentProfile.image,
       contentLimit: currentProfile.contentLimit,
     });
-    navigate('/profile/select');
+    navigate('/');
   };
 
   return (
@@ -26,11 +36,14 @@ const ProfileEditPage = () => {
         <ProfileTitle profileTitle="프로필 수정" />
         <ProfileEditBox />
         <div className="profileEditBtnwrap">
-          <div className="profileEditBtn">
-            <button onClick={handleComplete}>완료</button>
-          </div>
-          <button className="pofileDelBtn">프로필 삭제</button>
+          <button className="profileComBtn" onClick={handleComplete}>
+            완료
+          </button>
+          <button className="profileDelBtn" onClick={() => setIsDeleteOpen(true)}>
+            프로필 삭제
+          </button>
         </div>
+        {isDeleteOpen && <ProfileDeletePopup onClose={() => setIsDeleteOpen(false)} />}
       </div>
     </div>
   );

@@ -2,17 +2,21 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './scss/Header.scss';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useProfileStore } from '../../store/useProfileStore';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDepthOpen, setIsDepthOpen] = useState(false);
   const { isLogin, onLogout } = useAuthStore();
+  const { profiles, activeProfileId } = useProfileStore();
   const location = useLocation();
   const path = location.pathname;
   const navigate = useNavigate();
 
   const isProfilePage = path.startsWith('/profile');
   const isLoginPage = path.startsWith('/login');
+
+  const activeProfile = profiles.find((profile) => profile.id === activeProfileId);
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -56,12 +60,12 @@ const Header = () => {
         <>
           <div className="Header-left">
             <h1 className="logo">
-              <Link to="/">
+              <Link to="void">
                 <img src="/images/logo.svg" alt="로고" />
               </Link>
             </h1>
             <nav>
-              <Link className="LinkBtn" to="/">
+              <Link className="LinkBtn" to="void">
                 홈
               </Link>
               <Link className="LinkBtn" to="/movie">
@@ -87,7 +91,10 @@ const Header = () => {
             </Link>
             <div className="MyProfileDepth">
               <button className="MyProfile" onClick={toggleProfileDepth}>
-                <img src="/images/exProfile.png" alt="프로필 이미지" />
+                <img
+                  src={activeProfile?.image || '/images/exProfile.png'}
+                  alt={activeProfile?.name || '프로필'}
+                />
               </button>
               <ul
                 className={`ProfileDropdown ${isDepthOpen ? 'open' : ''}`}
@@ -98,7 +105,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/profile/change" className="dropdownLink">
+                  <Link to="/profile/select" className="dropdownLink">
                     프로필 변경
                   </Link>
                 </li>

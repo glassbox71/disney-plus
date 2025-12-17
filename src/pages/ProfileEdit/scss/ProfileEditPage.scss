@@ -19,7 +19,7 @@
       width: 50%;
       justify-content: space-between;
 
-      .profileEditBtn {
+      .profileComBtn {
         display: flex;
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.20);
@@ -29,17 +29,12 @@
         padding: 1.2rem 1.6rem;
         width: 13rem;
         justify-content: center;
-
-        >button {
-          color: white;
-          font-size: 2rem;
-          font-weight: 500;
-          background: none;
-          cursor: pointer;
-        }
+        color: white;
+        font-size: 2rem;
+        font-weight: 500;
       }
 
-      .pofileDelBtn {
+      .profileDelBtn {
         color: #DDD;
         text-align: center;
         font-size: 1.8rem;
