@@ -18,7 +18,9 @@ export interface ITVStore {
   UpComingTv: TV[];
   RatedTv: TV[];
   TopTV: TV[];
+  playID: TV[];
   onFetchNewTV: () => Promise<void>;
   onFetchRated: () => Promise<void>;
   onFetchTopTV: () => Promise<void>;
+  onFetchID: (id: number, type: string) => Promise<TV[] | void>;
 }
