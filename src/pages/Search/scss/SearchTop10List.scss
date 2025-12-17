@@ -1,0 +1,26 @@
+.searchTop10List {
+  padding-bottom: 10rem;
+  .mainTItle {
+    span {
+      display: none;
+    }
+  }
+  .movieThumbnail {
+    .imgBox {
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 2 / 3;
+
+      img {
+        width: 100%;
+        background: rgba(#eee, 0.3);
+        vertical-align: middle;
+        transition: ease 0.3s;
+        object-fit: cover;
+      }
+    }
+    &:hover .imgBox img {
+      transform: scale(1.1);
+    }
+  }
+}

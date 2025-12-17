@@ -1,7 +1,6 @@
 @use '../../../App.scss' as rs;
 
 .searchPage {
-  // height: 100vh;
   .searchWrap {
     padding-top: 200px;
     color: #fff;
@@ -81,7 +80,7 @@
             text-align: center;
             align-items: center;
             border-radius: 8px;
-
+            z-index: 50;
             li {
               height: 100%;
               button {

@@ -1,4 +1,6 @@
 // 일반, 키즈 조건문
+// 배경 누르면 장르 리스트 닫히도록
+// 장르 선택하면 해당하는 장르 searchList에 데이터 뿌리고 검색창에 선택된 장르 띄우기
 
 import { useState } from 'react';
 import { useGenreStore } from '../../../store/useGenreStore';
