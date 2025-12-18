@@ -13,7 +13,6 @@ import ProfileEditPage from './pages/ProfileEdit/ProfileEditPage';
 import Footer from './pages/Footer/Footer';
 import MainMovie from './pages/Main/MainMovie';
 import MainSeries from './pages/Main/MainSeries';
-import MainOriginal from './pages/Main/MainOriginal';
 import ProfileSelectPage from './pages/ProfileSelect/ProfileSelectPage';
 import ProfileCreatePageImage from './pages/ProfileCreate/ProfileCreatePageImage';
 import ProfileCreatePageInfo from './pages/ProfileCreate/ProfileCreatePageInfo';
@@ -38,7 +37,6 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/movie" element={<MainMovie />} />
         <Route path="/series" element={<MainSeries />} />
-        <Route path="/original" element={<MainOriginal />} />
         <Route path="/play/:type/:id" element={<VideoPlayer />} />
         <Route path="/subscription" element={<SubscriptionPage />} />
         <Route path="/subscription/success" element={<SubComplete />} />

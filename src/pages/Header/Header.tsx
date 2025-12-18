@@ -74,9 +74,6 @@ const Header = () => {
               <Link className="LinkBtn" to="/series">
                 시리즈
               </Link>
-              <Link className="LinkBtn" to="/original">
-                오리지널
-              </Link>
             </nav>
           </div>
           <div className="Header-right">
