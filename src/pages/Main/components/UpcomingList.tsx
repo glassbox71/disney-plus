@@ -34,7 +34,7 @@ const UpcomingList = () => {
           {movies.map((el) => {
             return (
               <SwiperSlide>
-                <Link className="" to="void">
+                <Link className="" to={`/play/movie/${el.id}`}>
                   <div className="col movieThumbnail">
                     <img
                       src={`https://image.tmdb.org/t/p/w500/${el.poster_path}`}
