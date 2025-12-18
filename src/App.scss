@@ -196,6 +196,7 @@ address {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #fff;
   border-radius: 4px;
 
   &::before {
@@ -205,9 +206,17 @@ address {
     // aspect-ratio: 40/22;
   }
 
+  &.ageAL {
+    background-color: rgba(76, 175, 80, 0.7);
+
+    &::before {
+      content: 'ALL';
+      @include font(1.4rem, 500, #fff);
+    }
+  }
+
   &.ageAll {
     background-color: rgba(76, 175, 80, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.2);
 
     &::before {
       content: 'ALL';
@@ -217,51 +226,72 @@ address {
 
   &.age5 {
     background-color: rgba(40, 167, 69, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
 
     &::before {
-      content: '5세 이상 관람가';
+      content: '5세 이상';
+    }
+  }
+
+  &.age6 {
+    background-color: rgba(40, 167, 69, 0.6);
+
+    &::before {
+      content: '6세 이상';
     }
   }
 
   &.age7 {
     background-color: rgba(40, 167, 69, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
 
     &::before {
-      content: '7세 이상 관람가';
+      content: '7세 이상';
+    }
+  }
+
+  &.age9 {
+    background-color: rgba(40, 167, 69, 0.6);
+
+    &::before {
+      content: '9세 이상';
     }
   }
 
   &.age12 {
     background-color: rgba(40, 167, 69, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
 
     &::before {
-      content: '12세 이상 관람가';
+      content: '12세 이상';
     }
   }
 
   &.age15 {
     background-color: rgba(220, 115, 23, 0.6);
-    border: 1px solid rgba(220, 115, 23, 0.2);
-    border-radius: 4px;
 
     &::before {
-      content: '15세 이상 관람가';
+      content: '15세 이상';
+    }
+  }
+
+  &.age16 {
+    background-color: rgba(220, 115, 23, 0.6);
+
+    &::before {
+      content: '16세 이상';
     }
   }
 
   &.age18 {
     background-color: rgba(226, 0, 0, 0.6);
-    border: 1px solid rgba(220, 115, 23, 0.2);
-    border-radius: 4px;
 
     &::before {
-      content: '18세 이상 관람가';
+      content: '18세 이상';
+    }
+  }
+  &.agenone {
+    background-color: rgba(226, 0, 0, 0.6);
+
+    &::before {
+      content: '18세 이상';
     }
   }
 }
