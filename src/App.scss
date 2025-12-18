@@ -190,3 +190,78 @@ address {
   font-weight: $fw;
   color: $color;
 }
+
+//TODO age
+@mixin age() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+
+  &::before {
+    display: inline-block;
+    @include font(1.4rem, 500, #fff);
+    padding: 4px 8px;
+    // aspect-ratio: 40/22;
+  }
+
+  &.ageAll {
+    background-color: rgba(76, 175, 80, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &::before {
+      content: 'ALL';
+      @include font(1.4rem, 500, #fff);
+    }
+  }
+
+  &.age5 {
+    background-color: rgba(40, 167, 69, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &::before {
+      content: '5세 이상 관람가';
+    }
+  }
+
+  &.age7 {
+    background-color: rgba(40, 167, 69, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &::before {
+      content: '7세 이상 관람가';
+    }
+  }
+
+  &.age12 {
+    background-color: rgba(40, 167, 69, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &::before {
+      content: '12세 이상 관람가';
+    }
+  }
+
+  &.age15 {
+    background-color: rgba(220, 115, 23, 0.6);
+    border: 1px solid rgba(220, 115, 23, 0.2);
+    border-radius: 4px;
+
+    &::before {
+      content: '15세 이상 관람가';
+    }
+  }
+
+  &.age18 {
+    background-color: rgba(226, 0, 0, 0.6);
+    border: 1px solid rgba(220, 115, 23, 0.2);
+    border-radius: 4px;
+
+    &::before {
+      content: '18세 이상 관람가';
+    }
+  }
+}
