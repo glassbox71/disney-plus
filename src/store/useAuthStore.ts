@@ -11,7 +11,7 @@ import {
 import { auth, googleProvider, db } from '../api/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { AuthState, KidsModeInfo, UserData } from '../types/IAuth';
-import { useSubStore } from './useSubStore';
+import { useProfileStore } from './useProfileStore';
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
@@ -136,6 +136,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         isLogin: true,
       });
 
+      useProfileStore.getState().initWithUser(firebaseUser.uid);
+
       console.log('로그인 성공');
     } catch (err: any) {
       console.error('로그인 실패:', err);
@@ -232,6 +234,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   onLogout: async () => {
     await signOut(auth);
     set({ user: null, userData: null, isLogin: false });
+
+    useProfileStore.getState().resetProfiles();
+
     console.log('로그아웃 완료');
   },
 }));

@@ -3,23 +3,39 @@ import ProfileSettingBox from './components/ProfileSettingBox';
 import { Link } from 'react-router-dom';
 import './scss/ProfileSettingPage.scss';
 import ProfileTitle from './components/ProfileTitle';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useSubStore } from '../../store/useSubStore';
 
 const ProfileSettingPage = () => {
+  const { userData } = useAuthStore();
+  const { membership } = useSubStore();
+
+  const formatDate = (timestamp?: number) => {
+    if (!timestamp) return '-';
+    return new Date(timestamp).toLocaleDateString('ko-KR');
+  };
+
   return (
     <div className="profileCreationBg pullInner">
       <div className="profileCreateWrap inner">
         <ProfileTitle profileTitle="계정 설정" />
         <div className="profileCreateBoxWrap">
           <ProfileSettingBox title="계정 정보">
-            <span className="profileCreateBox userEmail profileBoxSubTitle"></span>
+            <span className="profileCreateBox userEmail profileBoxSubTitle">{userData?.email}</span>
           </ProfileSettingBox>
 
           <ProfileSettingBox title="멤버십">
             <div className="profileCreateBox membershipInfo profileBoxContent bottomLine">
-              <span className="profileBoxSubTitle"></span>
+              <span className="profileBoxSubTitle">
+                {membership ? membership.plan.title : '멤버십 없음'}
+              </span>
               <div className="fontSize14">
                 <span>갱신일</span>
-                <span></span>
+                <span>
+                  {membership?.startedAt
+                    ? new Date(membership.startedAt).toLocaleDateString('ko-KR')
+                    : '-'}
+                </span>
               </div>
             </div>
             <div className="profileCreateBox membershipChange profileBoxContent">

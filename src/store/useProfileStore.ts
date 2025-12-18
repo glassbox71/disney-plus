@@ -1,6 +1,21 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+const saveProfilesToUserStorage = (state: ProfileState) => {
+  if (!state.currentUserId) return;
+
+  const key = `profile-storage-${state.currentUserId}`;
+  localStorage.setItem(
+    key,
+    JSON.stringify({
+      state: {
+        profiles: state.profiles,
+        activeProfileId: state.activeProfileId,
+      },
+    })
+  );
+};
+
 export interface Profile {
   id: string;
   name: string;
@@ -11,10 +26,17 @@ export interface Profile {
 }
 
 interface ProfileState {
+  currentUserId: string | null;
+
+  initWithUser: (userId: string) => void;
+
   profiles: Profile[];
 
   // 임시 작업용 (생성/수정) 수정중인 프로필
   currentProfile: Profile | null;
+
+  // 키즈모드인가? 아닌가? 체크하는 메서드
+  setIsKidsProfile: (isKids: boolean) => void;
 
   // 현재 내가 선택한 들어간 프로필 시청중인거
   activeProfileId: string | null;
@@ -47,15 +69,58 @@ interface ProfileState {
 export const useProfileStore = create<ProfileState>()(
   persist(
     (set, get) => ({
+      currentUserId: null,
+
+      initWithUser: (userId) => {
+        const key = `profile-storage-${userId}`;
+        const saved = localStorage.getItem(key);
+
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          set({
+            currentUserId: userId,
+            profiles: parsed.state.profiles ?? [],
+            activeProfileId: parsed.state.activeProfileId ?? null,
+            currentProfile: null,
+          });
+        } else {
+          set({
+            currentUserId: userId,
+            profiles: [],
+            activeProfileId: null,
+            currentProfile: null,
+          });
+        }
+      },
+
       profiles: [],
       currentProfile: null,
+
+      setIsKidsProfile: (isKids) =>
+        set((state) =>
+          state.currentProfile
+            ? {
+                currentProfile: {
+                  ...state.currentProfile,
+                  isKids,
+                },
+              }
+            : state
+        ),
 
       activeProfileId: null,
 
       // 아이디로 프로필 구분
       setActiveProfile: (id) =>
-        set({
-          activeProfileId: id,
+        set((state) => {
+          const next = { activeProfileId: id };
+
+          saveProfilesToUserStorage({
+            ...state,
+            ...next,
+          });
+
+          return next;
         }),
 
       resetCurrentProfile: () => set({ currentProfile: null }),
@@ -106,16 +171,32 @@ export const useProfileStore = create<ProfileState>()(
         }),
 
       addProfile: (profile) =>
-        set((state) => ({
-          profiles: [...state.profiles, profile],
-          currentProfile: null,
-        })),
+        set((state) => {
+          const newState = {
+            profiles: [...state.profiles, profile],
+            currentProfile: null,
+          };
+
+          saveProfilesToUserStorage({ ...state, ...newState });
+          return newState;
+        }),
 
       updateProfile: (id, data) =>
-        set((state) => ({
-          profiles: state.profiles.map((p) => (p.id === id ? { ...p, ...data } : p)),
-          currentProfile: null,
-        })),
+        set((state) => {
+          const nextProfiles = state.profiles.map((p) => (p.id === id ? { ...p, ...data } : p));
+
+          const next = {
+            profiles: nextProfiles,
+            currentProfile: null,
+          };
+
+          saveProfilesToUserStorage({
+            ...state,
+            ...next,
+          });
+
+          return next;
+        }),
 
       // 수정중인 프로필 변경사항
       setProfileName: (name) =>
@@ -156,6 +237,12 @@ export const useProfileStore = create<ProfileState>()(
         currentProfile: null,
       }),
     }),
-    { name: 'profile-storage' }
+    {
+      name: 'profile-storage-temp',
+      partialize: (state) => ({
+        profiles: state.profiles,
+        activeProfileId: state.activeProfileId,
+      }),
+    }
   )
 );
