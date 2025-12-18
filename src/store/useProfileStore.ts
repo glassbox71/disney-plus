@@ -66,7 +66,7 @@ export const useProfileStore = create<ProfileState>()(
           currentProfile: {
             id: crypto.randomUUID(),
             name: '',
-            image: '',
+            image: '/images/profile/profile1.png',
             contentLimit: 19,
             isKids: false,
             isDefault: false,

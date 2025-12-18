@@ -4,6 +4,7 @@
   background: #0A1A26;
   align-content: center;
   justify-items: center;
+  padding: 10rem;
   height: 100vh;
 
   .profileCreateWrap {
@@ -27,14 +28,10 @@
         padding: 1.2rem 1.6rem;
         width: 13rem;
         justify-content: center;
-
-        >button {
-          color: white;
-          font-size: 2rem;
-          font-weight: 500;
-          background: none;
-          cursor: pointer;
-        }
+        color: white;
+        font-size: 2rem;
+        font-weight: 500;
+        cursor: pointer;
       }
     }
   }

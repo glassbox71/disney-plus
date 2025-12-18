@@ -40,7 +40,7 @@ const ProfileDeletePopup = ({ onClose }: ProfileDeletePopupProps) => {
     <div className="profileDelPopupWrap">
       <div className="profileDelPopup">
         <div className="profileDelTitle">
-          <span>'계정 이름'</span>
+          <span>{`"${currentProfile?.name}" `}</span>
           <span>프로필을 삭제하시겠습니까?</span>
         </div>
         <div className="profileDelInfo">

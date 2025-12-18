@@ -6,7 +6,7 @@ interface AgeSettingPopupProps {
   onClose: () => void;
 }
 
-const ageLevels = [
+const allAgeLevels = [
   { label: 'ALL', value: 0 },
   { label: '5세 이상', value: 5 },
   { label: '7세 이상', value: 7 },
@@ -19,8 +19,15 @@ const AgeSettingPopup = ({ onClose }: AgeSettingPopupProps) => {
   const { currentProfile, setContentLimit } = useProfileStore();
   const [selectedAge, setSelectedAge] = useState<number>(19);
 
+  const isKidsProfile = currentProfile?.isKids === true;
+  const ageLevels = isKidsProfile ? allAgeLevels.filter((age) => age.value <= 12) : allAgeLevels;
+
   const handleSaveAge = () => {
-    setContentLimit(selectedAge);
+    if (isKidsProfile && selectedAge > 12) {
+      setContentLimit(12);
+    } else {
+      setContentLimit(selectedAge);
+    }
     onClose();
   };
 
@@ -36,12 +43,16 @@ const AgeSettingPopup = ({ onClose }: AgeSettingPopupProps) => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
-  
+
   useEffect(() => {
-    if (currentProfile) {
+    if (!currentProfile) return;
+
+    if (isKidsProfile && currentProfile.contentLimit > 12) {
+      setSelectedAge(12);
+    } else {
       setSelectedAge(currentProfile.contentLimit);
     }
-  }, [currentProfile]);
+  }, [currentProfile, isKidsProfile]);
 
   const progressPercent =
     (ageLevels.findIndex((a) => a.value === selectedAge) / (ageLevels.length - 1)) * 100;
@@ -66,19 +77,16 @@ const AgeSettingPopup = ({ onClose }: AgeSettingPopupProps) => {
               const isActive = age.value <= selectedAge;
 
               return (
-                <div className="progressbtn">
+                <div className="progressbtn" key={age.value}>
                   <button
-                    key={age.value}
                     className={`ageDot ${isActive ? 'active' : ''}`}
                     style={{ left: `${(i / (ageLevels.length - 1)) * 100}%` }}
-                    onClick={() => setSelectedAge(age.value)}></button>
+                    onClick={() => setSelectedAge(age.value)}
+                  />
                   <span>{age.label}</span>
                 </div>
               );
             })}
-            {/* {ageLevels.map((a) => (
-              <span>{a.label}</span>
-            ))} */}
           </div>
         </div>
         <div className="agesetPopupBtnWrap">

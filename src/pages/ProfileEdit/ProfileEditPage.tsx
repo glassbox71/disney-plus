@@ -7,17 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import ProfileDeletePopup from './components/ProfileDeletePopup';
 
 const ProfileEditPage = () => {
-  const { profiles, activeProfileId, currentProfile, selectProfile, updateProfile, deleteProfile } =
-    useProfileStore();
+  const { currentProfile, updateProfile } = useProfileStore();
   const navigate = useNavigate();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   useEffect(() => {
-    if (!activeProfileId) return;
-    const profile = profiles.find((p) => p.id === activeProfileId);
-    if (profile) selectProfile(profile);
-  }, [activeProfileId, profiles, selectProfile]);
+    if (!currentProfile) {
+      navigate('/profile/select');
+    }
+  }, [currentProfile, navigate]);
 
   const handleComplete = () => {
     if (!currentProfile) return;
@@ -27,7 +26,8 @@ const ProfileEditPage = () => {
       image: currentProfile.image,
       contentLimit: currentProfile.contentLimit,
     });
-    navigate('/');
+
+    navigate('/profile/select');
   };
 
   return (
