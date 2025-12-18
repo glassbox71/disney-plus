@@ -8,13 +8,11 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProfileStore } from '../../../store/useProfileStore';
 import { useWatchingStore } from '../../../store/useWatchingStore';
-import { useProfileStore } from '../../../store/useProfileStore';
 
 //TODO 현재 시청 중인 콘텐츠
 // ? 로그인 전에는 노출 불가
 const WatchList = () => {
   const { watching, onFetchWatching, onRemoveWatching } = useWatchingStore();
-  const { activeProfileId } = useProfileStore();
   const { profiles, activeProfileId } = useProfileStore();
   const activeProfile = profiles.find((profile) => profile.id === activeProfileId);
 
