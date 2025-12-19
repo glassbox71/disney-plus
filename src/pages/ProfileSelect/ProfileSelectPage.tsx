@@ -47,9 +47,9 @@ const ProfileSelectPage = () => {
                     onClick={() =>
                       mode === 'select' ? handleSelectProfile(profile) : handleSelectEdit(profile)
                     }>
-                    <Link to="/void" className="profileImgBox">
+                    <div className="profileImgBox">
                       <img src={profile.image} alt={profile.name} />
-                    </Link>
+                    </div>
                     <div className="profileTextBox">
                       <span>{profile.name}</span>
                     </div>

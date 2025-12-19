@@ -77,10 +77,19 @@ export const useProfileStore = create<ProfileState>()(
 
         if (saved) {
           const parsed = JSON.parse(saved);
+
+          const profiles = parsed.state.profiles ?? [];
+          let activeProfileId = parsed.state.activeProfileId ?? null;
+
+          if (!activeProfileId && profiles.length > 0) {
+            const defaultAdult = profiles.find((p: Profile) => p.id === 'default-adult');
+            activeProfileId = defaultAdult?.id ?? profiles[0].id;
+          }
+
           set({
             currentUserId: userId,
-            profiles: parsed.state.profiles ?? [],
-            activeProfileId: parsed.state.activeProfileId ?? null,
+            profiles,
+            activeProfileId,
             currentProfile: null,
           });
         } else {
@@ -142,25 +151,28 @@ export const useProfileStore = create<ProfileState>()(
         set((state) => {
           if (state.profiles.length > 0) return state;
 
+          const profiles = [
+            {
+              id: 'default-adult',
+              name: '계정 1',
+              image: '/images/profile/profile1.png',
+              contentLimit: 19,
+              isKids: false,
+              isDefault: true,
+            },
+            {
+              id: 'default-kid',
+              name: '키즈',
+              image: '/images/profile/kidsProfile_big.svg',
+              contentLimit: 0,
+              isKids: true,
+              isDefault: true,
+            },
+          ];
+
           return {
-            profiles: [
-              {
-                id: 'default-adult',
-                name: '계정 1',
-                image: '/images/profile/profile1.png',
-                contentLimit: 19,
-                isKids: false,
-                isDefault: true,
-              },
-              {
-                id: 'default-kid',
-                name: '키즈',
-                image: '/images/profile/kidsProfile_big.svg',
-                contentLimit: 0,
-                isKids: true,
-                isDefault: true,
-              },
-            ],
+            profiles,
+            activeProfileId: profiles[0].id,
           };
         }),
 

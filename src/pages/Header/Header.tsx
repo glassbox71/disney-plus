@@ -83,15 +83,12 @@ const Header = () => {
             <Link className="MyWish LinkBtn" to="/wishlist">
               내가 찜한 콘텐츠
             </Link>
-            <Link className="Kids LinkBtn" to="void">
+            {/* <Link className="Kids LinkBtn" to="void">
               키즈
-            </Link>
+            </Link> */}
             <div className="MyProfileDepth">
               <button className="MyProfile" onClick={toggleProfileDepth}>
-                <img
-                  src={activeProfile?.image || '/images/exProfile.png'}
-                  alt={activeProfile?.name || '프로필'}
-                />
+                <img src={activeProfile?.image} alt={activeProfile?.name || '프로필'} />
               </button>
               <ul
                 className={`ProfileDropdown ${isDepthOpen ? 'open' : ''}`}

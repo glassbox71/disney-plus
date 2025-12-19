@@ -22,13 +22,22 @@ import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
 import SearchPage from './pages/Search/SearchPage';
 import PlayerControls from './pages/VideoPlayer/PlayerControls';
 import WishlistPage from './pages/Wishlist/WishlistPage';
+import { useProfileStore } from './store/useProfileStore';
 
 function App() {
-  const { initAuth } = useAuthStore();
+  const { initAuth, userData } = useAuthStore();
+  const { initWithUser, initDefaultProfiles } = useProfileStore();
 
   useEffect(() => {
     initAuth(); // 앱 시작 시 로그인 상태 초기화
   }, [initAuth]);
+
+  useEffect(() => {
+    if (userData?.uid) {
+      initWithUser(userData.uid);
+      initDefaultProfiles();
+    }
+  }, [userData]);
 
   return (
     <div>
