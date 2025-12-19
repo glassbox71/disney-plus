@@ -70,24 +70,33 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
 
   // 사용자 별 플레이리스트 저장목록을 불러올 메서드
   onFetchWatching: async () => {
-    // 사용자가 로그인 상태인지 체크
     const user = useAuthStore.getState().user;
-    // 프로필 정보
     const activeProfileId = useProfileStore.getState().activeProfileId;
-    if (!user) return;
 
-    // firestore에서 가져오기
-    // users/{uid}/profiles/{activeProfileId}/watching컬렉션 가져오기
-    const snap = await getDocs(
-      collection(db, 'users', user.uid, 'profiles', activeProfileId, 'playlist')
-    );
-    // 가져온 문서르 배열로 변환시켜 watching에 저장하기
-    const data = snap.docs.map((doc) => doc.data() as WatchingItem);
+    // 1. 유저 정보가 없으면 중단
+    if (!user || !user.uid) {
+      console.log('유저 정보가 없습니다.');
+      return;
+    }
 
-    // 가져온 데이터 zustand 상태 변수에 넣기
-    set({ watching: data });
+    // 2. 중요: activeProfileId가 null이면 Firebase 경로를 만들 수 없으므로 중단
+    if (!activeProfileId) {
+      console.log('선택된 프로필이 없습니다. 데이터를 불러오지 않습니다.');
+      return;
+    }
 
-    console.log('가지고 오는 중');
+    try {
+      // 이제 모든 인자가 존재함이 보장됩니다.
+      const snap = await getDocs(
+        collection(db, 'users', user.uid, 'profiles', activeProfileId, 'playlist')
+      );
+
+      const data = snap.docs.map((doc) => doc.data() as WatchingItem);
+      set({ watching: data });
+      console.log('데이터 로드 완료');
+    } catch (error) {
+      console.error('데이터 로드 중 에러 발생:', error);
+    }
   },
 
   // 사용자가 변경되면 기존 플레이 리스트 리셋

@@ -24,10 +24,15 @@ const VideoPlayer = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
 
   // TODO 1. 탭 리스트 동적 생성 ---
-  const hasCollection =
-    (player.seasons && player.seasons.length > 0) || player.belongs_to_collection;
-  const tabList = ['추천 콘텐츠', '작품정보', '예고편'];
+  const hasRecommend = player.overview || player.production_companies || player.release_date;
+  const hasCollection = player.seasons;
+  const hasBelongs = player.belongs_to_collection;
+  const hasProduction = player.production_companies;
+  const tabList = ['추천 콘텐츠'];
+  if (hasRecommend) tabList.push('작품정보');
+  if (hasProduction) tabList.push('예고편');
   if (hasCollection) tabList.push('컬렉션');
+  if (hasBelongs) tabList.unshift('에피소드');
 
   // --- 비동기 데이터 호출 함수들 ---
   // TODO 2. 추천 콘텐츠 호출 (onFetchID 내부에서 호출됨)
@@ -82,6 +87,8 @@ const VideoPlayer = () => {
     const trailers = data.results.filter((v: any) => v.type === 'Trailer');
     setVideos(trailers.length > 0 ? trailers : data.results);
   };
+
+  console.log(id, type, player, player.episode_run_time);
 
   // --- Side Effects ---
   useEffect(() => {
@@ -195,6 +202,20 @@ const VideoPlayer = () => {
         </div>
 
         <div className="tab-content">
+          {activeTab === '에피소드' && (
+            <div className="recommend tab">
+              <ul className="collection-list grid col">
+                <li className="grid-item">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${player.belongs_to_collection.poster_path}`}
+                    alt="collection"
+                  />
+                  <p>{player.belongs_to_collection.name}</p>
+                </li>
+              </ul>
+            </div>
+          )}
+
           {/* 1. 추천 콘텐츠 */}
           {activeTab === '추천 콘텐츠' && (
             <div className="recommend tab">
@@ -281,7 +302,7 @@ const VideoPlayer = () => {
                   </li>
                 ))}
                 {/* 영화 시리즈 */}
-                {player.belongs_to_collection && (
+                {/* {player.belongs_to_collection && (
                   <li className="grid-item">
                     <img
                       src={`https://image.tmdb.org/t/p/w500/${player.belongs_to_collection.poster_path}`}
@@ -289,7 +310,7 @@ const VideoPlayer = () => {
                     />
                     <p>{player.belongs_to_collection.name}</p>
                   </li>
-                )}
+                )} */}
               </ul>
             </div>
           )}
