@@ -4,8 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import type {
   Genre,
   MediaDetail,
-  MovieDetail,
-  TVDetail,
   Video,
   CollectionMovie,
   Movie,
@@ -39,6 +37,7 @@ const VideoPlayer = () => {
   const { onToggleWish } = useWishStore();
   const navigate = useNavigate();
 
+  console.log('player', player);
   // TODO 탭 기능
   const generateTabList = () => {
     const tabs: string[] = [];
@@ -201,7 +200,7 @@ const VideoPlayer = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPlayer({});
+    setPlayer();
     setRecommendations([]);
     setVideos([]);
     setCollectionMovies([]);
@@ -308,33 +307,37 @@ const VideoPlayer = () => {
             alt={title}
           />
         )}
-        <div className="info-wrap">
-          <div className="logo">
-            {logo ? (
-              <img src={`https://image.tmdb.org/t/p/original/${logo}`} alt="logo" />
-            ) : (
-              <h1 className="logo-text">{title}</h1>
-            )}
-          </div>
-          <div className="flex">
-            <span className={`info1 age age${certification}`}></span>
-            <div className="innerFlex">
-              <span className="info2">{year}</span>
-              <span className="info3">{runTimeDisplay}</span>
-              <p className="info4">
-                {player?.genres?.map((genre: Genre) => (
-                  <span key={genre.id}>{genre.name}</span>
-                ))}
-              </p>
+        {!(player && player.id) ? (
+          <div className="skeleton"></div>
+        ) : (
+          <div className="info-wrap">
+            <div className="logo ">
+              {logo ? (
+                <img src={`https://image.tmdb.org/t/p/original/${logo}`} alt="logo" />
+              ) : (
+                <h1 className="logo-text">{title}</h1>
+              )}
+            </div>
+            <div className="flex">
+              <span className={`info1 age age${certification}`}></span>
+              <div className="innerFlex">
+                <span className="info2">{year}</span>
+                <span className="info3">{runTimeDisplay}</span>
+                <p className="info4">
+                  {player?.genres?.map((genre: Genre) => (
+                    <span key={genre.id}>{genre.name}</span>
+                  ))}
+                </p>
+              </div>
+            </div>
+            <div className="buttonWrap">
+              <button className="play" onClick={handleVideoOpen}>
+                지금 재생하기
+              </button>
+              <button className="MyWish LinkBtn" onClick={handleWishToggle}></button>
             </div>
           </div>
-          <div className="buttonWrap">
-            <button className="play" onClick={handleVideoOpen}>
-              지금 재생하기
-            </button>
-            <button className="MyWish LinkBtn" onClick={handleWishToggle}></button>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* 탭 메뉴 및 상세 콘텐츠 영역 */}
@@ -384,6 +387,9 @@ const VideoPlayer = () => {
                         <img
                           src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
                           alt={itemTitle}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
                         />
                         <p>{itemTitle}</p>
                       </Link>
@@ -436,6 +442,9 @@ const VideoPlayer = () => {
                         <iframe
                           src={`https://www.youtube.com/embed/${video.key}`}
                           title={video.name}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
                           allowFullScreen></iframe>
                       </div>
                       <p>{video.name}</p>
@@ -462,8 +471,10 @@ const VideoPlayer = () => {
                           <img
                             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                             alt={movie.title}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
                           />
-                          <p>{movie.title}</p>
                         </Link>
                       </li>
                     ))
