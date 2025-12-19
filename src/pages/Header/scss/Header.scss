@@ -35,6 +35,12 @@
   .Header-right {
     display: flex;
     align-items: center;
+
+    .onLogoutBtn {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 400;
+    }
   }
 
   .LinkBtn {

@@ -15,6 +15,9 @@ const Header = () => {
 
   const isProfilePage = path.startsWith('/profile');
   const isLoginPage = path.startsWith('/login');
+  const isSignupPage = path.startsWith('/signup');
+  const isSubPage = path.startsWith('/subscription');
+  const isPayPage = path.startsWith('/payment');
 
   const activeProfile = profiles.find((profile) => profile.id === activeProfileId);
 
@@ -38,7 +41,7 @@ const Header = () => {
     setIsDepthOpen(false);
   };
 
-  if (isProfilePage || isLoginPage) {
+  if (isProfilePage || isLoginPage || isSubPage || isPayPage) {
     return (
       <div className={`Header isprofile pullInner ${isScrolled ? 'active' : ''}`}>
         <div className="Header-left">
@@ -48,7 +51,9 @@ const Header = () => {
         </div>
 
         <div className="Header-right">
-          <button onClick={() => onLogout()}>로그아웃</button>
+          <button className="onLogoutBtn" onClick={() => onLogout()}>
+            로그아웃
+          </button>
         </div>
       </div>
     );
@@ -56,7 +61,7 @@ const Header = () => {
 
   return (
     <div className={`Header pullInner ${isScrolled ? 'active' : ''} `}>
-      {isLogin ? (
+      {isLogin && !isSignupPage ? (
         <>
           <div className="Header-left">
             <h1 className="logo">
@@ -83,9 +88,6 @@ const Header = () => {
             <Link className="MyWish LinkBtn" to="/wishlist">
               내가 찜한 콘텐츠
             </Link>
-            {/* <Link className="Kids LinkBtn" to="void">
-              키즈
-            </Link> */}
             <div className="MyProfileDepth">
               <button className="MyProfile" onClick={toggleProfileDepth}>
                 <img src={activeProfile?.image} alt={activeProfile?.name || '프로필'} />

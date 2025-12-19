@@ -23,6 +23,7 @@ const LoginForm = ({ onComplete }: LoginProps) => {
     e.preventDefault();
     try {
       await onLogin(email, password);
+      navigate('/auth/redirect');
       setEmail('');
       setPassword('');
       onComplete();

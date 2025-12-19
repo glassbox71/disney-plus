@@ -20,7 +20,11 @@ const ProfileSelectPage = () => {
 
   const handleSelectProfile = (profile: Profile) => {
     setActiveProfile(profile.id);
-    navigate('/');
+    if (profile.isKids) {
+      navigate('/kids');
+    } else {
+      navigate('/');
+    }
   };
 
   const handleSelectEdit = (profile: Profile) => {

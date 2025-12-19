@@ -12,6 +12,7 @@ import { auth, googleProvider, db } from '../api/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { AuthState, KidsModeInfo, UserData } from '../types/IAuth';
 import { useProfileStore } from './useProfileStore';
+import { useSubStore } from './useSubStore';
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
@@ -136,6 +137,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         isLogin: true,
       });
 
+      useSubStore.getState().fetchMembership(firebaseUser.uid);
       useProfileStore.getState().initWithUser(firebaseUser.uid);
 
       console.log('로그인 성공');

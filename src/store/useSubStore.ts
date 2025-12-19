@@ -9,6 +9,7 @@ interface MembershipState {
   setMembership: (plan: Membership) => void;
   saveMenbership: (plan: SubPlan) => Promise<void>;
   clearMembership: () => void;
+  fetchMembership: (uidParam?: string) => Promise<void>;
 }
 
 export const useSubStore = create<MembershipState>((set) => ({
@@ -46,7 +47,7 @@ export const useSubStore = create<MembershipState>((set) => ({
   },
 
   //TODO 새로고침 했을때 다시 firebase에서 전역으로 가져오기
-  fetchMembership: async (uidParam: string) => {
+  fetchMembership: async (uidParam?: string) => {
     const uid = uidParam ?? auth.currentUser?.uid;
     if (!uid) return;
 
