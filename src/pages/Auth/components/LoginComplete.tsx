@@ -6,7 +6,7 @@ const LoginComplete = () => {
   const navigate = useNavigate();
 
   const handleDisney = () => {
-    navigate('/');
+    navigate('/', { replace: true });
   };
   return (
     <div className="loginCompleteWrap">

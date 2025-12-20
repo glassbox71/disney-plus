@@ -13,6 +13,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { AuthState, KidsModeInfo, UserData } from '../types/IAuth';
 import { useProfileStore } from './useProfileStore';
 import { useSubStore } from './useSubStore';
+import { calculateAgeLimit } from '../utils/AgeCalculate';
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
@@ -50,7 +51,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ user: firebaseUser, userData, loading: false, isLogin: true });
 
       //Firestore에서 membership만 가져와서 subStore로 복구
-      // await useSubStore.getState().fetchMembership(firebaseUser.uid);
+      await useSubStore.getState().fetchMembership(firebaseUser.uid);
     });
   },
 
@@ -138,7 +139,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
 
       useSubStore.getState().fetchMembership(firebaseUser.uid);
-      useProfileStore.getState().initWithUser(firebaseUser.uid);
+
+      const profileStore = useProfileStore.getState();
+      profileStore.initWithUser(firebaseUser.uid);
+      profileStore.initDefaultProfiles();
+
+      if (userData?.kidsMode?.isActive) {
+        const { year, month, date } = userData.kidsMode;
+
+        if (year && month && date) {
+          const limit = calculateAgeLimit(year, month, date);
+
+          const kidsProfile = profileStore.profiles.find((p) => p.isKids);
+          if (kidsProfile) {
+            profileStore.updateProfile(kidsProfile.id, {
+              contentLimit: limit,
+            });
+            profileStore.setActiveProfile(kidsProfile.id);
+          }
+        }
+      }
 
       console.log('로그인 성공');
     } catch (err: any) {

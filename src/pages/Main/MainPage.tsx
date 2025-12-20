@@ -8,6 +8,8 @@ import GenreList from './components/GenreList';
 import SeasonList from './components/SeasonList';
 import Top10List from './components/Top10List';
 import LatestList from './components/LatestList';
+import { useProfileStore } from '../../store/useProfileStore';
+import KidsMainPage from '../KidsMain/KidsMainPage';
 
 // 12: "모험"
 // 14: "판타지"
@@ -29,6 +31,12 @@ import LatestList from './components/LatestList';
 // 10752: "전쟁"
 // 10770: "TV 영화"
 const MainPage = () => {
+  const { profiles, activeProfileId } = useProfileStore();
+  const activeProfile = profiles.find((p) => p.id === activeProfileId);
+
+  if (activeProfile?.isKids) {
+    return <KidsMainPage />;
+  }
   return (
     <section className="MainPage normal">
       <MainScreen />

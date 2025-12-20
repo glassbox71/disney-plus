@@ -29,6 +29,11 @@ const Header = () => {
     }
   };
 
+  const handleLogout = () => {
+    onLogout();
+    navigate('/login');
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
   }, []);
@@ -51,9 +56,15 @@ const Header = () => {
         </div>
 
         <div className="Header-right">
-          <button className="onLogoutBtn" onClick={() => onLogout()}>
-            로그아웃
-          </button>
+          {isLogin ? (
+            <button className="onLogoutBtn" onClick={handleLogout}>
+              로그아웃
+            </button>
+          ) : (
+            <Link to="/login" className="LinkBtn">
+              로그인
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -116,7 +127,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <button className="dropdownLink" onClick={() => onLogout()}>
+                  <button className="dropdownLink" onClick={handleLogout}>
                     로그아웃
                   </button>
                 </li>

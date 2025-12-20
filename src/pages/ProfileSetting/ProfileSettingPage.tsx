@@ -1,18 +1,27 @@
 import React from 'react';
 import ProfileSettingBox from './components/ProfileSettingBox';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './scss/ProfileSettingPage.scss';
 import ProfileTitle from './components/ProfileTitle';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useSubStore } from '../../store/useSubStore';
+import { useProfileStore } from '../../store/useProfileStore';
 
 const ProfileSettingPage = () => {
   const { userData } = useAuthStore();
   const { membership } = useSubStore();
+  const { activeProfileId, profiles } = useProfileStore();
+  const navigate = useNavigate();
 
-  const formatDate = (timestamp?: number) => {
-    if (!timestamp) return '-';
-    return new Date(timestamp).toLocaleDateString('ko-KR');
+  const handleComplete = () => {
+    const profile = profiles.find((p) => p.id === activeProfileId);
+
+    if (!profile) return;
+    if (profile.isKids) {
+      navigate('/kids');
+    } else {
+      navigate('/');
+    }
   };
 
   return (
@@ -21,7 +30,9 @@ const ProfileSettingPage = () => {
         <ProfileTitle profileTitle="계정 설정" />
         <div className="profileCreateBoxWrap">
           <ProfileSettingBox title="계정 정보">
-            <span className="profileCreateBox userEmail profileBoxSubTitle">{userData?.email}</span>
+            <div className="profileCreateBox">
+              <span className=" userEmail profileBoxSubTitle">{userData?.email}</span>
+            </div>
           </ProfileSettingBox>
 
           <ProfileSettingBox title="멤버십">
@@ -30,7 +41,7 @@ const ProfileSettingPage = () => {
                 {membership ? membership.plan.title : '멤버십 없음'}
               </span>
               <div className="fontSize14">
-                <span>갱신일</span>
+                <span>갱신일 : </span>
                 <span>
                   {membership?.startedAt
                     ? new Date(membership.startedAt).toLocaleDateString('ko-KR')
@@ -62,11 +73,9 @@ const ProfileSettingPage = () => {
           </ProfileSettingBox>
         </div>
 
-        <div className="profileCreateBtnwrap">
-          <Link to="/void">
-            <button className="profileCreateBtn">완료</button>
-          </Link>
-        </div>
+        <button onClick={handleComplete} className="profileCreateBtn">
+          완료
+        </button>
       </div>
     </div>
   );

@@ -4,10 +4,12 @@ import { useProfileStore, type Profile } from '../../store/useProfileStore';
 import './scss/ProfileSelectPage.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import ProfileSelectEdit from './components/ProfileSelectEdit';
+import { useSubStore } from '../../store/useSubStore';
 
 const ProfileSelectPage = () => {
   const { profiles, initDefaultProfiles, selectProfile, resetCurrentProfile, setActiveProfile } =
     useProfileStore();
+  const { membership } = useSubStore();
 
   const [mode, setMode] = useState<'select' | 'Edit'>('select');
 
@@ -16,6 +18,7 @@ const ProfileSelectPage = () => {
   useEffect(() => {
     initDefaultProfiles();
     console.log(profiles);
+    console.log(membership);
   }, []);
 
   const handleSelectProfile = (profile: Profile) => {

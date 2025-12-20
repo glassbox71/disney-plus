@@ -21,6 +21,12 @@
 
       .profileCreateBox {
         padding: 1.5rem 3rem;
+
+        .userEmail {
+          color: #ddd;
+          font-size: 1.8rem;
+          font-weight: 400;
+        }
       }
 
       .profileBoxContent {
@@ -72,27 +78,20 @@
       }
     }
 
-    .profileCreateBtnwrap {
-
-      >a {
-        display: flex;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.20);
-        background: rgba(255, 255, 255, 0.10);
-        backdrop-filter: blur(12px);
-        align-items: center;
-        padding: 1.2rem 1.6rem;
-        width: 13rem;
-        justify-content: center;
-
-        .profileCreateBtn {
-          color: white;
-          font-size: 2rem;
-          font-weight: 500;
-          background: none;
-          cursor: pointer;
-        }
-      }
+    .profileCreateBtn {
+      color: white;
+      font-size: 2rem;
+      font-weight: 500;
+      display: flex;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      background: rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      padding: 1.2rem 1.6rem;
+      width: 13rem;
+      justify-content: center;
+      cursor: pointer;
     }
   }
 }

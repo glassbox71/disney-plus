@@ -21,7 +21,7 @@ const PaymentRadioBtn = ({ plan }: payRadioProps) => {
                 <input type="radio" checked={activeRadio === true} onChange={handleRadio} />
             </div>
             <div className={`radioBtn ${activeRadio ? "" : "active"}`}>
-                <p>월 {plan.year_price}원</p>
+                <p>연 {plan.year_price}원</p>
                 <input type="radio" checked={activeRadio === false} onChange={handleRadio} />
                 <div className="salePer">
                     <p>16% 이상 할인된 가격</p>
