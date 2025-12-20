@@ -21,7 +21,8 @@ export interface WatchingItem {
   backdrop_path: string;
   poster_path: string;
   currentTime?: number; // 현재 재생 위치 (초)
-  dutation?: number; // 영상 전체 길이 (초)
+  duration?: number; // 영상 전체 길이 (초)
+  updateAt: number;
 }
 
 // 찜목록 타입
