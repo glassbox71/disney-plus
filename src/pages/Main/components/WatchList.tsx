@@ -3,78 +3,141 @@ import 'swiper/swiper.css';
 import '../scss/movieList.scss';
 import { Pagination } from 'swiper/modules';
 import HeaderTitle from './HeaderTitle';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useProfileStore } from '../../../store/useProfileStore';
 import { useWatchingStore } from '../../../store/useWatchingStore';
+import { useMovieStore } from '../../../store/useMovieStore';
+import { useTvStore } from '../../../store/useTvStore';
+import VideoPopup from './VideoPopup';
+
+const generateProgress = (id: number): number => {
+  const seed = id * 9301 + 49297;
+  const random = (seed % 233280) / 233280;
+  return Math.floor(random * (98 - 5 + 1)) + 5;
+};
 
 const WatchList = () => {
-  const { watching, onFetchWatching, onRemoveWatching } = useWatchingStore();
+  const { watching, onFetchWatching } = useWatchingStore();
   const { profiles, activeProfileId } = useProfileStore();
+  const { onFetchVideo } = useMovieStore();
+  const { onFetchTvVideo } = useTvStore();
 
-  // 현재 활성화된 프로필 찾기
+  const [youtubeKey, setYoutubeKey] = useState('');
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
+
   const activeProfile = profiles.find((profile) => profile.id === activeProfileId);
 
-  // 프로필이 변경되거나 컴포넌트가 마운트될 때 시청 목록 로드
   useEffect(() => {
     if (activeProfileId) {
       onFetchWatching();
     }
-  }, [activeProfileId]);
+  }, [activeProfileId, onFetchWatching]);
 
-  // 시청 중인 콘텐츠가 없으면 섹션 자체를 숨김
-  if (watching.length === 0) return null;
+  if (!watching || watching.length === 0) return null;
+
+  const handleMouseEnter = (id: number, mediaType: string) => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+
+    hoverTimer.current = setTimeout(async () => {
+      try {
+        let videos = [];
+        // mediaType이 'tv'나 'series'로 들어올 경우를 모두 대비
+        if (mediaType === 'movie') {
+          videos = await onFetchVideo(id);
+        } else {
+          videos = await onFetchTvVideo(id);
+        }
+
+        const trailer = videos?.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
+
+        if (trailer) {
+          setYoutubeKey(trailer.key);
+        } else {
+          setYoutubeKey(''); // 영상 없으면 빈값
+        }
+
+        // 영상 유무와 상관없이 팝업을 띄우기 위해 ID 설정
+        setHoveredId(id);
+      } catch (error) {
+        console.error('비디오 로드 실패:', error);
+        setYoutubeKey('');
+        setHoveredId(id);
+      }
+    }, 400);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setHoveredId(null);
+    setYoutubeKey('');
+  };
 
   return (
-    <section className="WatchList movieList pullInner marginUp">
+    <section className="WatchList movieList pullInner marginUp" style={{ position: 'relative' }}>
       <HeaderTitle
         mainTitle={
           activeProfile ? `${activeProfile.name}님이 시청 중인 콘텐츠` : '시청 중인 콘텐츠'
         }
       />
+
       <Swiper
         slidesPerView={4.3}
         spaceBetween={20}
-        pagination={{
-          clickable: true,
-        }}
+        pagination={{ clickable: true }}
         modules={[Pagination]}
-        className="mySwiper">
+        className="mySwiper"
+        style={{ overflow: 'visible' }}>
         {watching.map((el) => {
-          // ⭐ 중요: el.type 대신 el.media_type을 사용합니다.
-          const currentType = el.media_type || 'movie';
+          // [중요] 상세페이지 경로를 위한 미디어 타입 변환
+          // TMDB 데이터가 'tv'로 오면 'tv'를 유지하거나, 프로젝트 구조상 'series'가 필요하면 여기서 교정
+          const rawType = el.media_type || 'movie';
+          const mediaTypeForPopup = rawType === 'series' ? 'tv' : rawType;
+
+          const title = el.title || el.name;
+          const progress = generateProgress(el.id);
+          const isHovered = hoveredId === el.id;
 
           return (
-            <SwiperSlide key={`${currentType}-${el.id}`}>
-              {/* 비디오 플레이어로 이동하는 경로 수정 */}
-              <Link className="flex" to={`/play/${currentType}/${el.id}/video`}>
-                <div className="movieThumbnail row">
+            <SwiperSlide
+              key={`${rawType}-${el.id}`}
+              style={{ zIndex: isHovered ? 100 : 1, overflow: 'visible' }}>
+              <div className="flex" onMouseLeave={handleMouseLeave}>
+                <div
+                  className="movieThumbnail row"
+                  onMouseEnter={() => handleMouseEnter(el.id, mediaTypeForPopup)}
+                  style={{ position: 'relative', cursor: 'pointer' }}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${el.backdrop_path}`}
-                    alt={`${el.title} 썸네일`}
-                    // 이미지 로드 실패 시 대체 이미지 처리 (선택사항)
+                    alt={`${title} 썸네일`}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = '/images/no-image.png';
                     }}
                   />
-                  <span className="movieTitle">{el.title}</span>
+                  <span className="movieTitle">{title}</span>
 
-                  {/* 삭제 버튼 추가 시 활용 (필요할 경우 주석 해제)
-                  <button 
-                    className="removeBtn" 
-                    onClick={(e) => {
-                      e.preventDefault(); // Link 이동 방지
-                      onRemoveWatching(el.id, currentType);
-                    }}
-                  >✕</button> 
-                  */}
+                  <div className="progressBar">
+                    <div className="now" style={{ width: `${progress}%` }}></div>
+                  </div>
                 </div>
 
-                {/* 진행 바 (WatchBar 값이 있는 경우) */}
-                <div className="progressBar">
-                  <div className="now" style={{ width: `${el.WatchBar || 0}%` }}></div>
-                </div>
-              </Link>
+                {/* youtubeKey가 있거나 빈 문자열("")이어도 hoveredId만 맞으면 팝업 노출 */}
+                {isHovered && (
+                  <div
+                    className="video-popup-container"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}>
+                    <VideoPopup
+                      youtubeKey={youtubeKey}
+                      title={title || '제목 없음'}
+                      id={el.id}
+                      mediaType={mediaTypeForPopup as 'movie' | 'tv'}
+                      posterPath={el.poster_path || ''}
+                      backdropPath={el.backdrop_path}
+                      onClose={handleMouseLeave}
+                    />
+                  </div>
+                )}
+              </div>
             </SwiperSlide>
           );
         })}
