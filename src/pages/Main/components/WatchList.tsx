@@ -27,8 +27,8 @@ const WatchList = () => {
   const [popupPos, setPopupPos] = useState({ top: 0, left: 0, width: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
-  const closeTimer = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeProfile = profiles.find((p) => p.id === activeProfileId);
 
@@ -131,9 +131,10 @@ const WatchList = () => {
                   }}
                 />
                 <span className="movieTitle">{title}</span>
-                <div className="progressBar">
-                  <div className="now" style={{ width: `${progress}%` }} />
-                </div>
+              </div>
+              {/* 재생바 */}
+              <div className="progressBar">
+                <div className="now" style={{ width: `${progress}%` }} />
               </div>
             </SwiperSlide>
           );

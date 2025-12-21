@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 import '../../Main/scss/movieList.scss';
 import { Pagination } from 'swiper/modules';
-import { Link, useMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import HeaderTitle from '../../Main/components/HeaderTitle';
 import VideoPopup from '../../Main/components/VideoPopup';
 
@@ -26,8 +26,8 @@ const WatchList = () => {
   const [popupPos, setPopupPos] = useState({ top: 0, left: 0, width: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
-  const closeTimer = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     onFetchWatching();
@@ -114,23 +114,21 @@ const WatchList = () => {
           return (
             <SwiperSlide key={`${el.id}-${idx}`} style={{ overflow: 'visible' }}>
               <div className="hover-target" onMouseEnter={(e) => handleMouseEnter(e, el)}>
-                <Link to={`/play/${mediaType}/${el.id}`} style={{ display: 'block' }}>
-                  <div className={`movieThumbnail row ${isKidsPath ? 'kids' : ''}`}>
-                    <img
-                      src={
-                        el.backdrop_path
-                          ? `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`
-                          : '/images/no-image.png'
-                      }
-                      alt={el.title || el.name}
-                    />
-                    <span className="movieTitle">{el.title || el.name}</span>
-                  </div>
-
-                  <div className="progressBar">
-                    <div className="now" style={{ width: `${el.progress || 30}%` }} />
-                  </div>
-                </Link>
+                <div className={`movieThumbnail row ${isKidsPath ? 'kids' : ''}`}>
+                  <img
+                    src={
+                      el.backdrop_path
+                        ? `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`
+                        : '/images/no-image.png'
+                    }
+                    alt={el.title || el.name}
+                  />
+                  <span className="movieTitle">{el.title || el.name}</span>
+                </div>
+              </div>
+              {/* 재생바 */}
+              <div className="progressBar">
+                <div className="now" style={{ width: `${progress}%` }} />
               </div>
             </SwiperSlide>
           );
