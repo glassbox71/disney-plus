@@ -14,13 +14,18 @@ const GenreSelect = ({ mode }: GenreSelectProps) => {
   const [isOpenGenre, setIsOpenGenre] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState('장르');
   const { genreList } = useGenreStore();
-  const { setSelectedFilter } = useSearchStore();
+  const { setSelectedFilter, onSearch } = useSearchStore();
 
   // mode에 맞는 장르만 필터
   const filteredGenres = genreList.filter((genre) => genre.type === mode);
 
   const handleSelectGenres = (genre: any) => {
+    // 1. 스토어에 필터 객체 { type, value, genreId } 전체 저장
     setSelectedFilter(genre.filter);
+
+    // 2. 장르/나라의 타이틀을 검색어로 사용하여 onSearch 트리거
+    onSearch(genre.title);
+
     setSelectedGenre(genre.title);
     setIsOpenGenre(false);
   };

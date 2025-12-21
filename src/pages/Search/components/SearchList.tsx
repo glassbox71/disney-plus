@@ -7,12 +7,12 @@ const SearchList = () => {
   const { searchResults, searchWord } = useSearchStore();
   const { mergedList, setLocalList } = useContentMatchStore();
 
-  // 1. 검색 결과가 변경될 때 매칭 스토어에 데이터 주입
+  // 검색 결과가 변경될 때 매칭 스토어에 데이터 주입
   useEffect(() => {
     setLocalList(searchResults);
   }, [searchResults, setLocalList]);
 
-  // 2. ⭐ 핵심: 매칭된 결과(mergedList)가 비어있다면 원본 검색 결과(searchResults)를 가공해서 사용
+  // 핵심: 매칭된 결과(mergedList)가 비어있다면 원본 검색 결과(searchResults)를 가공해서 사용
   // 이렇게 하면 TMDb 매칭 데이터가 없더라도 화면에 로컬 데이터가 즉시 나타납니다.
   const displayResults = useMemo(() => {
     if (mergedList.length > 0) return mergedList;

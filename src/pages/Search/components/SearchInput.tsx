@@ -3,7 +3,11 @@ import { useSearchStore } from '../../../store/useSearchStore';
 
 const SearchInput = () => {
   const [value, setValue] = useState('');
-  const { onSearch, clearSearch } = useSearchStore();
+  const { onSearch, clearSearch, searchWord } = useSearchStore();
+
+  useEffect(() => {
+    setValue(searchWord);
+  }, [searchWord]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
