@@ -36,4 +36,14 @@ export const useTvStore = create<ITVStore>((set, get) => ({
     const resData = data.results;
     set({ TopTV: resData });
   },
+  // TODO 시리즈 tv 영상을 불러올 메서드
+  onFetchTvVideo: async (id: string) => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${API_KEY}&language=en-US`
+    );
+    const data = await res.json();
+    console.log(data);
+    set({ videos: data.results });
+    return data.results;
+  },
 }));
