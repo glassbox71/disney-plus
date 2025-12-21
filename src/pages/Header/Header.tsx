@@ -94,7 +94,7 @@ const Header = () => {
               </nav>
             </div>
             <div className="Header-right">
-              <button className="search" onClick={() => navigate('/search')}>
+              <button className="search" onClick={() => navigate('/kids/search')}>
                 <img src="/icon/search.svg" alt="검색 아이콘" />
               </button>
               <Link className="MyWish LinkBtn" to="/wishlist">

@@ -27,6 +27,7 @@ import AuthRedirect from './pages/Auth/components/AuthRedirect';
 import KidsDetail from './pages/KidsMain/components/KidsDetail';
 import KidsMovie from './pages/KidsMain/KidsMovie';
 import KidsSeries from './pages/KidsMain/KidsSeries';
+import KidsSearch from './pages/KidsMain/components/KidsSearch';
 
 function App() {
   const { initAuth, userData } = useAuthStore();
@@ -69,6 +70,7 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/auth/redirect" element={<AuthRedirect />} />
+        <Route path='/kids/search' element={<KidsSearch />} />
       </Routes>
       <Footer />
     </div>
