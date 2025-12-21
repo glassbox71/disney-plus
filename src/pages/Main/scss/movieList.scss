@@ -7,6 +7,18 @@
 .TvKeywordList {
   padding-top: 80px;
 }
+.flexWrap {
+  position: relative;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
 
 .movieList {
   padding-left: 4%;
@@ -14,6 +26,31 @@
   border: 1px solid yellow;
   max-width: 1920px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+
+  // 호버 시 z-index 상승
+  &:hover {
+    z-index: 100;
+  }
+
+  .mySwiper {
+    overflow: visible !important;
+
+    .swiper-wrapper {
+      overflow: visible !important;
+    }
+
+    .swiper-slide {
+      overflow: visible !important;
+      z-index: 1;
+
+      // 호버 시 해당 슬라이드만 z-index 상승
+      &:hover {
+        z-index: 50;
+      }
+    }
+  }
 
   a {
     width: 100%;
@@ -24,6 +61,15 @@
       gap: 12px;
       flex-direction: column;
     }
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
   }
 
   .movieThumbnail {
@@ -71,8 +117,8 @@
   }
 
   .progressBar {
-    width: 72%;
-    aspect-ratio: 260/4;
+    width: 100%;
+    height: 4px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.3);
     position: relative;
@@ -82,9 +128,32 @@
       background: #33ddff;
       position: absolute;
       top: 0;
-      height: max-content;
-      display: inline-block;
-      color: transparent;
+      left: 0;
+      height: 100%;
+      display: block;
     }
   }
+}
+// VideoPopup을 감싸는 컨테이너 (각 슬라이드 내부)
+.video-popup-container {
+  position: absolute;
+  top: 0;
+  left: 50%; // 중앙 기준 배치
+  transform: translateX(-50%); // 중앙 정렬
+  width: 120%; // 썸네일보다 약간 크게 설정
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+// 만약 가로 스크롤이 여전히 생긴다면
+// 첫 번째 슬라이드와 마지막 슬라이드에서 팝업이 화면 밖으로 나가는 것입니다.
+.SwiperSlide:first-child .video-popup-container {
+  left: 0;
+  transform: translateX(0); // 왼쪽 끝 고정
+}
+
+.SwiperSlide:last-child .video-popup-container {
+  left: auto;
+  right: 0;
+  transform: translateX(0); // 오른쪽 끝 고정
 }
