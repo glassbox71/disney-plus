@@ -3,11 +3,11 @@ import { create } from 'zustand';
 export const useGenreStore = create(() => ({
   genreList: [
     // ===== 1열 =====
-    {
-      type: 'normal',
-      title: '한국콘텐츠',
-      filter: { type: 'country', value: 'KR' },
-    },
+    // {
+    //   type: 'normal',
+    //   title: '한국콘텐츠',
+    //   filter: { type: 'country', value: 'KR' },
+    // },
     {
       type: 'normal',
       title: '코미디',
@@ -19,11 +19,11 @@ export const useGenreStore = create(() => ({
       filter: { type: 'genre', value: 'SF & 판타지', genreId: [878, 14] },
     },
     // ===== 2열 =====
-    {
-      type: 'normal',
-      title: '미국 콘텐츠',
-      filter: { type: 'country', value: 'US' },
-    },
+    // {
+    //   type: 'normal',
+    //   title: '미국 콘텐츠',
+    //   filter: { type: 'country', value: 'US' },
+    // },
     {
       type: 'normal',
       title: '로맨스',
@@ -35,11 +35,11 @@ export const useGenreStore = create(() => ({
       filter: { type: 'genre', value: '스릴러 & 호러', genreId: [53, 27] },
     },
     // ===== 3열 =====
-    {
-      type: 'normal',
-      title: '영국 콘텐츠',
-      filter: { type: 'country', value: 'GB' },
-    },
+    // {
+    //   type: 'normal',
+    //   title: '영국 콘텐츠',
+    //   filter: { type: 'country', value: 'GB' },
+    // },
     {
       type: 'normal',
       title: '드라마',
@@ -52,11 +52,11 @@ export const useGenreStore = create(() => ({
     },
 
     // ===== 4열 =====
-    {
-      type: 'normal',
-      title: '아시아 콘텐츠',
-      filter: { type: 'region', value: ['KR', 'JP', 'CN', 'TH'] },
-    },
+    // {
+    //   type: 'normal',
+    //   title: '아시아 콘텐츠',
+    //   filter: { type: 'region', value: ['KR', 'JP', 'CN', 'TH'] },
+    // },
     {
       type: 'normal',
       title: '액션',
