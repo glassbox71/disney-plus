@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProfileSettingBox from './components/ProfileSettingBox';
 import { Link, useNavigate } from 'react-router-dom';
 import './scss/ProfileSettingPage.scss';
@@ -10,8 +10,9 @@ import { useProfileStore } from '../../store/useProfileStore';
 const ProfileSettingPage = () => {
   const { userData } = useAuthStore();
   const { membership } = useSubStore();
-  const { activeProfileId, profiles } = useProfileStore();
+  const { activeProfileId, profiles, autoKidsLogin, setAutoKidsLogin } = useProfileStore();
   const navigate = useNavigate();
+  const [isActive, setIsActive] = useState();
 
   const handleComplete = () => {
     const profile = profiles.find((p) => p.id === activeProfileId);
@@ -63,11 +64,13 @@ const ProfileSettingPage = () => {
           <ProfileSettingBox title="기타 설정">
             <div className="profileCreateBox profileSetting profileBoxContent">
               <div>
-                <span className="profileBoxSubTitle">프로필 생성 제한</span>
-                <span></span>
+                <span className="profileBoxSubTitle">키즈 프로필을 기본 프로필로 설정</span>
+                <button
+                  className={`toggleBg ${autoKidsLogin ? 'active' : ''}`}
+                  onClick={() => setAutoKidsLogin(!autoKidsLogin)}></button>
               </div>
               <span className="fontSize14">
-                제한 시 새로운 프로필 생성하려면 계정 비밀번호를 입력해야 합니다.
+                키즈 프로필을 기본으로 설정하면 접속 시 자동으로 키즈 프로필로 들어갑니다.
               </span>
             </div>
           </ProfileSettingBox>

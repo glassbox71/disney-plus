@@ -11,6 +11,7 @@ const saveProfilesToUserStorage = (state: ProfileState) => {
       state: {
         profiles: state.profiles,
         activeProfileId: state.activeProfileId,
+        autoKidsLogin: state.autoKidsLogin,
       },
     })
   );
@@ -37,6 +38,10 @@ interface ProfileState {
 
   // 키즈모드인가? 아닌가? 체크하는 메서드
   setIsKidsProfile: (isKids: boolean) => void;
+
+  // 어떤 프로필을 사용해도 키즈모드로 로그인 되도록
+  autoKidsLogin: boolean;
+  setAutoKidsLogin: (value: boolean) => void;
 
   // 현재 내가 선택한 들어간 프로필 시청중인거
   activeProfileId: string | null;
@@ -81,8 +86,14 @@ export const useProfileStore = create<ProfileState>()(
 
           const profiles = parsed.state.profiles ?? [];
           let activeProfileId = parsed.state.activeProfileId ?? null;
+          const autoKidsLogin = parsed.state.autoKidsLogin ?? false;
 
-          if (!activeProfileId && profiles.length > 0) {
+          if (autoKidsLogin) {
+            const kidsProfile = profiles.find((p) => p.isKids);
+            if (kidsProfile) {
+              activeProfileId = kidsProfile.id;
+            }
+          } else if (!activeProfileId && profiles.length > 0) {
             const defaultAdult = profiles.find((p: Profile) => p.id === 'default-adult');
             activeProfileId = defaultAdult?.id ?? profiles[0].id;
           }
@@ -91,6 +102,7 @@ export const useProfileStore = create<ProfileState>()(
             currentUserId: userId,
             profiles,
             activeProfileId,
+            autoKidsLogin,
             currentProfile: null,
           });
         } else {
@@ -99,6 +111,7 @@ export const useProfileStore = create<ProfileState>()(
             profiles: [],
             activeProfileId: null,
             currentProfile: null,
+            autoKidsLogin: false,
           });
         }
       },
@@ -117,6 +130,20 @@ export const useProfileStore = create<ProfileState>()(
               }
             : state
         ),
+
+      autoKidsLogin: false,
+
+      setAutoKidsLogin: (value) =>
+        set((state) => {
+          const next = { autoKidsLogin: value };
+
+          saveProfilesToUserStorage({
+            ...state,
+            ...next,
+          });
+
+          return next;
+        }),
 
       activeProfileId: null,
 
@@ -239,11 +266,11 @@ export const useProfileStore = create<ProfileState>()(
         set((state) =>
           state.currentProfile
             ? {
-              currentProfile: {
-                ...state.currentProfile,
-                contentLimit: limit,
-              },
-            }
+                currentProfile: {
+                  ...state.currentProfile,
+                  contentLimit: limit,
+                },
+              }
             : state
         ),
 

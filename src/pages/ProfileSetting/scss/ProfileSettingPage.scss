@@ -75,6 +75,46 @@
           font-size: 1.8rem;
           font-weight: 400;
         }
+
+        &.profileSetting {
+
+          >div {
+            display: flex;
+            justify-content: space-between;
+
+            .toggleBg {
+              position: relative;
+              background: #ddd;
+              width: 40px;
+              height: 20px;
+              padding: 2px;
+              border-radius: 50px;
+              cursor: pointer;
+
+              &::after {
+                content: '';
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: #fff;
+                transition: left 0.3s;
+              }
+
+              &.active {
+                background: #33ddff;
+
+                &::after {
+                  left: calc(100% - 44%);
+                }
+              }
+            }
+          }
+        }
+
+
       }
     }
 
