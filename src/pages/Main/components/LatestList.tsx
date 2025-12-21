@@ -16,7 +16,7 @@ const LatestList = ({ title }: title) => {
   const [popupData, setPopupData] = useState<any>(null); // 현재 팝업에 띄울 데이터 객체
   const [popupPos, setPopupPos] = useState({ top: 0, left: 0, width: 0 }); // 위치 상태
 
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (Latest.length === 0) onfetchLatest();

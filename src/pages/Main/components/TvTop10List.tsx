@@ -20,7 +20,7 @@ const TvTop10List = ({ title }: title) => {
   const [popupPos, setPopupPos] = useState({ top: 0, left: 0, width: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (TopTV.length === 0) {
@@ -60,7 +60,7 @@ const TvTop10List = ({ title }: title) => {
         } else {
           setYoutubeKey('');
         }
-      } catch (error) {
+      } catch (error: any) {
         setYoutubeKey('');
       }
     }, 400);

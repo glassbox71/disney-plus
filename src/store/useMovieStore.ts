@@ -98,25 +98,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     set({ Top: TopMOV });
   },
 
-  //TODO TOP10 TV
-  onFetchTOPTV: async () => {
-    const genreMap = await get().getGenreMap();
-    const resTOP = await fetch(
-      `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
-    );
-    const data = await resTOP.json();
-    const dataTOP = data.results;
-
-    const TopMOV = dataTOP.map((mov: Movie) => {
-      const genreNames = (mov.genre_ids || [])
-        .map((id: number) => genreMap[id])
-        .filter((name: string): name is string => !!name);
-      return { ...mov, genreNames };
-    });
-
-    set({ TopTV: TopMOV });
-  },
-
   //TODO 최신개봉작
   onfetchLatest: async () => {
     const resLatest = await fetch(

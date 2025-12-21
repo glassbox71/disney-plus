@@ -25,7 +25,7 @@ const SeasonList = () => {
   const [popupPos, setPopupPos] = useState({ top: 0, left: 0, width: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 현재 날짜 및 시즌 계산 로직 (기존 유지)
   const { nowDayNum } = useMemo(() => {

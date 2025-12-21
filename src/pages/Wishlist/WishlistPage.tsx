@@ -1,9 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useWishStore } from '../../store/useWishStore';
 import './scss/WishlistPage.scss';
 import { useEffect, useMemo, useState } from 'react';
 import { useProfileStore } from '../../store/useProfileStore';
-import FilterSelect from './components/FliterSelect';
+import FilterSelect from './components/FilterSelect';
 
 const WishlistPage = () => {
   const { wishlist, onToggleWish, onFetchWish } = useWishStore();

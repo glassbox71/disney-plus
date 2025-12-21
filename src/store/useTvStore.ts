@@ -2,10 +2,11 @@ import { create } from 'zustand';
 import type { ITVStore } from '../types/ITV';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export const useTvStore = create<ITVStore>((set, get) => ({
+export const useTvStore = create<ITVStore>((set) => ({
   UpComingTv: [],
   RatedTv: [],
   TopTV: [],
+  videos: [],
 
   //TODO TV 공개 예정
   onFetchNewTV: async () => {

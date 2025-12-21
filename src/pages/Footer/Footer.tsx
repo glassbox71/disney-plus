@@ -1,15 +1,10 @@
-import { useState } from 'react';
 import './scss/Footer.scss';
 import { useMatch } from 'react-router-dom';
 
-// ${onKidsMode ? 'kids' : 'normal'}
-
 const Footer = () => {
-  // const [onKidsMode] = useState('kids');
-
-  const isKids = !!useMatch("/kids/*");
+  const isKids = !!useMatch('/kids/*');
   return (
-    <div className={`footer normal ${isKids ? "kidsMode" : ""}`}>
+    <div className={`footer normal ${isKids ? 'kidsMode' : ''}`}>
       <div className="inner">
         <div className="footerLogo">
           <img src="/images/logo.svg" alt="footer_logo" />

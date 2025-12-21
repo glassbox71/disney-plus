@@ -5,10 +5,12 @@ const SearchInput = () => {
   const [value, setValue] = useState('');
   const { onSearch, clearSearch, searchWord } = useSearchStore();
 
+  // store의 searchWord와 input 동기화
   useEffect(() => {
     setValue(searchWord);
   }, [searchWord]);
 
+  // debounce 검색
   useEffect(() => {
     const timer = setTimeout(() => {
       if (value.trim()) {
@@ -16,27 +18,27 @@ const SearchInput = () => {
       } else {
         clearSearch();
       }
-    });
-  }, [onSearch]);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [value, onSearch, clearSearch]);
 
   const handleSearch = () => {
-    onSearch(value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (value.trim()) {
       onSearch(value);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = e.target.value;
-    setValue(v);
-
-    if (!v.trim()) {
-      clearSearch();
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
     }
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
   return (
     <div className="searchInputWrap">
       <label>
