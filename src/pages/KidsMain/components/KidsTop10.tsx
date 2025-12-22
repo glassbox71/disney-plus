@@ -1,25 +1,21 @@
+import '../scss/KidsMovieList.scss';
+import '../../Main/scss/Top10List.scss';
 import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.css';
-import { Pagination } from 'swiper/modules';
 import { Link, useMatch } from 'react-router-dom';
+import type { title } from '../../../types/IMovie';
 import HeaderTitle from '../../Main/components/HeaderTitle';
-import VideoPopup from '../../Main/components/VideoPopup';
-import { useMovieStore } from '../../../store/useMovieStore';
-import { useTvStore } from '../../../store/useTvStore';
-import { useRecommendationStore } from '../../../store/useRecommendationStore';
-import { useProfileStore } from '../../../store/useProfileStore';
-import '../scss/KidsMovieList.scss';
+import { useKidsMoiveStore } from '../../../store/useKidsMovieStore';
+import { useMovieStore } from '../../../store/useMovieStore'; // 비디오 페칭용
+import VideoPopup from '../../Main/components/VideoPopup'; // 경로 확인 필요
+import 'swiper/swiper.css';
 
-const RecommendedForYou = () => {
-  const { onFetchVideo } = useMovieStore();
-  const { onFetchTvVideo } = useTvStore();
-  const { recommendedItems, isLoading, onGenerateRecommendations } = useRecommendationStore();
-  const { activeProfile } = useProfileStore();
+const KidsTop10 = ({ title }: title) => {
+  const kids = useMatch('/kids/*');
+  const { onFetchTop10Movies, kidsTopMovie } = useKidsMoiveStore();
+  const { onFetchVideo } = useMovieStore(); // 영화 비디오 가져오기 함수
 
-  // 1. 현재 키즈 경로(/kids/*)에 있는지 확인
-  const isKidsPath = useMatch('/kids/*');
-
+  // --- 팝업 상태 관리 ---
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [youtubeKey, setYoutubeKey] = useState('');
   const [popupData, setPopupData] = useState<any>(null);
@@ -29,13 +25,12 @@ const RecommendedForYou = () => {
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    onGenerateRecommendations();
-  }, [onGenerateRecommendations]);
+    if (kidsTopMovie.length === 0) {
+      onFetchTop10Movies();
+    }
+  }, [kidsTopMovie, onFetchTop10Movies]);
 
-  // 키즈 모드에서도 추천 스토어가 이미 필터링된 데이터를 제공하므로
-  // 추가 필터링 없이 그대로 사용
-  const displayItems = recommendedItems;
-
+  // --- 화면 경계 인식 마우스 핸들러 ---
   const handleMouseEnter = (e: React.MouseEvent, el: any) => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
 
@@ -43,10 +38,14 @@ const RecommendedForYou = () => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     const windowWidth = window.innerWidth;
 
+    // 1. 기본 왼쪽 시작점 계산
     let leftPos = rect.left - (containerRect?.left || 0);
-    const popupWidth = rect.width * 1.2;
 
-    if (rect.left + popupWidth > windowWidth - 20) {
+    // 2. 팝업 예상 너비 (아이템의 1.1배 정도로 설정)
+    const popupWidth = rect.width * 1.1;
+
+    // 3. 우측 경계 인식: 팝업이 화면 오른쪽을 벗어나면 왼쪽으로 밀기
+    if (rect.left + popupWidth > windowWidth - 30) {
       leftPos = leftPos - (popupWidth - rect.width);
     }
 
@@ -62,22 +61,16 @@ const RecommendedForYou = () => {
       setHoveredId(el.id);
 
       try {
-        let videos: any[] = [];
-        if (el.media_type === 'tv') {
-          videos = await onFetchTvVideo(String(el.id));
-        } else {
-          videos = await onFetchVideo(el.id);
-        }
-
+        // 키즈 영화 비디오 데이터 가져오기
+        const videos = await onFetchVideo(el.id);
         if (videos && videos.length > 0) {
           const trailer =
             videos.find(
               (v: any) => (v.type === 'Trailer' || v.type === 'Teaser') && v.site === 'YouTube'
             ) || videos.find((v: any) => v.site === 'YouTube');
-          setYoutubeKey(trailer?.key || '');
+          setYoutubeKey(trailer ? trailer.key : '');
         }
-      } catch (err) {
-        console.error('비디오 로드 실패:', err);
+      } catch (error) {
         setYoutubeKey('');
       }
     }, 400);
@@ -86,38 +79,35 @@ const RecommendedForYou = () => {
   const handleMouseLeave = () => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
     setHoveredId(null);
+    setYoutubeKey('');
+    setPopupData(null);
   };
-
-  if (isLoading) return null;
-  if (displayItems.length === 0) return null;
 
   return (
     <section
-      className="RecommendedForYou movieList pullInner"
+      className={`Top10List ${kids ? 'kids' : ''}`}
       ref={containerRef}
       style={{ position: 'relative' }}>
-      <HeaderTitle mainTitle={`${activeProfile?.name || '우리 아이'}를 위한 추천 이야기`} />
-
+      <HeaderTitle mainTitle={title} />
       <Swiper
-        slidesPerView={6.2}
+        slidesPerView={4.2}
         spaceBetween={20}
-        pagination={{ clickable: true }}
-        modules={[Pagination]}
         className="mySwiper"
-        style={{ overflow: 'visible' }}>
-        {displayItems.map((el: any, idx: number) => (
-          <SwiperSlide key={`${el.media_type}-${el.id}-${idx}`}>
+        style={{ overflow: 'visible' }} // 팝업 노출용
+      >
+        {kidsTopMovie.slice(0, 7).map((el, i) => (
+          <SwiperSlide key={el.id}>
             <Link
-              to={`/play/${el.media_type}/${el.id}`}
+              to={`/play/movie/${el.id}`}
               onMouseEnter={(e) => handleMouseEnter(e, el)}
               onMouseLeave={() => {
                 if (hoverTimer.current) clearTimeout(hoverTimer.current);
               }}>
-              <div className={`movieThumbnail col ${isKidsPath ? 'kids' : ''}`}>
-                <div className="imgBox">
+              <div className={`movieThumbnail TopNumber number${1 + i}`}>
+                <div className={`imgBox ${kids ? 'kids' : ''}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${el.poster_path}`}
-                    alt={el.title || el.name}
+                    alt={`${el.title} 썸네일`}
                   />
                 </div>
               </div>
@@ -126,25 +116,26 @@ const RecommendedForYou = () => {
         ))}
       </Swiper>
 
+      {/* 화면 경계가 반영된 비디오 팝업 */}
       {hoveredId && popupData && (
         <div
           className="external-popup-portal"
           onMouseLeave={handleMouseLeave}
           style={{
             position: 'absolute',
-            top: popupPos.top - 15,
-            left: popupPos.left - popupPos.width * 0.1,
-            width: popupPos.width * 1.2,
-            zIndex: 1000,
+            top: popupPos.top - 10,
+            left: popupPos.left - popupPos.width * 0.05,
+            width: popupPos.width * 1.1,
+            zIndex: 9999,
+            pointerEvents: 'auto',
           }}>
           <VideoPopup
             youtubeKey={youtubeKey}
-            title={popupData.title || popupData.name}
+            title={popupData.title} // 영화는 title 속성 사용
             id={popupData.id}
-            mediaType={popupData.media_type}
+            mediaType="movie"
             posterPath={popupData.poster_path || ''}
             backdropPath={popupData.backdrop_path}
-            overview={popupData.overview}
             onClose={handleMouseLeave}
           />
         </div>
@@ -153,4 +144,4 @@ const RecommendedForYou = () => {
   );
 };
 
-export default RecommendedForYou;
+export default KidsTop10;

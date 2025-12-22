@@ -98,25 +98,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     set({ Top: TopMOV });
   },
 
-  //TODO TOP10 TV
-  onFetchTOPTV: async () => {
-    const genreMap = await get().getGenreMap();
-    const resTOP = await fetch(
-      `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
-    );
-    const data = await resTOP.json();
-    const dataTOP = data.results;
-
-    const TopMOV = dataTOP.map((mov: Movie) => {
-      const genreNames = (mov.genre_ids || [])
-        .map((id: number) => genreMap[id])
-        .filter((name: string): name is string => !!name);
-      return { ...mov, genreNames };
-    });
-
-    set({ TopTV: TopMOV });
-  },
-
   //TODO 최신개봉작
   onfetchLatest: async () => {
     const resLatest = await fetch(
@@ -225,5 +206,30 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     console.log('시즌', seasonData, mapped);
     //  theme  → seasonMovies
     set({ seasonMovies: mapped });
+  },
+
+  // 영화의 예고편을 가져올 메서드
+  // TODO movie_id 자리에 매개값으로 받아온 ${id}를 넣고, ?뒤에 api 키값 & 추가하기
+  // `https://api.themoviedb.org/3/movie/movie_id/videos?language=en-US`
+  onFetchVideo: async (id: string) => {
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`
+      );
+
+      // 응답이 성공적이지 않을 경우 빈 배열 반환
+      if (!res.ok) return [];
+
+      const data = await res.json();
+
+      // 데이터가 없거나 results가 없으면 빈 배열 반환
+      const videos = data.results || [];
+
+      set({ videos: videos });
+      return videos;
+    } catch (error) {
+      console.error('비디오 페칭 에러:', error);
+      return []; // 에러 발생 시 빈 배열 반환하여 .find() 에러 방지
+    }
   },
 }));

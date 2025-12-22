@@ -1,10 +1,13 @@
 import "../scss/KidsMainScreen.scss";
 
-const KidsMainScreen = () => {
+interface KidsScreenProps {
+    num: number;
+}
+const KidsMainScreen = ({ num }: KidsScreenProps) => {
     return (
         <div className="kidsScreenWrap">
             <div className="imgBox">
-                <img src="/images/kidsMain/kidsMain1.png" alt="" />
+                <img src={`/images/kidsMain/kidsMain${num}.png`} alt="" />
             </div>
             <div className="titleBox">
                 <img src="/images/logo.svg" alt="" />

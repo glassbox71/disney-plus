@@ -1,51 +1,169 @@
+import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 import '../../Main/scss/movieList.scss';
 import { Pagination } from 'swiper/modules';
-import { NowWatchListData } from '../../../store/data';
-import { Link, useMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import HeaderTitle from '../../Main/components/HeaderTitle';
+import VideoPopup from '../../Main/components/VideoPopup';
 
-//TODO 현재 시청 중인 콘텐츠
-// ? 로그인 전에는 노출 불가
+import { useWatchingStore } from '../../../store/useWatchingStore';
+import { useProfileStore } from '../../../store/useProfileStore';
+import { useMovieStore } from '../../../store/useMovieStore';
+import { useTvStore } from '../../../store/useTvStore';
+
 const WatchList = () => {
-    const isKids = !!useMatch("/kids/*");
-    return (
-        <section className="WatchList movieList pullInner marginUp">
-            <HeaderTitle mainTitle="@@@님이 시청중인 콘텐츠" />
-            <>
-                <Swiper
-                    slidesPerView={4.3}
-                    spaceBetween={20}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className="mySwiper">
-                    {NowWatchListData.map((el) => {
-                        return (
-                            <SwiperSlide>
-                                <Link className="flex" to="void">
-                                    <div className={`movieThumbnail row ${isKids ? "kids" : ""}`}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500/${el.backdrop_path}`}
-                                            alt={`${el.title} 썸네일`}
-                                        />
-                                        <span className="movieTitle">{el.title}</span>
-                                    </div>
-                                    <div className="progressBar">
-                                        <div className="now" style={{ width: `${el.WatchBar}%` }}>
-                                            progressBar
-                                        </div>
-                                    </div>
-                                </Link>
-                            </SwiperSlide>
-                        );
-                    })}
-                </Swiper>
-            </>
-        </section>
-    );
+  const { watching, onFetchWatching } = useWatchingStore();
+  const { activeProfile } = useProfileStore();
+  const { onFetchVideo } = useMovieStore();
+  const { onFetchTvVideo } = useTvStore();
+
+  const isKidsPath = !!useMatch('/kids/*');
+
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [youtubeKey, setYoutubeKey] = useState('');
+  const [popupData, setPopupData] = useState<any>(null);
+  const [popupPos, setPopupPos] = useState({ top: 0, left: 0, width: 0 });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    onFetchWatching();
+  }, [onFetchWatching, activeProfile]);
+
+  const displayWatching = isKidsPath
+    ? watching.filter((item: any) => {
+        return (
+          !item.adult &&
+          (item.genre_ids?.some((id: number) => [16, 10751].includes(id)) || item.isKids)
+        );
+      })
+    : watching;
+
+  /** 썸네일 hover */
+  const handleMouseEnter = (e: React.MouseEvent, el: any) => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const containerRect = containerRef.current?.getBoundingClientRect();
+
+    const position = {
+      top: rect.top - (containerRect?.top || 0),
+      left: rect.left - (containerRect?.left || 0),
+      width: rect.width,
+    };
+
+    hoverTimer.current = setTimeout(async () => {
+      const mediaType = el.media_type || (el.title ? 'movie' : 'tv');
+
+      let key = '';
+      try {
+        const videos =
+          mediaType === 'tv' ? await onFetchTvVideo(String(el.id)) : await onFetchVideo(el.id);
+
+        const trailer =
+          videos?.find(
+            (v: any) => (v.type === 'Trailer' || v.type === 'Teaser') && v.site === 'YouTube'
+          ) || videos?.find((v: any) => v.site === 'YouTube');
+
+        key = trailer ? trailer.key : '';
+      } catch (e) {
+        console.error('비디오 로드 실패', e);
+      }
+
+      setYoutubeKey(key);
+      setPopupData({ ...el, media_type: mediaType });
+      setPopupPos(position);
+      setHoveredId(el.id);
+    }, 400);
+  };
+
+  /** 닫기 (지연 처리) */
+  const handleMouseLeave = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+
+    closeTimer.current = setTimeout(() => {
+      setHoveredId(null);
+      setPopupData(null);
+      setYoutubeKey('');
+    }, 150);
+  };
+
+  if (!displayWatching || displayWatching.length === 0) return null;
+
+  return (
+    <section
+      className="WatchList movieList pullInner marginUp"
+      ref={containerRef}
+      style={{ position: 'relative', overflow: 'visible' }}>
+      <HeaderTitle mainTitle={`${activeProfile?.name || '회원'}님이 시청 중인 콘텐츠`} />
+
+      <Swiper
+        slidesPerView={4.3}
+        spaceBetween={20}
+        pagination={{ clickable: true }}
+        modules={[Pagination]}
+        className="mySwiper"
+        style={{ overflow: 'visible' }}>
+        {displayWatching.map((el, idx) => {
+          const mediaType = el.media_type || (el.title ? 'movie' : 'tv');
+
+          return (
+            <SwiperSlide key={`${el.id}-${idx}`} style={{ overflow: 'visible' }}>
+              <div className="hover-target" onMouseEnter={(e) => handleMouseEnter(e, el)}>
+                <div className={`movieThumbnail row ${isKidsPath ? 'kids' : ''}`}>
+                  <img
+                    src={
+                      el.backdrop_path
+                        ? `https://image.tmdb.org/t/p/w500/${el.backdrop_path}`
+                        : '/images/no-image.png'
+                    }
+                    alt={el.title || el.name}
+                  />
+                  <span className="movieTitle">{el.title || el.name}</span>
+                </div>
+              </div>
+              {/* 재생바 */}
+              <div className="progressBar">
+                <div className="now" style={{ width: `${progress}%` }} />
+              </div>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+
+      {/* 팝업 (Swiper 밖 / Section 안) */}
+      {hoveredId && popupData && (
+        <div
+          className="external-popup-portal"
+          onMouseEnter={() => {
+            if (closeTimer.current) clearTimeout(closeTimer.current);
+          }}
+          onMouseLeave={handleMouseLeave}
+          style={{
+            position: 'absolute',
+            top: popupPos.top - 10,
+            left: popupPos.left,
+            width: popupPos.width,
+            zIndex: 10000,
+            pointerEvents: 'auto',
+          }}>
+          <VideoPopup
+            youtubeKey={youtubeKey}
+            title={popupData.title || popupData.name}
+            id={popupData.id}
+            mediaType={popupData.media_type}
+            posterPath={popupData.poster_path || ''}
+            backdropPath={popupData.backdrop_path}
+            onClose={handleMouseLeave}
+          />
+        </div>
+      )}
+    </section>
+  );
 };
 
 export default WatchList;

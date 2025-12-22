@@ -4,7 +4,6 @@ import { collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore'
 import { db } from '../api/auth';
 import type { WishItem } from '../types/IWish_Watching';
 import { useProfileStore } from './useProfileStore';
-import type { TMDBListItem } from '../types/TMDBListItem';
 
 export interface WishState {
   wishlist: WishItem[];

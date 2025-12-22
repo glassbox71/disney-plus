@@ -2,10 +2,11 @@ import { create } from 'zustand';
 import type { ITVStore } from '../types/ITV';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export const useTvStore = create<ITVStore>((set, get) => ({
+export const useTvStore = create<ITVStore>((set) => ({
   UpComingTv: [],
   RatedTv: [],
   TopTV: [],
+  videos: [],
 
   //TODO TV 공개 예정
   onFetchNewTV: async () => {
@@ -35,5 +36,15 @@ export const useTvStore = create<ITVStore>((set, get) => ({
     const data = await res.json();
     const resData = data.results;
     set({ TopTV: resData });
+  },
+  // TODO 시리즈 tv 영상을 불러올 메서드
+  onFetchTvVideo: async (id: string) => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${API_KEY}&language=en-US`
+    );
+    const data = await res.json();
+    console.log(data);
+    set({ videos: data.results });
+    return data.results;
   },
 }));

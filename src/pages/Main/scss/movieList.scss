@@ -7,13 +7,50 @@
 .TvKeywordList {
   padding-top: 80px;
 }
+.flexWrap {
+  position: relative;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
 
 .movieList {
   padding-left: 4%;
   padding-bottom: 80px;
-  border: 1px solid yellow;
+  // border: 1px solid yellow;
   max-width: 1920px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+
+  // 호버 시 z-index 상승
+  &:hover {
+    z-index: 100;
+  }
+
+  .mySwiper {
+    overflow: visible !important;
+
+    .swiper-wrapper {
+      overflow: visible !important;
+    }
+
+    .swiper-slide {
+      overflow: visible !important;
+      z-index: 1;
+
+      // 호버 시 해당 슬라이드만 z-index 상승
+      &:hover {
+        z-index: 50;
+      }
+    }
+  }
 
   a {
     width: 100%;
@@ -26,12 +63,21 @@
     }
   }
 
+  .flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+  }
+
   .movieThumbnail {
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     position: relative;
-    border: 1px solid yellow;
+    // border: 1px solid yellow;
 
     &.kids {
       border-radius: 16px;
@@ -52,7 +98,7 @@
       object-fit: cover;
       vertical-align: middle;
       transition: ease 0.3s;
-      border: 1px solid red;
+      // border: 1px solid red;
     }
 
     &:hover {
@@ -71,20 +117,21 @@
   }
 
   .progressBar {
-    width: 72%;
-    aspect-ratio: 260/4;
+    width: 100%;
+    height: 5px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.3);
-    position: relative;
+    position: absolute;
+    bottom: -20%;
     overflow: hidden;
 
     .now {
       background: #33ddff;
       position: absolute;
       top: 0;
-      height: max-content;
-      display: inline-block;
-      color: transparent;
+      left: 0;
+      height: 100%;
+      display: block;
     }
   }
 }

@@ -54,6 +54,15 @@
 
       .dropdownWrap {
         position: relative;
+
+        &.disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          .dropdownHeader {
+            pointer-events: none; // 클릭 방지
+          }
+        }
+
         .dropdownHeader {
           display: flex;
           justify-content: space-between;
@@ -64,11 +73,20 @@
           background: transparent;
           border: 1px solid #888;
           color: #bbb;
+          &.selected {
+            border: 1px solid #fff;
+          }
 
           .dropdownArrow {
             width: 16px;
             height: 16px;
             background: url(../../../../public/icon/dropdownOpen.svg) no-repeat;
+          }
+
+          p {
+            &.selected {
+              color: #fff; // 혹은 검정색(#000) 등 원하는 강조색
+            }
           }
         }
 
@@ -90,21 +108,33 @@
           .dropdownList {
             display: block;
             position: absolute;
-            width: 100%;
-            height: 50px;
+            max-height: 200px; /* 최대 높이 지정 */
+            overflow-y: auto;
             background: #25272c;
             border-radius: 8px;
             height: fit-content;
-            padding: 0 2rem;
             border: 1px solid #888;
             color: #fff;
             margin-top: 5px;
-            padding: 10px 20px;
             z-index: 5;
+            width: 100%;
+
+            &::-webkit-scrollbar {
+              width: 8px;
+            }
+            &::-webkit-scrollbar-thumb {
+              background: rgba(255, 255, 255, 0.1); // 배경
+              border-radius: 4px;
+            }
 
             li {
-              line-height: 1.6;
+              width: 100%;
+              line-height: 2.4;
+              padding: 1rem 2rem;
               cursor: pointer;
+              &:hover {
+                background: #2d2f36;
+              }
             }
           }
         }

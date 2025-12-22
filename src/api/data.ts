@@ -3,6 +3,26 @@ import type { LocalContentItem } from '../types/IContentTypes';
 export const disney: LocalContentItem[] = [
   {
     adult: false,
+    backdrop_path: '/pQKApd4R4BEsju4t9ZjofgNkPnO.jpg',
+    genre_ids: [16, 35, 12, 10751, 9648],
+    id: 1084242,
+    original_language: 'en',
+    original_title: 'Zootopia 2',
+    overview:
+      '미스터리한 뱀 게리가 나타난 순간, 주토피아가 다시 흔들리기 시작했다. 혼란에 빠진 도시를 구하기 위해 환상의 콤비 주디와 닉이 잠입 수사에 나서고 상상 그 이상의 진실과 위협을 마주하게 되는데...!', // TMDB 개요 기반 요약 [page:1]
+    popularity: 2129.323,
+    poster_path: '/ib6v6qUXzez1x2qIOLN7C0yJNPQ.jpg',
+    release_date: '2025-11-26',
+    title: '주토피아 2',
+    video: false,
+    vote_average: 7.5,
+    vote_count: 1325,
+    genre_title: ['애니메이션', '코미디', '모험', '가족', '미스터리'],
+    age: 6,
+    category: 'movie',
+  },
+  {
+    adult: false,
     backdrop_path: '/9tOkjBEiiGcaClgJFtwocStZvIT.jpg',
     genre_ids: [16, 12, 10751, 35],
     id: 269149,

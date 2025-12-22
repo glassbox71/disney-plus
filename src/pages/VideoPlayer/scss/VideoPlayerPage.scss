@@ -165,7 +165,7 @@
           &::after {
             content: '분  중';
             padding-right: 4px;
-            border: 1px solid red;
+            // border: 1px solid red;
           }
 
           &:empty {
@@ -177,7 +177,7 @@
           &::after {
             content: '분';
             padding-right: 4px;
-            border: 1px solid red;
+            // border: 1px solid red;
           }
           &:empty {
             display: none;

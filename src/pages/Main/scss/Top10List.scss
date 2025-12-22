@@ -3,17 +3,24 @@
 .Top10List {
   padding: 100px 0;
   padding-left: 4%;
-  border: 1px solid red;
-  background: linear-gradient(
-    180deg,
-    rgba(2, 23, 42, 0.6) 4%,
-    rgba(12, 48, 64, 0.6) 16%,
-    rgba(47, 131, 139, 0.55) 53%,
-    rgba(12, 48, 64, 0.56) 81%,
-    rgba(2, 23, 42, 0.6) 100%
-  );
+  // border: 1px solid red;
+  background: linear-gradient(180deg,
+      rgba(2, 23, 42, 0.6) 4%,
+      rgba(12, 48, 64, 0.6) 16%,
+      rgba(47, 131, 139, 0.55) 53%,
+      rgba(12, 48, 64, 0.56) 81%,
+      rgba(2, 23, 42, 0.6) 100%);
   max-width: 1920px;
   margin: 0 auto;
+
+  &.kids {
+    background: linear-gradient(180deg,
+        rgba(0, 47, 62, 1) 4%,
+        rgba(12, 48, 64, 1) 16%,
+        rgba(47, 131, 139, 0.91) 53%,
+        rgba(12, 48, 64, 0.93) 81%,
+        rgba(0, 47, 62, 1) 100%);
+  }
 
   .TopNumber {
     position: relative;
@@ -39,21 +46,27 @@
     &.number1::before {
       content: '1';
     }
+
     &.number2::before {
       content: '2';
     }
+
     &.number3::before {
       content: '3';
     }
+
     &.number4::before {
       content: '4';
     }
+
     &.number5::before {
       content: '5';
     }
+
     &.number6::before {
       content: '6';
     }
+
     &.number7::before {
       content: '7';
     }
@@ -61,6 +74,10 @@
     .imgBox {
       border-radius: 8px;
       overflow: hidden;
+
+      &.kids {
+        border-radius: 16px;
+      }
 
       img {
         height: 100%;

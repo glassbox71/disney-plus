@@ -45,7 +45,7 @@ $Theme-sizes: (
   .menu {
     margin-bottom: 90px;
 
-    border: 1px solid red;
+    // border: 1px solid red;
     ul {
       display: flex;
       justify-content: center;
@@ -58,7 +58,7 @@ $Theme-sizes: (
         width: 120px;
         height: 80px;
         cursor: pointer;
-        border: 1px solid red;
+        // border: 1px solid red;
 
         @each $Theme, $size-map in $Theme-sizes {
           &.#{$Theme} {
@@ -157,7 +157,7 @@ $Theme-sizes: (
           aspect-ratio: 323/480;
           border-radius: 8px;
           overflow: hidden;
-          border: 1px solid green;
+          // border: 1px solid green;
 
           a {
             width: 100%;
@@ -176,7 +176,7 @@ $Theme-sizes: (
             vertical-align: middle;
             object-fit: cover;
             object-position: center;
-            border: 1px solid blue;
+            // border: 1px solid blue;
             transition: ease 0.3s;
           }
 

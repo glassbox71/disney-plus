@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import './scss/Header.scss';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -20,6 +20,7 @@ const Header = () => {
   const isPayPage = path.startsWith('/payment');
 
   const activeProfile = profiles.find((profile) => profile.id === activeProfileId);
+  const kids = useMatch("/kids/*")
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -48,7 +49,7 @@ const Header = () => {
 
   if (isProfilePage || isLoginPage || isSubPage || isPayPage) {
     return (
-      <div className={`Header isprofile pullInner ${isScrolled ? 'active' : ''}`}>
+      <div className={`Header isprofile pullInner ${isScrolled ? 'active' : ''} ${kids ? "kids" : ""} `}>
         <div className="Header-left">
           <Link to="/">
             <img src="/images/logo.svg" alt="로고" />
@@ -66,6 +67,94 @@ const Header = () => {
             </Link>
           )}
         </div>
+      </div>
+    );
+  }
+  if (kids) {
+    return (
+      <div className={`Header pullInner ${isScrolled ? 'kids' : ''} `}>
+        {isLogin ? (
+          <>
+            <div className="Header-left">
+              <h1 className="logo">
+                <Link to="/">
+                  <img src="/images/logo.svg" alt="로고" />
+                </Link>
+              </h1>
+              <nav>
+                <Link className="LinkBtn" to="/kids">
+                  홈
+                </Link>
+                <Link className="LinkBtn" to="/kids/movie">
+                  영화
+                </Link>
+                <Link className="LinkBtn" to="/kids/series">
+                  시리즈
+                </Link>
+              </nav>
+            </div>
+            <div className="Header-right">
+              <button className="search" onClick={() => navigate('/kids/search')}>
+                <img src="/icon/search.svg" alt="검색 아이콘" />
+              </button>
+              <Link className="MyWish LinkBtn" to="/wishlist">
+                내가 찜한 콘텐츠
+              </Link>
+              {/* <Link className="Kids LinkBtn" to="void">
+              키즈
+            </Link> */}
+              <div className="MyProfileDepth">
+                <button className="MyProfile" onClick={toggleProfileDepth}>
+                  <img src={activeProfile?.image} alt={activeProfile?.name || '프로필'} />
+                </button>
+                <ul
+                  className={`ProfileDropdown ${isDepthOpen ? 'open' : ''}`}
+                  onMouseLeave={closeDepth}>
+                  <li>
+                    <button
+                      className="dropdownLink"
+                      onClick={() => {
+                        editActiveProfile();
+                        navigate('/profile/edit');
+                      }}>
+                      내 프로필 수정
+                    </button>
+                  </li>
+                  <li>
+                    <Link to="/profile/select" className="dropdownLink">
+                      프로필 변경
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/profile/setting" className="dropdownLink">
+                      계정 설정
+                    </Link>
+                  </li>
+                  <li>
+                    <button className="dropdownLink" onClick={() => onLogout()}>
+                      로그아웃
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="Header-left">
+              <h1 className="logo">
+                <Link to="/">
+                  <img src="/images/logo.svg" alt="로고" />
+                </Link>
+              </h1>
+            </div>
+            <div className="Header-right">
+              <Link to="/login" className="LinkBtn">
+                로그인
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     );
   }
@@ -153,6 +242,7 @@ const Header = () => {
       )}
     </div>
   );
+
 };
 
 export default Header;

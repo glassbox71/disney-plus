@@ -1,13 +1,16 @@
 import { create } from 'zustand';
-import { disney } from '../api/data'; // 5만 줄의 로컬 데이터
+import { disney } from '../api/data';
 import type { LocalContentItem } from '../types/IContentTypes';
 
+type SearchFilter =
+  | { type: 'genre'; genreId: number | number[]; value: string }
+  | { type: 'country' | 'region'; value: string | string[] };
+
 interface SearchState {
-  searchResults: LocalContentItem[]; // 필터링된 원본 로컬 데이터 배열
+  searchResults: LocalContentItem[];
   searchWord: string;
-  selectedFilter: number | null;
-  selectedGenreId: number | null;
-  setSelectedFilter: (filter: number) => void;
+  selectedFilter: SearchFilter | null;
+  setSelectedFilter: (filter: SearchFilter) => void;
   clearSelectedFilter: () => void;
   setSearchWord: (keyword: string) => void;
   clearSearch: () => void;
@@ -15,65 +18,94 @@ interface SearchState {
 }
 
 export const useSearchStore = create<SearchState>((set, get) => ({
-  // 1. 상태
   searchResults: [],
   searchWord: '',
   selectedFilter: null,
-  selectedGenreId: null,
 
-  // 2. 필터 관련 함수
-  setSelectedFilter: (filter: number) => {
-    set({ selectedFilter: filter, selectedGenreId: filter });
-    // 필터가 바뀌면 현재 검색어로 다시 검색을 실행하여 결과 갱신
-    const currentWord = get().searchWord;
-    if (currentWord) get().onSearch(currentWord);
+  setSelectedFilter: (filter) => {
+    // 1. 상태 업데이트 (필터 저장 및 검색창 텍스트 설정)
+    set({
+      selectedFilter: filter,
+      searchWord: typeof filter.value === 'string' ? filter.value : '',
+    });
+
+    // 2. 즉시 검색 실행 (필터가 설정된 직후의 상태로 검색)
+    get().onSearch(get().searchWord);
   },
 
   clearSelectedFilter: () => {
-    set({ selectedFilter: null, selectedGenreId: null });
-    const currentWord = get().searchWord;
-    if (currentWord) get().onSearch(currentWord);
+    set({ selectedFilter: null });
+    get().onSearch(get().searchWord);
   },
 
-  // 3. 검색 상태 함수
-  setSearchWord: (keyword: string) => set({ searchWord: keyword }),
+  setSearchWord: (keyword) => set({ searchWord: keyword }),
 
-  clearSearch: () =>
-    set({
-      searchWord: '',
-      searchResults: [],
-      selectedFilter: null,
-      selectedGenreId: null,
-    }),
+  clearSearch: () => set({ searchWord: '', searchResults: [], selectedFilter: null }),
 
-  // 4. 메인 검색 로직
-  // ... (상태 정의 부분 생략)
+  onSearch: (keyword) => {
+    const currentFilter = get().selectedFilter;
+    set({ searchWord: keyword });
 
-  onSearch: (keyword: string) => {
-    if (!keyword.trim()) {
-      set({ searchResults: [], searchWord: keyword });
+    if (!keyword.trim() && !currentFilter) {
+      set({ searchResults: [] });
       return;
     }
 
-    set({ searchWord: keyword });
-
     const results = disney.filter((item) => {
-      // ⭐ 핵심 수정: media_type이 아니라 이미지 속 데이터인 category를 사용해야 합니다.
+      /* ---------- A. 텍스트 매칭 ---------- */
       const isMovie = item.category === 'movie';
-      const title = isMovie ? (item as any).title : (item as any).name;
+      const title = (isMovie ? (item as any).title : (item as any).name) || '';
+      const keywordLower = keyword.toLowerCase();
 
-      const titleMatch = title?.toLowerCase().includes(keyword.toLowerCase());
-      const genreMatch = item.genre_title?.some((g: string) =>
-        g.toLowerCase().includes(keyword.toLowerCase())
-      );
+      // 필터명(예: "한국콘텐츠")이 검색창에 입력되어 있을 때는 텍스트 검색을 무시함 (검색 결과가 0이 되는 것 방지)
+      const isFilterTitle = currentFilter && keyword === (currentFilter as any).value;
 
-      const selectedId = get().selectedGenreId;
-      const genreIdMatch = selectedId ? item.genre_ids.includes(selectedId) : true;
+      const textMatch =
+        keyword.trim() && !isFilterTitle
+          ? title.toLowerCase().includes(keywordLower) ||
+            item.genre_title?.some((g) => g.toLowerCase().includes(keywordLower))
+          : true;
 
-      return (titleMatch || genreMatch) && genreIdMatch;
+      /* ---------- B. 필터 매칭 ---------- */
+      let filterMatch = true;
+
+      if (currentFilter) {
+        // 1. 나라 / 지역 필터 (KR -> ko, US -> en 매핑 포함)
+        if (currentFilter.type === 'country' || currentFilter.type === 'region') {
+          const itemLang = item.original_language?.toLowerCase() || '';
+          const target = currentFilter.value;
+
+          const convertToLang = (val: string) => {
+            if (val === 'KR') return 'ko';
+            if (val === 'US') return 'en';
+            if (val === 'JP') return 'ja';
+            return val.toLowerCase();
+          };
+
+          if (Array.isArray(target)) {
+            filterMatch = target.map((v) => convertToLang(v)).includes(itemLang);
+          } else {
+            filterMatch = itemLang === convertToLang(target);
+          }
+        }
+
+        // 2. 장르 필터 (SF & 판타지: [878, 14] 대응)
+        if (currentFilter.type === 'genre') {
+          const targetIds = currentFilter.genreId;
+          const itemGenres = item.genre_ids || [];
+
+          if (Array.isArray(targetIds)) {
+            // 필터 ID 배열(SF, 판타지) 중 하나라도 영화의 장르 배열에 있으면 포함
+            filterMatch = targetIds.some((id) => itemGenres.includes(id));
+          } else {
+            filterMatch = itemGenres.includes(targetIds);
+          }
+        }
+      }
+
+      return textMatch && filterMatch;
     });
 
-    console.log('검색 결과 수:', results.length);
     set({ searchResults: results.slice(0, 100) });
   },
 }));

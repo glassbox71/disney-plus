@@ -61,4 +61,5 @@ export interface MovieState {
   onfetchSeason: (seasonData: SeasonData) => Promise<void>;
   onfetchTheme: (companyId: string) => Promise<Theme[] | void>;
   onfetchCate: (genreId: string | number) => Promise<Movie[] | void>;
+  onFetchVideo: (id: string) => Promise<void[]>;
 }

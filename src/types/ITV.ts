@@ -186,9 +186,11 @@ export interface ITVStore {
   UpComingTv: TV[];
   RatedTv: TV[];
   TopTV: TV[];
+  videos: [];
   onFetchNewTV: () => Promise<void>;
   onFetchRated: () => Promise<void>;
   onFetchTopTV: () => Promise<void>;
+  onFetchTvVideo: (id: string) => Promise<void[]>;
 }
 
 // 타입 가드 함수들

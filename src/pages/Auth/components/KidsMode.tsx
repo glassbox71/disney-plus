@@ -21,10 +21,12 @@ const KidsMode = ({ title, subTitle, onKidsModeChange, initialData }: KidsModePr
   const [selectedMonth, setSelectedMonth] = useState<number | null>(initialData?.month ?? null);
   const [selectedDate, setSelectedDate] = useState<number | null>(initialData?.date ?? null);
 
-  const [openDropdown, setOpenDropdown] =
-    useState<'year' | 'month' | 'date' | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<'year' | 'month' | 'date' | null>(null);
 
+  // 드롭다운 활성화 로직 수정
   const toggleDropdown = (type: 'year' | 'month' | 'date') => {
+    if (type === 'month' && !selectedYear) return; // 연도 선택 안되면 월 클릭 불가
+    if (type === 'date' && !selectedMonth) return; // 월 선택 안되면 일 클릭 불가
     setOpenDropdown(openDropdown === type ? null : type);
   };
 
@@ -74,8 +76,10 @@ const KidsMode = ({ title, subTitle, onKidsModeChange, initialData }: KidsModePr
           <div className="selectWrap">
             {/* 연도 */}
             <div className={`dropdownWrap year ${openDropdown === 'year' ? 'active' : ''}`}>
-              <div className="dropdownHeader" onClick={() => toggleDropdown('year')}>
-                <p>{selectedYear ?? '연도'}</p>
+              <div
+                className={`dropdownHeader ${selectedYear ? 'selected' : ''}`}
+                onClick={() => toggleDropdown('year')}>
+                <p className={selectedYear ? 'selected' : ''}>{selectedYear ?? '연도'}</p>
                 <span className="dropdownArrow" />
               </div>
               <ul className="dropdownList">
@@ -93,9 +97,14 @@ const KidsMode = ({ title, subTitle, onKidsModeChange, initialData }: KidsModePr
             </div>
 
             {/* 월 */}
-            <div className={`dropdownWrap month ${openDropdown === 'month' ? 'active' : ''}`}>
-              <div className="dropdownHeader" onClick={() => toggleDropdown('month')}>
-                <p>{selectedMonth ?? '월'}</p>
+            <div
+              className={`dropdownWrap month ${openDropdown === 'month' ? 'active' : ''} ${
+                !selectedYear ? 'disabled' : ''
+              }`}>
+              <div
+                className={`dropdownHeader ${selectedMonth ? 'selected' : ''}`}
+                onClick={() => toggleDropdown('month')}>
+                <p className={selectedMonth ? 'selected' : ''}>{selectedMonth ?? '월'}</p>
                 <span className="dropdownArrow" />
               </div>
               <ul className="dropdownList">
@@ -113,9 +122,14 @@ const KidsMode = ({ title, subTitle, onKidsModeChange, initialData }: KidsModePr
             </div>
 
             {/* 일 */}
-            <div className={`dropdownWrap date ${openDropdown === 'date' ? 'active' : ''}`}>
-              <div className="dropdownHeader" onClick={() => toggleDropdown('date')}>
-                <p>{selectedDate ?? '일'}</p>
+            <div
+              className={`dropdownWrap date ${openDropdown === 'date' ? 'active' : ''} ${
+                !selectedMonth ? 'disabled' : ''
+              }`}>
+              <div
+                className={`dropdownHeader ${selectedDate ? 'selected' : ''}`}
+                onClick={() => toggleDropdown('date')}>
+                <p className={selectedDate ? 'selected' : ''}>{selectedDate ?? '일'}</p>
                 <span className="dropdownArrow" />
               </div>
               <ul className="dropdownList">

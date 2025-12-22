@@ -35,7 +35,7 @@ export const mainBanner = [
   {
     id: 3,
     title: '라푼젤 미니스토리',
-    backgrond_img: '/images/kidsMain/kidsBanner2.png',
+    background_img: '/images/kidsMain/kidsBanner2.png',
     logo: '/images/kidsMain/kidsBannerLogo2.png',
     logo_size: 'small',
     age: 'All',

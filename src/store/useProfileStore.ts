@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useKidsMoiveStore } from "./useKidsMovieStore";
+
 
 const saveProfilesToUserStorage = (state: ProfileState) => {
   if (!state.currentUserId) return;
@@ -123,11 +125,11 @@ export const useProfileStore = create<ProfileState>()(
         set((state) =>
           state.currentProfile
             ? {
-                currentProfile: {
-                  ...state.currentProfile,
-                  isKids,
-                },
-              }
+              currentProfile: {
+                ...state.currentProfile,
+                isKids,
+              },
+            }
             : state
         ),
 
@@ -205,7 +207,7 @@ export const useProfileStore = create<ProfileState>()(
               id: 'default-kid',
               name: '키즈',
               image: '/images/profile/kidsProfile_big.svg',
-              contentLimit: 0,
+              contentLimit: 12,
               isKids: true,
               isDefault: true,
             },
@@ -236,7 +238,10 @@ export const useProfileStore = create<ProfileState>()(
 
       updateProfile: (id, data) =>
         set((state) => {
+          const prev = state.profiles.find((p) => p.id === id);
+
           const nextProfiles = state.profiles.map((p) => (p.id === id ? { ...p, ...data } : p));
+
 
           const next = {
             profiles: nextProfiles,
@@ -247,6 +252,15 @@ export const useProfileStore = create<ProfileState>()(
             ...state,
             ...next,
           });
+
+          //여기서 “현재 활성 프로필”의 제한/키즈여부가 바뀌면 캐시 날리기 추가
+          const isActive = state.activeProfileId === id;
+          const limitChanged = prev?.contentLimit !== (data.contentLimit ?? prev?.contentLimit);
+          const kidsChanged = prev?.isKids !== (data.isKids ?? prev?.isKids);
+
+          if (isActive && (limitChanged || kidsChanged)) {
+            useKidsMoiveStore.getState().clearKidsCategory?.();
+          }
 
           return next;
         }),
@@ -266,11 +280,11 @@ export const useProfileStore = create<ProfileState>()(
         set((state) =>
           state.currentProfile
             ? {
-                currentProfile: {
-                  ...state.currentProfile,
-                  contentLimit: limit,
-                },
-              }
+              currentProfile: {
+                ...state.currentProfile,
+                contentLimit: limit,
+              },
+            }
             : state
         ),
 
