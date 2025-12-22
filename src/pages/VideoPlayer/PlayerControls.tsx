@@ -1,10 +1,9 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './scss/PlayerControls.scss'; // 전용 스타일 파일
 
 const PlayerControls = () => {
   const { type, id } = useParams(); // URL에서 type(movie/tv)과 id 추출
-  const navigate = useNavigate();
   const [videoKey, setVideoKey] = useState<string | null>(null);
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
