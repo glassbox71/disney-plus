@@ -232,6 +232,7 @@
 @include rs.respond(mobile) {
   .Header {
     border: 1px solid blue;
+    background-color: #02172a;
     .Header-left {
       h1 {
         aspect-ratio: 66/36;

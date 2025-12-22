@@ -69,9 +69,18 @@ const MainScreen = () => {
         loop={true}
         pagination={true}
         modules={[Pagination, Autoplay]}
-        autoplay={{
-          delay: 3200,
-          disableOnInteraction: false,
+        // autoplay={{
+        //   delay: 3200,
+        //   disableOnInteraction: false,
+        // }}
+        breakpoints={{
+          0: {
+            slidesPerView: 1.1,
+            spaceBetween: 16,
+          },
+          360: {
+            slidesPerView: 1,
+          },
         }}
         className="mySwiper">
         {MainScreenData.map((el) => {
@@ -85,18 +94,20 @@ const MainScreen = () => {
                   <div className="genreTitle">{el.genre_title}</div>
                 </div>
                 <div className="overview">{el.overview}</div>
-                <button
-                  className="nowPlay"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleVideoOpen(el);
-                  }}>
-                  지금 재생하기
-                </button>
-                <Link to={`/play/${el.type}/${el.id}`} className="detailInfo">
-                  상세 정보
-                </Link>
+                <div className="flexbox">
+                  <button
+                    className="nowPlay"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleVideoOpen(el);
+                    }}>
+                    지금 재생하기
+                  </button>
+                  <Link to={`/play/${el.type}/${el.id}`} className="detailInfo">
+                    상세 정보
+                  </Link>
+                </div>
               </div>
             </SwiperSlide>
           );
