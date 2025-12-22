@@ -8,9 +8,12 @@ const SubComplete = () => {
   const navigate = useNavigate();
   const { userData } = useAuthStore();
 
-
   const handleGoDisney = () => {
-    navigate('/');
+    if (userData?.kidsMode?.isActive) {
+      navigate('/kids', { replace: true });
+    } else {
+      navigate('/', { replace: true });
+    }
   };
 
   return (
