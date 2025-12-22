@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footerLogo">
           <img src="/images/logo.svg" alt="footer_logo" />
         </div>
-        <div className="infoWrap">
+        {/* <div className="infoWrap">
           <ul className="infoList">
             <li>
               <button>디즈니+이용약관</button>
@@ -36,7 +36,7 @@ const Footer = () => {
               <button>통신판매업 사업자정보확인</button>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="footerBottom">
           <div className="footerBottomTop">
             <p>
