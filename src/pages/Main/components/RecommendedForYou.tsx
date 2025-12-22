@@ -94,10 +94,21 @@ const RecommendedForYou = () => {
         </div>
       ) : (
         <Swiper
-          slidesPerView={6.2}
           spaceBetween={20}
           pagination={{ clickable: true }}
           modules={[Pagination]}
+          breakpoints={{
+            0: {
+              slidesPerView: 1.8,
+              spaceBetween: 16,
+            },
+            360: {
+              slidesPerView: 4.2,
+            },
+            768: {
+              slidesPerView: 6.2,
+            },
+          }}
           className="mySwiper"
           style={{ overflow: 'visible' }} // Swiper 잘림 방지
         >

@@ -106,7 +106,18 @@ const SeasonList = () => {
       </div>
 
       <div className="SeasonListList">
-        <Swiper slidesPerView={5.4} spaceBetween={20} className="mySwiper">
+        <Swiper
+          breakpoints={{
+            0: {
+              slidesPerView: 2.1,
+              spaceBetween: 16,
+            },
+            360: {
+              slidesPerView: 5.3,
+            },
+          }}
+          spaceBetween={20}
+          className="mySwiper">
           {seasonMovies.length > 0 ? (
             seasonMovies
               .filter((el) => el.poster_path)

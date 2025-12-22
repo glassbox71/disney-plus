@@ -14,7 +14,6 @@
   h2 {
     color: #fff;
     display: flex;
-
     align-items: end;
   }
 
@@ -25,65 +24,73 @@
     background-repeat: no-repeat;
 
     &.holiday {
-      width: 220px;
-      height: 119px;
+      width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/119;
       background-image: url('../../../../public/images/main/Season/holiday.svg');
     }
 
     &.winter {
-      width: 250px;
-      height: 110px;
+      width: clamp(60px, 2vw, 250px);
+      aspect-ratio: 250/110;
       background-image: url('../../../../public/images/main/Season/winter.svg');
     }
     &.newYear {
-      width: 220px;
-      height: 100px;
+      width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/newYear.svg');
     }
     &.valentine {
-      width: 220px;
-      height: 100px;
+      width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/valentine.svg');
     }
     &.spring {
       width: 220px;
-      height: 100px;
+    width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/spring.svg');
     }
     &.family {
       width: 220px;
-      height: 100px;
+       width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/family.svg');
     }
     &.classic {
       width: 220px;
-      height: 100px;
+    width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/classic.svg');
     }
     &.horror {
       width: 220px;
-      height: 140px;
+        width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/140;
       background-image: url('../../../../public/images/main/Season/horror.svg');
     }
     &.vacation {
       width: 220px;
-      height: 100px;
+    width: clamp(60px, 2vw, 220px);
+      aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/vacation.svg');
     }
   }
 
   .title {
     @include rs.font(4rem, 500, #fff);
+    font-size: clamp(1.6rem, 2.4vw, 4rem);
     line-height: 150%;
     letter-spacing: -1px;
   }
 
   h3 {
-    margin-top: 50px;
+    margin-top: clamp(20px, 2vw, 50px);
     display: flex;
     align-items: center;
     @include rs.font(2.4rem, 500, #fff);
+    font-size: clamp(1.2rem, 2vw, 2.4rem);
     margin-bottom: 20px;
+    color: red;
 
     &:hover {
       .arrow::before {
@@ -116,9 +123,12 @@
       &::after {
         content: '';
         width: 8px;
-        height: 14px;
+        aspect-ratio: 8/14;
+        width: clamp(4px, 0.6vw, 8px);
         display: inline-block;
         background: url('../../../../public/icon/mainArrow.svg');
+        background-position: center;
+        background-size: cover;
       }
     }
   }
@@ -150,6 +160,22 @@
 
       &:hover img {
         transform: scale(1.1);
+      }
+    }
+  }
+}
+
+@include rs.respond(tablet) {
+  .SeasonList {
+    .title {
+      display: none;
+    }
+
+    h3 {
+      .arrow {
+        &::before {
+          display: none;
+        }
       }
     }
   }

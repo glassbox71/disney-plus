@@ -100,12 +100,22 @@ const WatchList = () => {
           activeProfile ? `${activeProfile.name}님이 시청 중인 콘텐츠` : '시청 중인 콘텐츠'
         }
       />
-
       <Swiper
-        slidesPerView={4.3}
         spaceBetween={20}
         pagination={{ clickable: true }}
         modules={[Pagination]}
+        breakpoints={{
+          0: {
+            slidesPerView: 1.8,
+            spaceBetween: 16,
+          },
+          360: {
+            slidesPerView: 3.8,
+          },
+          768: {
+            slidesPerView: 6.2,
+          },
+        }}
         className="mySwiper"
         style={{ overflow: 'visible' }}>
         {watching.map((el) => {

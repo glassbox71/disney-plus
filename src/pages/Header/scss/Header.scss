@@ -87,7 +87,7 @@
     position: relative;
 
     .MyProfile {
-      width: 56px;
+      width: clamp(36px, 1.2vw, 56px);
       aspect-ratio: 1/1;
       border-radius: 50%;
       overflow: hidden;
@@ -179,21 +179,24 @@
         &.DropdownMenu {
           display: block;
           @include rs.font(1.8rem, 400, #fff);
+          font-size: clamp(1rem, 0.8vw, 1.8rem);
           position: relative;
-          width: 12vw;
 
+          width: clamp(12vw, 20vw, 20vw);
           img {
             margin-left: 2rem;
             vertical-align: middle;
           }
           .DropdownList {
             position: absolute;
+            top: 30px;
             border-radius: 4px;
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
             background: #25272c;
             @include rs.font(1.6rem, 400, #fff);
+            font-size: clamp(0.8rem, 0.8vw, 1.4rem);
 
             li {
               padding: 2vh 2vw;
@@ -213,7 +216,7 @@
       position: relative;
 
       .MyProfile {
-        width: 36px;
+        // width: 36px;
 
         img {
           width: 150%;
@@ -237,17 +240,6 @@
       h1 {
         aspect-ratio: 66/36;
         border: 1px solid red;
-      }
-
-      nav.DropdownMenu {
-        @include rs.font(1.2rem, 400, #fff);
-        width: 22vw;
-
-        .DropdownList {
-          @include rs.font(1.2rem, 400, #fff);
-          li {
-          }
-        }
       }
     }
 
