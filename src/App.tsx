@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './pages/Header/Header';
 import MainPage from './pages/Main/MainPage';
@@ -32,6 +32,26 @@ import KidsSearch from './pages/KidsMain/components/KidsSearch';
 function App() {
   const { initAuth, userData } = useAuthStore();
   const { initWithUser, initDefaultProfiles } = useProfileStore();
+  const location = useLocation();
+
+  //footer를 숨길 페이지
+  const hideFooter = [
+    '/login',
+    '/signup',
+    '/payment',
+    '/subscription',
+    '/subscription/success',
+    '/profile',
+    '/profile/edit',
+    '/profile/select',
+    '/profile/create/image',
+    '/profile/setting',
+    '/profile/create/info',
+    '/payment',
+    '/auth/redirect',
+  ];
+
+  const shouldHideFooter = hideFooter.includes(location.pathname);
 
   useEffect(() => {
     initAuth(); // 앱 시작 시 로그인 상태 초기화
@@ -60,19 +80,19 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/profile/edit" element={<ProfileEditPage />} />
         <Route path="/profile/select" element={<ProfileSelectPage />} />
-        <Route path="profile/create/image" element={<ProfileCreatePageImage />} />
-        <Route path="profile/create/info" element={<ProfileCreatePageInfo />} />
+        <Route path="/profile/create/image" element={<ProfileCreatePageImage />} />
+        <Route path="/profile/create/info" element={<ProfileCreatePageInfo />} />
         <Route path="/kids" element={<KidsMainPage />} />
         <Route path="/kids/:friends" element={<KidsDetail />} />
         <Route path="/kids/movie" element={<KidsMovie />} />
-        <Route path="kids/series" element={<KidsSeries />} />
+        <Route path="/kids/series" element={<KidsSeries />} />
         <Route path="/play/:type/:id/video" element={<PlayerControls />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/auth/redirect" element={<AuthRedirect />} />
-        <Route path='/kids/search' element={<KidsSearch />} />
+        <Route path="/kids/search" element={<KidsSearch />} />
       </Routes>
-      <Footer />
+      {!shouldHideFooter && <Footer />}
     </div>
   );
 }
