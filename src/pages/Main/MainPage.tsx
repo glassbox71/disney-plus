@@ -42,8 +42,8 @@ const MainPage = () => {
       <MainScreen />
       <WatchList />
       <RecommendedForYou />
-      <ThemeList />
       <LatestList title="새로 올라온 콘텐츠" />
+      <ThemeList />
       <Top10List title="현재 인기 영화 TOP 7" />
       <GenreList genreId="53" title="액션" />
       <GenreList genreId="16" title="애니메이션" />

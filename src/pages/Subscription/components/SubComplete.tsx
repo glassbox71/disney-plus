@@ -1,4 +1,3 @@
-import React from 'react'
 import SucessTop from './SucessTop'
 import { useNavigate } from 'react-router-dom'
 import "../scss/SubComplete.scss";

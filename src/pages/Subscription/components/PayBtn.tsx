@@ -3,9 +3,10 @@ import "../scss/PayBtn.scss";
 interface payBtnProps {
     activeBtn: string;
     onPay: () => void;
+    disabled?: boolean;
 }
 
-const PayBtn = ({ activeBtn, onPay }: payBtnProps) => {
+const PayBtn = ({ activeBtn, onPay, disabled = false }: payBtnProps) => {
     const isNaverPay = activeBtn === "naverpay"
     return (
         <div className="payBtnWrap">
@@ -14,7 +15,7 @@ const PayBtn = ({ activeBtn, onPay }: payBtnProps) => {
                     <p>결제 및 구독</p>
                 </button>
             ) : (
-                <button onClick={onPay}><p>결제 및 구독하기</p></button>
+                <button onClick={onPay} disabled={disabled}><p>결제 및 구독하기</p></button>
             )}
 
         </div>

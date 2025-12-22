@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "../scss/PayCredit.scss"
 import { payErrorMsg } from "../../../store/subscription";
 
 
 interface payCreditProps {
     onPopupOpen: () => void;
+    onValidChange: (valid: boolean) => void;
 }
 
 const NAME_REGEX = /^[가-힣a-zA-Z]{2,30}(?:\s[가-힣a-zA-Z]{2,30})?$/;
@@ -37,7 +38,7 @@ const formatBirth = (v: string) => {
     return `${d.slice(0, 4)} / ${d.slice(4, 6)} / ${d.slice(6)}`;
 };
 
-const PayCredit = ({ onPopupOpen }: payCreditProps) => {
+const PayCredit = ({ onPopupOpen, onValidChange }: payCreditProps) => {
     const [form, setForm] = useState({
         owner: "",
         cardNo: "",
@@ -109,8 +110,16 @@ const PayCredit = ({ onPopupOpen }: payCreditProps) => {
         setForm((p) => ({ ...p, [key]: value }))
     }
 
+    const isAllValid =
+        validity.ownerOk &&
+        validity.cardOk &&
+        validity.expOk &&
+        validity.pw2Ok &&
+        validity.birthOk
 
-
+    useEffect(() => {
+        onValidChange(isAllValid);
+    }, [isAllValid, onValidChange]);
 
     return (
         <div className="payInputWrap">
