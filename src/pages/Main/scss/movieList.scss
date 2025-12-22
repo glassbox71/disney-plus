@@ -135,3 +135,11 @@
     }
   }
 }
+@include rs.respond(mobile) {
+  .marginUp {
+    margin-top: 0 !important;
+  }
+  .movieList {
+    padding-bottom: 40px;
+  }
+}

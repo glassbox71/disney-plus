@@ -94,16 +94,27 @@ const RecommendedForYou = () => {
         </div>
       ) : (
         <Swiper
-          slidesPerView={6.2}
           spaceBetween={20}
           pagination={{ clickable: true }}
           modules={[Pagination]}
+          breakpoints={{
+            0: {
+              slidesPerView: 1.8,
+              spaceBetween: 16,
+            },
+            360: {
+              slidesPerView: 4.2,
+            },
+            768: {
+              slidesPerView: 6.2,
+            },
+          }}
           className="mySwiper"
           style={{ overflow: 'visible' }} // Swiper 잘림 방지
         >
           {recommendedItems.map((el) => {
             const title = el.title || el.name || '제목 없음';
-            const mediaType = el.media_type === 'tv' ? 'series' : 'movie';
+            const mediaType = el.media_type;
 
             return (
               <SwiperSlide key={`${el.media_type}-${el.id}`} style={{ overflow: 'visible' }}>

@@ -24,7 +24,7 @@ const VideoPopup = ({
 }: VideoPopupProps) => {
   const navigate = useNavigate();
   const { wishlist, onToggleWish } = useWishStore();
-  const { onRemoveWatching, watching } = useWatchingStore();
+  const { onRemoveWatching, watching, onAddWatching } = useWatchingStore();
 
   // 유효한 유튜브 키가 있는지 확인
   const hasVideo = youtubeKey && youtubeKey !== '' && youtubeKey !== 'undefined';
@@ -42,9 +42,19 @@ const VideoPopup = ({
   };
 
   // 재생 버튼 핸들러 (실제 재생 페이지로 이동)
-  const handlePlay = () => {
-    // TV는 series, 영화는 movie로 경로 구분
-    const playType = mediaType === 'tv' ? 'series' : 'movie';
+  const handlePlay = async () => {
+    await onAddWatching({
+      id,
+      media_type: mediaType,
+      poster_path: posterPath,
+      backdrop_path: backdropPath || '',
+      title: title,
+      currentTime: 0,
+      duration: 0,
+    });
+
+    // 재생 페이지 이동
+    const playType = mediaType;
     navigate(`/play/${playType}/${id}/video`);
   };
 
@@ -60,7 +70,7 @@ const VideoPopup = ({
   // 상세보기 핸들러
   const handleDetail = () => {
     // TV는 series, 영화는 movie로 경로 구분
-    const detailType = mediaType === 'tv' ? 'series' : 'movie';
+    const detailType = mediaType;
     navigate(`/play/${detailType}/${id}`);
   };
 
@@ -91,7 +101,6 @@ const VideoPopup = ({
                 src={`https://image.tmdb.org/t/p/w500${backdropPath || posterPath}`}
                 alt="fallback"
               />
-              <div className="no-video-msg">미리보기 영상이 없습니다.</div>
             </div>
           )}
         </div>
@@ -102,14 +111,15 @@ const VideoPopup = ({
           <div className="controlLeft">
             {/* 재생 버튼 */}
             <button
-              className={`playBtn ${isWished ? 'active' : ''}`}
+              className={`playBtn ${isWatching ? 'active' : ''}`}
               onClick={handlePlay}
-              title="재생">
-              <span>이어보기</span>
+              title={isWatching ? '이어보기' : '재생'}>
+              {isWatching && <span className="btnText">이어보기</span>}
+              <span className="btnImg"></span>
             </button>
             {/* 찜하기 버튼 */}
             <button
-              className={`wishBtn ${isWatching ? 'active' : ''}`}
+              className={`wishBtn ${isWished ? 'active' : ''}`}
               onClick={handleWishToggle}
               title={isWished ? '찜 목록에서 제거' : '찜 목록에 추가'}></button>
             {/* 기록 삭제 버튼 */}

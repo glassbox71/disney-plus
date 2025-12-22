@@ -85,6 +85,12 @@ address {
 
 /* TODO 반응형 해상도 */
 
+@mixin respond($res) {
+  @media screen and (max-width: $res) {
+    @content;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   .inner {
     max-width: 1680px;
@@ -202,8 +208,10 @@ address {
   &::before {
     display: inline-block;
     @include font(1.4rem, 500, #fff);
+    font-size: clamp(0.8rem, 0.8vw, 1.4rem);
     padding: 4px 8px;
     // aspect-ratio: 40/22;
+    text-wrap: nowrap;
   }
 
   &.ageAL {
@@ -212,7 +220,7 @@ address {
 
     &::before {
       content: 'ALL';
-      @include font(1.4rem, 500, #fff);
+      font: clamp(1.2rem, 1.2vw, 1.4rem);
     }
   }
 
@@ -222,7 +230,6 @@ address {
 
     &::before {
       content: 'ALL';
-      @include font(1.4rem, 500, #fff);
     }
   }
 
@@ -315,5 +322,16 @@ address {
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+$breakpoints: (
+  tablet: 768px,
+  mobile: 360px,
+);
+
+@mixin respond($device) {
+  @media (max-width: map-get($breakpoints, $device)) {
+    @content;
   }
 }

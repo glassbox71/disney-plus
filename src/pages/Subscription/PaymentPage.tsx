@@ -15,6 +15,7 @@ import { useSubStore } from "../../store/useSubStore"
 const PaymentPage = () => {
     const [activeBtn, setActiveBtn] = useState("credit");
     const [popup, setPopup] = useState(false);
+    const [creditValid, setCreditValid] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -45,13 +46,13 @@ const PaymentPage = () => {
                 <PaymentRadioBtn plan={selectedPlan} />
                 <Toggle activeBtn={activeBtn} setActiveBtn={setActiveBtn} mode="pay" />
                 {activeBtn === "credit" && (
-                    <PayCredit onPopupOpen={() => setPopup(true)} />
+                    <PayCredit onPopupOpen={() => setPopup(true)} onValidChange={setCreditValid} />
                 )}
                 {activeBtn === "credit" && (
                     <PayCheck />
                 )}
                 <PayDes />
-                <PayBtn activeBtn={activeBtn} onPay={handlePaySuccess} />
+                <PayBtn activeBtn={activeBtn} onPay={handlePaySuccess} disabled={activeBtn === "credit" && !creditValid} />
                 {popup ? <PayPopup onClose={handleClosePopup} /> : ""}
 
             </div>

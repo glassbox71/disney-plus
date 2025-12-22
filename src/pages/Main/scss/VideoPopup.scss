@@ -25,6 +25,15 @@
       height: 100%;
       border: 0;
     }
+    .no-video-fallback {
+      height: inherit;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 10%;
+      }
+    }
   }
 
   h2 {
@@ -54,12 +63,43 @@
       border-radius: 50px;
       background: rgba($color: #fff, $alpha: 0.3);
       text-align: center;
-      border: 1px solid #fff;
+      border: 1px solid rgba($color: #fff, $alpha: 0.3);
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
       &.playBtn {
-        background: url(../../../../public/icon/playIcon.svg) no-repeat center
-          rgba($color: #fff, $alpha: 0.3);
-        span {
-          display: none;
+        display: flex;
+
+        background-color: rgba($color: #fff, $alpha: 0.3);
+
+        .btnText {
+          display: block;
+          font-size: 1.6rem;
+          font-size: 600;
+          color: #333;
+        }
+
+        .btnImg {
+          width: 24px;
+          height: 24px;
+          display: block;
+          background: url(../../../../public/icon/playIcon.svg) no-repeat center;
+        }
+
+        &.active {
+          justify-content: space-between;
+          width: 120px;
+          padding: 0 1.2rem;
+          background: #fff;
+
+          .btnImg {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            background: url(../../../../public/icon/activePlayIcon.svg) no-repeat center;
+          }
+
+          &:hover {
+            background: #f5f5f5;
+          }
         }
       }
 
@@ -68,7 +108,7 @@
           rgba($color: #fff, $alpha: 0.3);
         &.active {
           background: url(../../../../public/icon/heartFillIcon.svg) no-repeat center
-            rgba($color: #fff, $alpha: 0.3);
+            rgba(255, 255, 255, 0.5);
         }
       }
       &.deleteBtn {
@@ -82,7 +122,7 @@
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.5);
-        transform: scale(1.05);
+        // transform: scale(1.05);
       }
 
       img {

@@ -8,11 +8,13 @@
 .MainScreen {
   width: 100%;
   background-repeat: no-repeat;
+  position: relative;
+  padding-bottom: 80px;
 
   .swiper {
     width: 100%;
     aspect-ratio: 1920/1010;
-
+    overflow: visible;
     .swiper-slide {
       position: relative;
     }
@@ -47,23 +49,30 @@
       padding-left: 4%;
 
       .movieTitleImg {
-        height: 158px;
+        height: 140px;
+        height: clamp(80px, 5vh, 150px);
         width: auto;
-        margin-bottom: 40px;
+        margin-bottom: 36px;
 
         &.movie {
           background: url('../../../../public/images/main/mainTItle.png');
           background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
         }
 
         &.series {
           background: url('../../../../public/images/main/seriesTitle.png');
           background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
         }
 
         &.original {
           background: url('../../../../public/images/main/originalTItle.png');
           background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
         }
       }
 
@@ -73,9 +82,12 @@
         align-items: center;
         gap: 12px;
         @include rs.font(1.6rem, 600, #fff);
+        font-size: clamp(1rem, 1.6vw, 1.6rem);
+        word-break: break-all;
         margin-bottom: 34px;
         user-select: none;
         cursor: default;
+        text-wrap: nowrap;
 
         .age {
           @include rs.age();
@@ -84,23 +96,34 @@
 
       .overview {
         @include rs.font(1.8rem, 400, #fff);
+        font-size: clamp(1.8rem, 1.8vw, 1.2em);
         letter-spacing: -0.45px;
         line-height: 150%;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         user-select: none;
         cursor: default;
         word-break: keep-all;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
+      .flexbox {
+        display: flex;
+      }
       .nowPlay {
-        padding: 12px 16px;
         @include rs.font(2rem, 500, #333);
+        font-size: clamp(1rem, 1.6vw, 2rem);
         border-radius: 8px;
         background: #fff;
         box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
         display: inline-flex;
         align-items: center;
         gap: 10px;
+        padding: clamp(5px, 1.5vw, 12px) clamp(5px, 2vw, 16px) clamp(4px, 1.5vw, 12px)
+          clamp(6px, 2vw, 16px);
 
         &::after {
           content: '';
@@ -112,6 +135,10 @@
           background-position: center;
           background-size: contain;
         }
+
+        &:hover {
+          background: #f4f4f4;
+        }
       }
 
       .detailInfo {
@@ -119,20 +146,29 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
-        padding: 12px 16px;
         @include rs.font(2rem, 500, #fff);
+        font-size: clamp(1rem, 1.8vw, 2rem);
         margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(5px, 1.5vw, 12px) clamp(5px, 2vw, 16px) clamp(4px, 1.5vw, 12px)
+          clamp(6px, 2vw, 16px);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(12px);
+        }
       }
     }
   }
 
   .bgGra {
     width: 100%;
-    aspect-ratio: 1840/250;
-    margin-top: -180px;
-    position: relative;
+    aspect-ratio: 1840/150;
+    position: absolute;
+    bottom: 50px;
     z-index: 1;
-    background: #ffffff;
     background: #ffffff;
     background: linear-gradient(
       180deg,
@@ -140,5 +176,140 @@
       rgba(2, 23, 42, 0.5) 20%,
       rgba(2, 23, 42, 1) 80%
     );
+  }
+}
+
+@include rs.respond(tablet) {
+  .MainScreen {
+    .swiper {
+      width: 100%;
+      aspect-ratio: 768/512;
+      .swiper-slide {
+        position: relative;
+      }
+
+      .basic {
+        background: url(../../../../public/images/movieScreen1.jpg);
+        @include bg();
+      }
+
+      .movie {
+        background: url(../../../../public/images/main/movieScreen2.jpg);
+        @include bg();
+      }
+
+      .series {
+        background: url(../../../../public/images/main/movieScreen1.jpg);
+        @include bg();
+      }
+
+      .original {
+        background: url(../../../../public/images/main/movieScreen3.jpg);
+        @include bg();
+      }
+
+      .textBox {
+        top: 52%;
+        width: 55%;
+        aspect-ratio: 392/206;
+
+        .movieTitleImg {
+          margin-bottom: 12px;
+          aspect-ratio: 167/79;
+        }
+
+        .overview {
+          display: none;
+        }
+
+        .nowPlay {
+          gap: 8px;
+
+          &::after {
+            width: 8px;
+          }
+        }
+
+        .detailInfo {
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .bgGra {
+      margin-top: 0px;
+    }
+  }
+}
+
+@include rs.respond(mobile) {
+  .MainPage.normal {
+    padding-top: 70px;
+  }
+  .MainScreen {
+    padding-bottom: 0;
+    .swiper {
+      aspect-ratio: 360/400;
+      margin-left: 12px;
+
+      .swiper-slide {
+        border-radius: 8px;
+      }
+      .textBox {
+        aspect-ratio: 240/200;
+        width: 80%;
+        max-width: 200px;
+
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+
+        .movieTitleImg {
+          margin-bottom: 20px;
+          background-size: cover;
+          height: 100px;
+        }
+
+        .movieInfo {
+          flex-direction: column;
+          margin-bottom: 20px;
+
+          .age,
+          .releaseDate {
+            display: none;
+          }
+          .genreTitle {
+            @include rs.font(1.2rem, 600, #fff);
+            word-break: keep-all;
+            text-align: center;
+          }
+        }
+
+        .flexbox {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .nowPlay {
+          gap: 8px;
+          width: fit-content;
+        }
+
+        .detailInfo {
+          width: fit-content;
+          border-radius: 4px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.048);
+          backdrop-filter: blur(8px);
+        }
+      }
+    }
+
+    .bgGra {
+      display: none;
+    }
   }
 }

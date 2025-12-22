@@ -21,6 +21,9 @@ export interface WatchingItem {
   title?: string;
   name?: string;
   progress?: number;
+  currentTime?: number;
+  duration?: number;
+  updateAt?: number;
 }
 
 // 찜목록 타입

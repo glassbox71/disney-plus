@@ -2,10 +2,12 @@
 
 .Header {
   width: 100%;
-  background: linear-gradient(180deg,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.3) 50%,
-      rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
   aspect-ratio: 1920/ 100;
   display: flex;
   justify-content: space-between;
@@ -23,7 +25,7 @@
   }
 
   &.kids {
-    background: #002F3E;
+    background: #002f3e;
   }
 
   .Header-left {
@@ -33,6 +35,15 @@
 
     h1 {
       aspect-ratio: 103/56;
+    }
+    nav {
+      &.DropdownMenu {
+        display: none;
+      }
+    }
+
+    .DropdownMenu {
+      display: none;
     }
   }
 
@@ -70,15 +81,13 @@
         background-size: contain;
       }
     }
-
-
   }
 
   .MyProfileDepth {
     position: relative;
 
     .MyProfile {
-      width: 56px;
+      width: clamp(36px, 1.2vw, 56px);
       aspect-ratio: 1/1;
       border-radius: 50%;
       overflow: hidden;
@@ -101,20 +110,20 @@
     .ProfileDropdown {
       opacity: 0;
       pointer-events: none;
-      transition: opacity .2s ease, transform .2s ease;
+      transition: opacity 0.2s ease, transform 0.2s ease;
       position: absolute;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.20);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
       width: 19rem;
       top: 110%;
       right: 0;
-      background: #25272C;
+      background: #25272c;
       overflow: hidden;
 
-      >li {
+      > li {
         display: flex;
         height: 60px;
         padding: 0 2rem;
@@ -132,14 +141,13 @@
         }
 
         &:hover {
-          background-color: #2D2F36;
+          background-color: #2d2f36;
           // cursor: pointer
         }
 
         button {
           @include rs.font(1.6rem, 400, #bbb);
         }
-
       }
 
       &.open {
@@ -147,8 +155,110 @@
         pointer-events: auto;
       }
     }
+  }
+}
 
+@include rs.respond(tablet) {
+  .Header {
+    border: 1px solid yellow;
 
+    .Header-left {
+      flex-grow: 1;
+      justify-content: space-between;
+      padding-right: 2vw;
 
+      h1 {
+        width: 66px;
+        border: 1px solid red;
+      }
+
+      nav {
+        &.web {
+          display: none;
+        }
+        &.DropdownMenu {
+          display: block;
+          @include rs.font(1.8rem, 400, #fff);
+          font-size: clamp(1rem, 0.8vw, 1.8rem);
+          position: relative;
+
+          width: clamp(12vw, 20vw, 20vw);
+          img {
+            margin-left: 2rem;
+            vertical-align: middle;
+          }
+          .DropdownList {
+            position: absolute;
+            top: 30px;
+            border-radius: 4px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+            background: #25272c;
+            @include rs.font(1.6rem, 400, #fff);
+            font-size: clamp(0.8rem, 0.8vw, 1.4rem);
+
+            li {
+              padding: 2vh 2vw;
+            }
+          }
+        }
+      }
+    }
+
+    .LinkBtn {
+      @include rs.font(1.6rem, 400, #fff);
+      letter-spacing: -1px;
+      padding: 8px 12px;
+    }
+
+    .MyProfileDepth {
+      position: relative;
+
+      .MyProfile {
+        // width: 36px;
+
+        img {
+          width: 150%;
+          max-width: 200%;
+          height: auto;
+        }
+
+        &:hover {
+          border: 2px solid #fff;
+        }
+      }
+    }
+  }
+}
+
+@include rs.respond(mobile) {
+  .Header {
+    border: 1px solid blue;
+    background-color: #02172a;
+    .Header-left {
+      h1 {
+        aspect-ratio: 66/36;
+        border: 1px solid red;
+      }
+    }
+
+    .Header-right {
+      .search {
+        display: none;
+      }
+      display: flex;
+      align-items: center;
+
+      .onLogoutBtn {
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 400;
+      }
+    }
+
+    .LinkBtn {
+      display: none;
+    }
   }
 }

@@ -14,6 +14,7 @@ import type {
 } from '../../types/ITV';
 import { useWatchingStore } from '../../store/useWatchingStore';
 import { useWishStore } from '../../store/useWishStore';
+import { generateProgress } from '../../utils/progress';
 
 const VideoPlayer = () => {
   // --- 상태 관리 ---
@@ -33,11 +34,14 @@ const VideoPlayer = () => {
   // --- 훅 및 변수 ---
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const { id, type } = useParams();
-  const { onAddWatching, onFetchWatching } = useWatchingStore();
-  const { wishlist, onToggleWish } = useWishStore();
+  const { onAddWatching, onFetchWatching, watching } = useWatchingStore();
+  const { wishlist, onToggleWish, onFetchWish } = useWishStore();
+  const [isWishActive, setIsWishActive] = useState(false);
+
   const navigate = useNavigate();
 
   console.log('player', player);
+
   // TODO 탭 기능
   const generateTabList = () => {
     const tabs: string[] = [];
@@ -249,26 +253,36 @@ const VideoPlayer = () => {
   };
 
   // 찜하기 토글 핸들러
-  const handleWishToggle = () => {
-    // 필수 데이터 체크
-    if (!id || !type || !player || !player.poster_path) return;
-
-    const title = 'title' in player ? player.title : player.name;
-
-    // ⭐ onToggleWish에 전달하는 객체에 media_type을 반드시 포함시킵니다.
-    onToggleWish({
-      id: Number(id),
-      media_type: type, // ⭐ 핵심: URL 파라미터에서 가져온 type('movie' 또는 'tv') 주입
-      poster_path: player.poster_path,
-      backdrop_path: player.backdrop_path || '',
-      title: title,
-    });
-  };
   // 현재 콘텐츠가 찜 목록에 있는지 여부를 판별.
   // type(media_type)과 id가 모두 일치해야 정확합니다.
   const isWished = wishlist.some(
     (item) => String(item.id) === String(id) && item.media_type === type
   );
+
+  useEffect(() => {
+    onFetchWish();
+  }, [onFetchWish]);
+
+  useEffect(() => {
+    setIsWishActive(isWished);
+  }, [isWished]);
+
+  const handleWishToggle = () => {
+    if (!id || !type || !player || !player.poster_path) return;
+
+    // ✅ 즉시 UI 반영
+    setIsWishActive((prev) => !prev);
+
+    const title = 'title' in player ? player.title : player.name;
+
+    onToggleWish({
+      id: Number(id),
+      media_type: type,
+      poster_path: player.poster_path,
+      backdrop_path: player.backdrop_path || '',
+      title,
+    });
+  };
 
   // --- 데이터 가공 ---
   const getDisplayData = () => {
@@ -311,6 +325,14 @@ const VideoPlayer = () => {
     </>
   );
 
+  // TODO 재생바
+  const isWatching = watching.some(
+    (item) =>
+      String(item.id) === String(id) && item.media_type === (type === 'series' ? 'tv' : type)
+  );
+
+  const progress = isWatching && player ? generateProgress(player.id) : 0;
+
   return (
     <section className="VideoPlayer">
       {/* 메인 비주얼 영역 */}
@@ -334,7 +356,16 @@ const VideoPlayer = () => {
                 <h1 className="logo-text">{title}</h1>
               )}
             </div>
-            <div className="flex">
+            {/* 재생바 */}
+            {isWatching && (
+              <div className="progressBarWrap">
+                <div className="progressBar">
+                  <div className="now" style={{ width: `${progress}%` }} />
+                </div>
+              </div>
+            )}
+
+            <div className="info-flex">
               <span className={`info1 age age${certification}`}></span>
               <div className="innerFlex">
                 <span className="info2">{year}</span>
@@ -351,7 +382,7 @@ const VideoPlayer = () => {
                 지금 재생하기
               </button>
               <button
-                className={`MyWish LinkBtn ${isWished ? 'active' : ''}`}
+                className={`MyWish LinkBtn ${isWishActive ? 'active' : ''}`}
                 onClick={handleWishToggle}
                 aria-label="찜하기"></button>
             </div>

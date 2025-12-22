@@ -17,8 +17,8 @@ const KidsMainPage = () => {
             <KidsWatchingList />
             <KidsFriendsSelect />
             <KidsRecommendedForYou />
-            <KidsGenreList genreId="12" title="슈퍼파워 히어로" />
             <KidsTop10 title={"현재 인기 이야기 TOP 7"} />
+            <KidsGenreList genreId="12" title="슈퍼파워 히어로" />
             <KidsGenreList genreId="10751" title="귀여운 동물 친구들" />
             <MainBanner num={0} />
             <KidsGenreList genreId="14" title="또 다른 세계로" />

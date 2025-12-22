@@ -70,7 +70,18 @@ const LatestList = ({ title }: title) => {
     <section className="LatestList movieList pullInner" style={{ position: 'relative' }}>
       <HeaderTitle mainTitle={title} />
 
-      <Swiper slidesPerView={6.2} spaceBetween={20} className="mySwiper">
+      <Swiper
+        spaceBetween={20}
+        breakpoints={{
+          0: {
+            slidesPerView: 2.1,
+            spaceBetween: 16,
+          },
+          360: {
+            slidesPerView: 6.2,
+          },
+        }}
+        className="mySwiper">
         {Latest.map((el) => (
           <SwiperSlide key={el.id}>
             <div

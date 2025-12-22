@@ -77,19 +77,17 @@ const WishlistPage = () => {
                       <div className="hoverBg">
                         <ul className="wishTab">
                           <li>
-                            <button
-                              title="재생"
-                              onClick={() => navigate(`/play/${wish.media_type}/${wish.id}`)}>
-                              <img src="/icon/playIcon.svg" alt="재생" />
-                            </button>
-                          </li>
-
-                          <li>
                             <button onClick={() => onToggleWish(wish)} title="찜 목록에서 제거">
                               <img src="/icon/trashIcon.svg" alt="제거" />
                             </button>
                           </li>
-
+                          <li>
+                            <button
+                              title="재생"
+                              onClick={() => navigate(`/play/${wish.media_type}/${wish.id}/video`)}>
+                              <img src="/icon/playIcon.svg" alt="재생" />
+                            </button>
+                          </li>
                           <li>
                             <button
                               title="상세 정보"

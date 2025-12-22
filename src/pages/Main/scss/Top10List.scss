@@ -4,39 +4,48 @@
   padding: 100px 0;
   padding-left: 4%;
   // border: 1px solid red;
-  background: linear-gradient(180deg,
-      rgba(2, 23, 42, 0.6) 4%,
-      rgba(12, 48, 64, 0.6) 16%,
-      rgba(47, 131, 139, 0.55) 53%,
-      rgba(12, 48, 64, 0.56) 81%,
-      rgba(2, 23, 42, 0.6) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(2, 23, 42, 0.6) 4%,
+    rgba(12, 48, 64, 0.6) 16%,
+    rgba(47, 131, 139, 0.55) 53%,
+    rgba(12, 48, 64, 0.56) 81%,
+    rgba(2, 23, 42, 0.6) 100%
+  );
   max-width: 1920px;
   margin: 0 auto;
+  aspect-ratio: 768/300;
+
+  .swiper {
+    border: 1px solid red;
+  }
 
   &.kids {
-    background: linear-gradient(180deg,
-        rgba(0, 47, 62, 1) 4%,
-        rgba(12, 48, 64, 1) 16%,
-        rgba(47, 131, 139, 0.91) 53%,
-        rgba(12, 48, 64, 0.93) 81%,
-        rgba(0, 47, 62, 1) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 47, 62, 1) 4%,
+      rgba(12, 48, 64, 1) 16%,
+      rgba(47, 131, 139, 0.91) 53%,
+      rgba(12, 48, 64, 0.93) 81%,
+      rgba(0, 47, 62, 1) 100%
+    );
   }
 
   .TopNumber {
     position: relative;
-    margin-left: 130px;
+    margin-left: clamp(100px, 4vw, 130px);
     border-radius: 8px;
 
     &::before {
       content: '';
       position: absolute;
-      left: -30px;
+      left: clamp(-20px, 2vw, -30px);
       bottom: 0;
       z-index: -1;
       transform: translate(-50%, -0%);
       color: rgba(255, 255, 255, 0.6);
       font-family: 'Rubik Doodle Shadow';
-      font-size: 260px;
+      font-size: clamp(160px, 4vw, 260px);
       font-style: normal;
       font-weight: 400;
       line-height: 80%;

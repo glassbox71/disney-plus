@@ -22,11 +22,17 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
 
     // media_type이 누락되었을 경우를 대비한 방어 로직
     const rawType = item.media_type || (item as any).type || (item as any).category;
-    if (!rawType) {
-      console.error('시청 기록 저장 실패: media_type 정보가 없습니다.', item);
+
+    const typeMap: Record<string, 'tv' | 'movie'> = {
+      series: 'tv',
+      movie: 'movie',
+    };
+
+    const normalizedType = typeMap[rawType];
+    if (!normalizedType) {
+      console.error('알 수 없는 media_type:', rawType);
       return;
     }
-    const normalizedType = rawType === 'series' ? 'tv' : rawType;
 
     const user = useAuthStore.getState().user;
     const activeProfileId = useProfileStore.getState().activeProfileId;
@@ -47,6 +53,9 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
       await setDoc(ref, updateData);
 
       // 4. Zustand 상태 업데이트 (기존 목록에 있으면 교체, 없으면 추가)
+      // const isExist = get().watching.some(
+      //   (w) => String(w.id) === String(item.id) && w.media_type === normalizedType
+      // );
       const isExist = get().watching.some(
         (w) => String(w.id) === String(item.id) && w.media_type === normalizedType
       );
@@ -97,7 +106,15 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
         collection(db, 'users', user.uid, 'profiles', activeProfileId, 'playlist')
       );
 
-      const data = snap.docs.map((doc) => doc.data() as WatchingItem);
+      // const data = snap.docs.map((doc) => doc.data() as WatchingItem);
+      const data = snap.docs
+        .map((doc) => {
+          const d = doc.data();
+          if (!d.id || !d.media_type) return null;
+          return d as WatchingItem;
+        })
+        .filter(Boolean) as WatchingItem[];
+
       // 최신 시청 순으로 정렬하여 저장
       const sortedData = data.sort((a, b) => (b.updateAt || 0) - (a.updateAt || 0));
 

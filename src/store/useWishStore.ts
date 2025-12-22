@@ -23,17 +23,11 @@ export const useWishStore = create<WishState>((set, get) => ({
     const activeProfileId = useProfileStore.getState().activeProfileId;
     if (!activeProfileId) return;
 
-    // 1. 타입 추출 (item에 정보가 없다면 undefined가 됨)
     const rawType = item.media_type || item.category || item.type;
+    if (!rawType) return;
 
-    if (!rawType) {
-      console.error('카테고리 정보 누락: 이 객체에는 media_type이나 category가 없습니다.', item);
-      // 사용자에게 알림을 주려면 여기에 toast 등을 넣으세요.
-      return;
-    }
-
-    // 2. 정규화
     const normalizedType = rawType === 'series' ? 'tv' : rawType;
+
     const docId = `${normalizedType}-${item.id}`;
     const ref = doc(db, 'users', user.uid, 'profiles', activeProfileId, 'wishlist', docId);
 
@@ -41,32 +35,44 @@ export const useWishStore = create<WishState>((set, get) => ({
       (w) => String(w.id) === String(item.id) && w.media_type === normalizedType
     );
 
+    /** ✅ 1️⃣ UI 상태를 먼저 변경 */
+    if (exists) {
+      set({
+        wishlist: get().wishlist.filter(
+          (w) => !(String(w.id) === String(item.id) && w.media_type === normalizedType)
+        ),
+      });
+    } else {
+      const wishItem: WishItem = {
+        id: item.id,
+        media_type: normalizedType as 'movie' | 'tv',
+        title: item.title || item.name || '제목 없음',
+        poster_path: item.poster_path || '',
+        createdAt: Date.now(),
+      };
+
+      set({ wishlist: [...get().wishlist, wishItem] });
+    }
+
+    /** ✅ 2️⃣ DB는 그 다음 (side-effect) */
     try {
       if (exists) {
         await deleteDoc(ref);
-        set({
-          wishlist: get().wishlist.filter(
-            (w) => !(String(w.id) === String(item.id) && w.media_type === normalizedType)
-          ),
-        });
       } else {
-        const wishItem: WishItem = {
+        await setDoc(ref, {
           id: item.id,
-          media_type: normalizedType as 'movie' | 'tv', // ⭐ 오타 수정: media_type -> normalizedType
+          media_type: normalizedType,
           title: item.title || item.name || '제목 없음',
           poster_path: item.poster_path || '',
           createdAt: Date.now(),
-        };
-        await setDoc(ref, wishItem);
-        set({ wishlist: [...get().wishlist, wishItem] });
+        });
       }
     } catch (error) {
       console.error('Firebase Error:', error);
+      // 필요하면 여기서 rollback 처리
     }
   },
-  // ==========================
-  // Firestore → Zustand (데이터 로드)
-  // ==========================
+
   onFetchWish: async () => {
     const user = useAuthStore.getState().user;
     if (!user) return;

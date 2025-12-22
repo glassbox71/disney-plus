@@ -41,12 +41,14 @@
     }
 
     .info-wrap {
+      display: flex;
+      flex-direction: column;
       margin-left: 4%;
       width: 35%;
       aspect-ratio: 660/360;
       // transform: translateY(-50%);
       position: absolute;
-      bottom: 14%;
+      bottom: 24%;
 
       .skeleton {
         aspect-ratio: 660/360;
@@ -68,16 +70,18 @@
       .logo-text {
         @include rs.font(6rem, 500, #fff);
       }
-      .flex {
+      .info-flex {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
       }
 
       .innerFlex {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+      }
+      .info1 {
+        margin-right: 2rem;
       }
       .info2,
       .info3,
@@ -139,50 +143,22 @@
       }
     }
 
-    //TODO 게이진
-    .bar {
-      margin-top: 40px;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      .outBar {
-        width: clamp(100px, 74%, 480px);
-        aspect-ratio: 480/10;
-        border-radius: 20px;
-        background: #888;
-        position: relative;
+    .progressBar {
+      width: 70%;
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      overflow: hidden;
+      margin-bottom: 4rem;
+      position: relative;
 
-        .innerBar {
-          height: inherit;
-          background-color: #33ddff;
-        }
-      }
-
-      .Time {
-        @include rs.font(1.6rem, 500, #ddd);
-
-        .runTime {
-          &::after {
-            content: '분  중';
-            padding-right: 4px;
-            // border: 1px solid red;
-          }
-
-          &:empty {
-            display: none;
-          }
-        }
-
-        .look {
-          &::after {
-            content: '분';
-            padding-right: 4px;
-            // border: 1px solid red;
-          }
-          &:empty {
-            display: none;
-          }
-        }
+      .now {
+        background: #33ddff;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        display: block;
       }
     }
 
@@ -215,9 +191,12 @@
           background-repeat: no-repeat;
           background-position: center;
         }
+        &:hover {
+          background: #f4f4f4;
+        }
       }
 
-      .LinkBtn {
+      .MyWish {
         width: 54px;
         aspect-ratio: 1/1;
         display: flex;
@@ -227,11 +206,18 @@
         gap: 10px;
         border-radius: 27px;
         border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(12px);
-        background: url('../../../../public/icon/heart.svg');
+        background-image: url('../../../../public/icon/heart.svg');
         background-repeat: no-repeat;
         background-position: center;
+
+        &.active {
+          background-image: url('../../../../public/icon/heartFillIcon.svg');
+          background-repeat: no-repeat;
+          background-color: rgba(255, 255, 255, 0.2);
+          background-position: center;
+        }
       }
     }
   }

@@ -1,1 +1,11 @@
 @use '../../../App.scss' as rs;
+
+.introWrap {
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  overflow-y: hidden;
+  video {
+    width: 100%;
+    object-fit: cover;
+  }
+}

@@ -67,10 +67,17 @@ const UpcomingList = () => {
       <HeaderTitle mainTitle="공개예정" />
 
       <Swiper
-        slidesPerView={6.2}
-        spaceBetween={20}
         pagination={{ clickable: true }}
         modules={[Pagination]}
+        breakpoints={{
+          0: {
+            slidesPerView: 2.6,
+            spaceBetween: 16,
+          },
+          360: {
+            slidesPerView: 4.3,
+          },
+        }}
         className="mySwiper">
         {movies.map((el) => (
           <SwiperSlide key={el.id}>

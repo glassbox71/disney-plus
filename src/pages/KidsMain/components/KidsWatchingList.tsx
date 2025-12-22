@@ -6,11 +6,11 @@ import { Pagination } from 'swiper/modules';
 import { useMatch } from 'react-router-dom';
 import HeaderTitle from '../../Main/components/HeaderTitle';
 import VideoPopup from '../../Main/components/VideoPopup';
-
 import { useWatchingStore } from '../../../store/useWatchingStore';
 import { useProfileStore } from '../../../store/useProfileStore';
 import { useMovieStore } from '../../../store/useMovieStore';
 import { useTvStore } from '../../../store/useTvStore';
+import { generateProgress } from '../../../utils/progress';
 
 const WatchList = () => {
   const { watching, onFetchWatching } = useWatchingStore();
@@ -110,6 +110,7 @@ const WatchList = () => {
         style={{ overflow: 'visible' }}>
         {displayWatching.map((el, idx) => {
           const mediaType = el.media_type || (el.title ? 'movie' : 'tv');
+          const progress = generateProgress(el.id);
 
           return (
             <SwiperSlide key={`${el.id}-${idx}`} style={{ overflow: 'visible' }}>

@@ -75,10 +75,18 @@ const GenreList = ({ genreId, title }: GenreListProps) => {
     >
       <HeaderTitle mainTitle={title} />
       <Swiper
-        slidesPerView={6.2}
         spaceBetween={20}
         pagination={{ clickable: true }}
         modules={[Pagination]}
+        breakpoints={{
+          0: {
+            slidesPerView: 2.6,
+            spaceBetween: 16,
+          },
+          360: {
+            slidesPerView: 4.3,
+          },
+        }}
         className="mySwiper">
         {GenreMovies.map((el) => (
           <SwiperSlide key={el.id}>
