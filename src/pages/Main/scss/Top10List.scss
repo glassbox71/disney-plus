@@ -35,6 +35,7 @@
     position: relative;
     display: flex;
     justify-content: end;
+
     .TopNumber {
       border-radius: 8px;
       position: absolute;
@@ -94,8 +95,9 @@
         }
       }
 
-    &:hover .imgBox img {
-      transform: scale(1.1);
+      &:hover .imgBox img {
+        transform: scale(1.1);
+      }
     }
   }
 }

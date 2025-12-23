@@ -7,7 +7,6 @@ import type { title } from '../../../types/IMovie';
 import VideoPopup from './VideoPopup';
 import '../scss/movieList.scss';
 import '../scss/Top10List.scss';
-import { useProfileStore } from '../../../store/useProfileStore';
 
 const Top10List = ({ title }: title) => {
   const { onFetchTOP, Top, onFetchVideo } = useMovieStore();
