@@ -101,15 +101,15 @@ const ThemeList = () => {
                 pagination={{ clickable: true }}
                 breakpoints={{
                   0: {
-                    slidesPerView: 1.8,
+                    slidesPerView: 1.2,
                     spaceBetween: 8,
                   },
                   281: {
-                    slidesPerView: 2,
+                    slidesPerView: 1.8,
                     spaceBetween: 8,
                   },
-                  361: {
-                    slidesPerView: 2.2,
+                  481: {
+                    slidesPerView: 2.4,
                     spaceBetween: 16,
                   },
                   769: {

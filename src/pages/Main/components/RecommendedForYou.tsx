@@ -105,7 +105,7 @@ const RecommendedForYou = () => {
               slidesPerView: 3.1,
               spaceBetween: 8,
             },
-            361: {
+            481: {
               slidesPerView: 4.1,
               spaceBetween: 16,
             },

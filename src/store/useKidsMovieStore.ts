@@ -52,9 +52,9 @@ interface KidsMovieProps {
   clearKidsCategory: () => void;
 }
 
-/* =======================
-  NL certification -> 숫자 나이
-======================= */
+
+// NL certification -> 숫자 나이
+
 const nlCertToAge = (cert?: string | null): number | null => {
   if (!cert) return null;
   const c = String(cert).trim().toUpperCase();
@@ -67,10 +67,8 @@ const nlCertToAge = (cert?: string | null): number | null => {
   return null;
 };
 
-/* =======================
-  현재 activeProfile 기준으로
-  키즈모드 + maxAge 계산
-======================= */
+
+// 현재 activeProfile 기준으로  키즈모드 + maxAge 계산
 const getActiveProfile = () => {
   const { profiles, activeProfileId } = useProfileStore.getState();
   const activeProfile = profiles.find((p) => p.id === activeProfileId) ?? null;
@@ -90,9 +88,8 @@ const getActiveProfile = () => {
   return { activeProfile, isKidsMode, maxAge };
 };
 
-/* =======================
- Movie: NL certification 가져오기
-======================= */
+
+// Movie: NL certification 가져오기
 const fetchMovieNlCert = async (id: number | string) => {
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${id}/release_dates?api_key=${API_KEY}`
@@ -113,9 +110,8 @@ const fetchMovieNlCert = async (id: number | string) => {
   return any ? String(any.certification).trim() : null;
 };
 
-/* =======================
- TV: NL rating 가져오기
-======================= */
+
+//TV: NL rating 가져오기
 const fetchTvNlCert = async (id: number | string) => {
   const res = await fetch(
     `https://api.themoviedb.org/3/tv/${id}/content_ratings?api_key=${API_KEY}`
@@ -126,10 +122,8 @@ const fetchTvNlCert = async (id: number | string) => {
   return nl?.rating ? String(nl.rating).trim() : null;
 };
 
-/* =======================
- 상위 N개만 NL 등급 붙여서 필터
-  - 키즈면 등급 없으면 숨김
-======================= */
+
+// 상위 N개만 NL 등급 붙여서 필터 - 키즈면 등급 없으면 숨김
 const filterByNlAgeTopN = async (
   results: KidsMovie[],
   maxAge: number,
@@ -166,8 +160,7 @@ export const useKidsMoiveStore = create<KidsMovieProps>((set, get) => ({
 
   onFethCharacterMovie: async (item) => {
     const res = await fetch(
-      `https://api.themoviedb.org/3/search/${
-        item.type
+      `https://api.themoviedb.org/3/search/${item.type
       }?api_key=${API_KEY}&query=${encodeURIComponent(item.query ?? '')}&language=ko-KR`
     );
     const data = await res.json();
@@ -200,12 +193,11 @@ export const useKidsMoiveStore = create<KidsMovieProps>((set, get) => ({
     let url = '';
 
     if (item.type === 'movie' || item.type === 'tv') {
-      url = `https://api.themoviedb.org/3/search/${
-        item.type
-      }?api_key=${API_KEY}&query=${encodeURIComponent(item.query ?? '')}&language=ko-KR`;
+      url = `https://api.themoviedb.org/3/search/${item.type
+        }?api_key=${API_KEY}&query=${encodeURIComponent(item.query ?? '')}&language=ko-KR`;
     }
 
-    //discover
+
 
     if (!url) {
       console.error('url이 비어있', item.type);

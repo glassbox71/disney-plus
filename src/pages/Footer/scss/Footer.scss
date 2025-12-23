@@ -19,8 +19,7 @@
 
     .footerLogo {
       margin-bottom: clamp(16px, 4vh, 6rem);
-
-      width: clamp(55px, 2vw, 180px);
+      width: clamp(55px, 20vw, 180px);
       aspect-ratio: 180/98;
 
       img {

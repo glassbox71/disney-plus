@@ -22,8 +22,8 @@
 
 .movieList {
   padding-left: 4%;
-  padding-bottom: 80px;
-  // border: 1px solid yellow;
+  padding-bottom: clamp(30px, 8vh, 80px);
+
   max-width: 1920px;
   margin: 0 auto;
   position: relative;
@@ -110,8 +110,9 @@
     .movieTitle {
       position: absolute;
       @include rs.font(2rem, 600, #fff);
-      bottom: 16px;
-      right: 16px;
+      font-size: clamp(1.2rem, 1.4vw, 2rem);
+      bottom: clamp(4px, 0.8vh, 16px);
+      left: 16px;
       text-shadow: -1px -1px 0 #02172a, 1px -1px 0 #02172a, -1px 1px 0 #02172a, 1px 1px 0 #02172a;
     }
   }
@@ -136,6 +137,6 @@
     margin-top: 0 !important;
   }
   .movieList {
-    padding-bottom: 40px;
+    padding-bottom: clamp(30px, 3vh, 80px);
   }
 }

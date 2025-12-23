@@ -3,7 +3,7 @@
 .mainTItle {
   h1 {
     @include rs.font(2.4rem, 500, #fff);
-    font-size: clamp(1.4rem, 1.2vw, 2.4rem);
+    font-size: clamp(1.4rem, 2vw, 2.4rem);
     line-height: 150%;
     letter-spacing: -0.6px;
     margin-bottom: 20px;
@@ -12,6 +12,10 @@
     align-items: center;
     z-index: 2;
     position: relative;
+
+    &.kidsTitle {
+      @include rs.font(3rem, 500, #fff);
+    }
 
     &:hover {
       .arrow::before {
@@ -33,6 +37,7 @@
     &::before {
       content: '둘러보기';
       @include rs.font(1.8rem, 500, #33ddff);
+      font-size: clamp(1.2rem, 1.4vw, 1.8rem);
       line-height: 1;
       visibility: hidden;
       width: 0px;
@@ -42,6 +47,7 @@
       display: inline-block;
       margin-right: 8px;
     }
+
     &::after {
       content: '';
       width: 8px;

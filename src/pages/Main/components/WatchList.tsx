@@ -111,7 +111,7 @@ const WatchList = () => {
             slidesPerView: 2.2,
             spaceBetween: 8,
           },
-          361: {
+          481: {
             slidesPerView: 3.4,
             spaceBetween: 16,
           },

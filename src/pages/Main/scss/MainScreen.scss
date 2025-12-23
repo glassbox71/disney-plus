@@ -50,28 +50,28 @@
 
       .movieTitleImg {
         height: 140px;
-        height: clamp(80px, 5vh, 150px);
+        height: clamp(60px, 8vh, 150px);
         width: auto;
         margin-bottom: 36px;
 
         &.movie {
           background: url('../../../../public/images/main/mainTItle.png');
           background-repeat: no-repeat;
-          background-position: center center;
+          background-position: left center;
           background-size: contain;
         }
 
         &.series {
           background: url('../../../../public/images/main/seriesTitle.png');
           background-repeat: no-repeat;
-          background-position: center center;
+          background-position: left center;
           background-size: contain;
         }
 
         &.original {
           background: url('../../../../public/images/main/originalTItle.png');
           background-repeat: no-repeat;
-          background-position: center center;
+          background-position: left center;
           background-size: contain;
         }
       }

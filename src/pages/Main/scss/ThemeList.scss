@@ -4,32 +4,32 @@ $Theme: disney, pixar, marvel, starwars, NGC, hulu, fx;
 $image-root: '../../../../public/images/main/theme/';
 $Theme-sizes: (
   disney: (
-    width: 113px,
-    height: 47px,
+    width: clamp(46px, 5vw, 113px),
+    aspect-ratio: 113 / 30,
   ),
   pixar: (
-    width: 103px,
-    height: 23px,
+    width: clamp(46px, 4.5vw, 103px),
+    aspect-ratio: 103 / 23,
   ),
   marvel: (
-    width: 125px,
-    height: 50px,
+    width: clamp(46px, 5.5vw, 125px),
+    aspect-ratio: 125 / 50,
   ),
   starwars: (
-    width: 100px,
-    height: 50px,
+    width: clamp(46px, 4.5vw, 100px),
+    aspect-ratio: 100 / 50,
   ),
   NGC: (
-    width: 140px,
-    height: 42px,
+    width: clamp(46px, 6vw, 140px),
+    aspect-ratio: 140 / 42,
   ),
   hulu: (
-    width: 97px,
-    height: 50px,
+    width: clamp(46px, 4.2vw, 97px),
+    aspect-ratio: 97 / 50,
   ),
   fx: (
-    width: 92px,
-    height: 50px,
+    width: clamp(46px, 4vw, 92px),
+    aspect-ratio: 92 / 50,
   ),
 );
 
@@ -42,8 +42,11 @@ $Theme-sizes: (
   margin: 0 auto;
   aspect-ratio: 1920/570;
   border: 1px solid transparent;
+
   .menu {
     margin-bottom: 90px;
+    display: flex;
+    flex-direction: column;
 
     // border: 1px solid red;
     ul {
@@ -51,21 +54,21 @@ $Theme-sizes: (
       justify-content: center;
       align-items: center;
       gap: 100px;
-      gap: clamp(30px, 6vw, 100px);
+      gap: clamp(30px, 4vw, 100px);
       padding-bottom: 30px;
 
       li {
-        width: 120px;
+        width: clamp(56px, 2vw, 120px);
         height: 80px;
         cursor: pointer;
-        // border: 1px solid red;
 
         @each $Theme, $size-map in $Theme-sizes {
           &.#{$Theme} {
             $brand-width: map-get($size-map, width); // Map에서 width 값을 가져옴
-            $brand-height: map-get($size-map, height); // Map에서 height 값을 가져옴
+            $aspect-ratio: map-get($size-map, aspect-ratio); // Map에서 height 값을 가져옴
             width: $brand-width;
-            height: $brand-height;
+
+            aspect-ratio: $aspect-ratio;
             background: url('#{$image-root}#{$Theme}.svg') no-repeat center center;
             background-size: contain;
             &:hover {
@@ -185,6 +188,39 @@ $Theme-sizes: (
             transform: scale(1.1);
           }
         }
+      }
+    }
+  }
+}
+
+@include rs.respond(tablet) {
+  .ThemeWrap .menu {
+    aspect-ratio: 1920/1400;
+    flex-direction: row;
+    gap: 12px;
+    margin-bottom: 0;
+
+    ul {
+      height: fit-content;
+      flex-direction: column;
+      padding: 0;
+      height: auto;
+      gap: clamp(8px, 2vw, 100px);
+
+      li {
+        height: 14%;
+      }
+    }
+
+    .ThemeList {
+      padding: 0;
+
+      .themeText {
+        display: none;
+      }
+
+      .themeMovie {
+        width: 100%;
       }
     }
   }

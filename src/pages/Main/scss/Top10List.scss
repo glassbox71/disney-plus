@@ -44,7 +44,7 @@
       transform: translateY(0%);
       color: rgba(255, 255, 255, 0.6);
       font-family: 'Rubik Doodle Shadow';
-      font-size: clamp(140px, 3vw, 260px);
+      font-size: clamp(80px, 9vw, 260px);
       font-style: normal;
       font-weight: 400;
       line-height: 80%;
@@ -99,5 +99,29 @@
         transform: scale(1.1);
       }
     }
+
+    a {
+      display: inline-block;
+      width: clamp(70%, 75%, 80%);
+
+      .movieThumbnail {
+        // border: 1px solid red;
+      }
+    }
+  }
+
+  .swiper {
+    // border: 1px solid red;
+  }
+
+  &.kids {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 47, 62, 1) 4%,
+      rgba(12, 48, 64, 1) 16%,
+      rgba(47, 131, 139, 0.91) 53%,
+      rgba(12, 48, 64, 0.93) 81%,
+      rgba(0, 47, 62, 1) 100%
+    );
   }
 }

@@ -1,3 +1,4 @@
+import { useMatch } from 'react-router-dom';
 import '../scss/HeaderTitle.scss';
 
 interface headerTItleProps {
@@ -5,9 +6,10 @@ interface headerTItleProps {
 }
 
 const HeaderTitle = ({ mainTitle }: headerTItleProps) => {
+  const isKids = useMatch("/kids/*")
   return (
     <div className="mainTItle">
-      <h1 className="">
+      <h1 className={`${isKids ? "kidsTitle" : ""}`}>
         {mainTitle}
         <span className="arrow"></span>
       </h1>

@@ -24,53 +24,53 @@
     background-repeat: no-repeat;
 
     &.holiday {
-      width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 12vw, 220px);
       aspect-ratio: 220/119;
       background-image: url('../../../../public/images/main/Season/holiday.svg');
     }
 
     &.winter {
-      width: clamp(60px, 2vw, 250px);
+      width: clamp(90px, 2vw, 250px);
       aspect-ratio: 250/110;
       background-image: url('../../../../public/images/main/Season/winter.svg');
     }
     &.newYear {
-      width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/newYear.svg');
     }
     &.valentine {
-      width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/valentine.svg');
     }
     &.spring {
       width: 220px;
-    width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/spring.svg');
     }
     &.family {
       width: 220px;
-       width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/family.svg');
     }
     &.classic {
       width: 220px;
-    width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/classic.svg');
     }
     &.horror {
       width: 220px;
-        width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/140;
       background-image: url('../../../../public/images/main/Season/horror.svg');
     }
     &.vacation {
       width: 220px;
-    width: clamp(60px, 2vw, 220px);
+      width: clamp(90px, 2vw, 220px);
       aspect-ratio: 220/100;
       background-image: url('../../../../public/images/main/Season/vacation.svg');
     }
@@ -90,7 +90,6 @@
     @include rs.font(2.4rem, 500, #fff);
     font-size: clamp(1.2rem, 2vw, 2.4rem);
     margin-bottom: 20px;
-    color: red;
 
     &:hover {
       .arrow::before {

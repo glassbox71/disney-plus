@@ -117,7 +117,7 @@ const SeasonList = () => {
               slidesPerView: 3.2,
               spaceBetween: 8,
             },
-            361: {
+            481: {
               slidesPerView: 3.6,
               spaceBetween: 16,
             },
