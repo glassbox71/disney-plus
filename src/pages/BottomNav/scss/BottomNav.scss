@@ -10,7 +10,7 @@
     width: 100%;
     aspect-ratio: 360/50;
     display: flex;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     z-index: 9990;
     background: rgba(2, 23, 42, 0.6);
