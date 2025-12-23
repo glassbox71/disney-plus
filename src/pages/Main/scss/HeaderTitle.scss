@@ -3,7 +3,7 @@
 .mainTItle {
   h1 {
     @include rs.font(2.4rem, 500, #fff);
-    font-size: clamp(1rem, 1.2vw, 2.4rem);
+    font-size: clamp(1.4rem, 1.2vw, 2.4rem);
     line-height: 150%;
     letter-spacing: -0.6px;
     margin-bottom: 20px;

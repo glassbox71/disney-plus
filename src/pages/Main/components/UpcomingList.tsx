@@ -68,14 +68,26 @@ const UpcomingList = () => {
 
       <Swiper
         pagination={{ clickable: true }}
-        modules={[Pagination]}
         breakpoints={{
           0: {
-            slidesPerView: 2.6,
+            slidesPerView: 2.2,
+            spaceBetween: 8,
+          },
+          281: {
+            slidesPerView: 3.1,
+            spaceBetween: 8,
+          },
+          361: {
+            slidesPerView: 4.1,
             spaceBetween: 16,
           },
-          360: {
-            slidesPerView: 4.3,
+          769: {
+            slidesPerView: 5.4,
+            spaceBetween: 16,
+          },
+          1201: {
+            slidesPerView: 6.2,
+            spaceBetween: 16,
           },
         }}
         className="mySwiper">

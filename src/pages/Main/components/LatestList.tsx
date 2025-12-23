@@ -71,14 +71,27 @@ const LatestList = ({ title }: title) => {
       <HeaderTitle mainTitle={title} />
 
       <Swiper
-        spaceBetween={20}
+        pagination={{ clickable: true }}
         breakpoints={{
           0: {
-            slidesPerView: 2.1,
+            slidesPerView: 2.2,
+            spaceBetween: 8,
+          },
+          281: {
+            slidesPerView: 3.1,
+            spaceBetween: 8,
+          },
+          361: {
+            slidesPerView: 4.1,
             spaceBetween: 16,
           },
-          360: {
+          769: {
+            slidesPerView: 5.4,
+            spaceBetween: 16,
+          },
+          1201: {
             slidesPerView: 6.2,
+            spaceBetween: 16,
           },
         }}
         className="mySwiper">

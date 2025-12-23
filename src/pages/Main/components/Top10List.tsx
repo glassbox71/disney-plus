@@ -66,17 +66,27 @@ const Top10List = ({ title }: title) => {
 
       {/* Swiper 스타일 및 구조 유지 */}
       <Swiper
-        spaceBetween={20}
+        pagination={{ clickable: true }}
         breakpoints={{
           0: {
-            slidesPerView: 1.8,
+            slidesPerView: 1.9,
+            spaceBetween: 8,
+          },
+          281: {
+            slidesPerView: 2.1,
+            spaceBetween: 8,
+          },
+          361: {
+            slidesPerView: 3.2,
             spaceBetween: 16,
           },
-          360: {
-            slidesPerView: 2.1,
+          769: {
+            slidesPerView: 3.8,
+            spaceBetween: 16,
           },
-          768: {
-            slidesPerView: 4.3,
+          1201: {
+            slidesPerView: 4.2,
+            spaceBetween: 16,
           },
         }}
         className="mySwiper">

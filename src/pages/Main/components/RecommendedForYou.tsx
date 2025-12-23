@@ -94,19 +94,28 @@ const RecommendedForYou = () => {
         </div>
       ) : (
         <Swiper
-          spaceBetween={20}
           pagination={{ clickable: true }}
           modules={[Pagination]}
           breakpoints={{
             0: {
-              slidesPerView: 1.8,
+              slidesPerView: 2.2,
+              spaceBetween: 8,
+            },
+            281: {
+              slidesPerView: 3.1,
+              spaceBetween: 8,
+            },
+            361: {
+              slidesPerView: 4.1,
               spaceBetween: 16,
             },
-            360: {
-              slidesPerView: 4.2,
+            769: {
+              slidesPerView: 5.4,
+              spaceBetween: 16,
             },
-            768: {
+            1201: {
               slidesPerView: 6.2,
+              spaceBetween: 16,
             },
           }}
           className="mySwiper"

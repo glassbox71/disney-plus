@@ -107,16 +107,29 @@ const SeasonList = () => {
 
       <div className="SeasonListList">
         <Swiper
+          pagination={{ clickable: true }}
           breakpoints={{
             0: {
-              slidesPerView: 2.1,
+              slidesPerView: 2.8,
+              spaceBetween: 8,
+            },
+            281: {
+              slidesPerView: 3.2,
+              spaceBetween: 8,
+            },
+            361: {
+              slidesPerView: 3.6,
               spaceBetween: 16,
             },
-            360: {
-              slidesPerView: 5.3,
+            769: {
+              slidesPerView: 4.8,
+              spaceBetween: 16,
+            },
+            1201: {
+              slidesPerView: 5.4,
+              spaceBetween: 16,
             },
           }}
-          spaceBetween={20}
           className="mySwiper">
           {seasonMovies.length > 0 ? (
             seasonMovies
