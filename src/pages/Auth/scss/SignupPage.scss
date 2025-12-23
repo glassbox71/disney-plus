@@ -253,13 +253,13 @@
             display: block;
             width: 16px;
             height: 16px;
-            background: url(../../../../public/icon/dropdownClose.svg) no-repeat;
+            background: url(../../../../public/icon/dropdownOpen.svg) no-repeat;
           }
         }
         &.active {
           .myDisneyTitle {
             span {
-              background: url(../../../../public/icon/dropdownOpen.svg) no-repeat;
+              background: url(../../../../public/icon/dropdownClose.svg) no-repeat;
             }
           }
         }

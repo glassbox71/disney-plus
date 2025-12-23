@@ -187,6 +187,8 @@ export interface ITVStore {
   RatedTv: TV[];
   TopTV: TV[];
   videos: [];
+  episodes: [];
+  seasons: [];
   onFetchNewTV: () => Promise<void>;
   onFetchRated: () => Promise<void>;
   onFetchTopTV: () => Promise<void>;
@@ -225,4 +227,16 @@ export interface CollectionResponse {
   poster_path: string;
   backdrop_path: string;
   parts: CollectionMovie[];
+}
+
+// types/ITV.ts 에 추가 권장
+export interface Episode {
+  id: number;
+  name: string;
+  overview: string;
+  still_path: string | null;
+  air_date: string;
+  episode_number: number;
+  season_number: number;
+  runtime: number | null;
 }

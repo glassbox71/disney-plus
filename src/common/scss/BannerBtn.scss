@@ -1,64 +1,74 @@
-@use "../../App.scss" as rs;
+@use '../../App.scss' as rs;
 
 .bannerBtnWrap {
-    position: absolute;
-    top: 65%;
-    left: 5%;
-    transform: translateY(-50%);
-    width: 40%;
+  position: absolute;
+  top: 65%;
+  left: 5%;
+  transform: translateY(-50%);
+  width: 40%;
+  display: flex;
+  gap: 2rem;
+
+  .nowPlay {
+    background: #fff;
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    border-radius: 8px;
+    width: 23%;
+    aspect-ratio: 168/45;
+    padding: 0 1.6rem;
+    @include rs.font(2rem, 500, #333);
+    box-shadow: 0 2px 6px rgba($color: #000000, $alpha: 0.15);
+    white-space: nowrap;
 
-    .nowPlay {
-        background: #fff;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        white-space: nowrap;
-        border-radius: 8px;
-        width: 23%;
-        aspect-ratio: 168/45;
-        padding: 0 1.6rem;
-        @include rs.font (2rem, 500, #333);
-        box-shadow: 0 2px 6px rgba($color: #000000, $alpha: 0.15);
-        white-space: nowrap;
-
-        img {
-            width: 20px;
-            height: 20px;
-        }
-
+    img {
+      width: 20px;
+      height: 20px;
     }
 
-    .moreInfo {
-        @include rs.font (2rem, 500, #fff);
-        width: 20%;
-        aspect-ratio: 2.8;
-        background: rgba($color: #fff, $alpha: 0.1);
-        backdrop-filter: blur(24px);
-        border: 1px solid rgba($color: #fff, $alpha: 0.2);
-        border-radius: 8px;
-        text-align: center;
-        white-space: nowrap;
-
-
+    &:hover {
+      background: #f4f4f4;
     }
+  }
 
-    .heart {
-        background: rgba($color: #fff, $alpha: 0.1);
-        backdrop-filter: blur(24px);
-        border: 1px solid rgba($color: #fff, $alpha: 0.2);
-        border-radius: 50%;
-        padding: 0.5rem;
-        display: flex;
-        align-items: center;
-        height: 54px;
-        width: 54px;
+  .moreInfo {
+    @include rs.font(2rem, 500, #fff);
+    width: 20%;
+    aspect-ratio: 2.8;
+    background: rgba($color: #fff, $alpha: 0.1);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba($color: #fff, $alpha: 0.2);
+    border-radius: 8px;
+    text-align: center;
+    white-space: nowrap;
 
-        img {
-            text-align: center;
-            width: 100%;
-            height: 24px;
-        }
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
     }
+  }
+
+  .heart {
+    background-image: url('../../../public/icon/heart.svg');
+    background-color: rgba($color: #fff, $alpha: 0.1);
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba($color: #fff, $alpha: 0.2);
+    border-radius: 50%;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    height: 54px;
+    width: 54px;
+
+    &.active {
+      background-image: url('../../../../public/icon/heartFillIcon.svg');
+      background-repeat: no-repeat;
+      background-color: rgba(255, 255, 255, 0.2);
+      background-position: center;
+    }
+  }
 }

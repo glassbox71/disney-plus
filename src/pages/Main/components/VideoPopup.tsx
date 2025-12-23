@@ -11,6 +11,7 @@ interface VideoPopupProps {
   mediaType: 'movie' | 'tv';
   posterPath: string;
   backdropPath?: string;
+  showDeleteButton?: boolean; // 삭제 버튼 표시 여부 (시청 목록에서만 true)
 }
 
 const VideoPopup = ({
@@ -21,6 +22,7 @@ const VideoPopup = ({
   mediaType,
   posterPath,
   backdropPath,
+  showDeleteButton = false, // 기본값 false
 }: VideoPopupProps) => {
   const navigate = useNavigate();
   const { wishlist, onToggleWish } = useWishStore();
@@ -84,11 +86,14 @@ const VideoPopup = ({
     (item) => String(item.id) === String(id) && item.media_type === mediaType
   );
 
+  // 시청 목록에서만 이어보기 상태 표시
+  const showContinueWatching = showDeleteButton && isWatching;
+
   return (
     <div className="videoPopupBg">
       <div className="videoPopupWrap" onMouseLeave={onClose}>
         <div className="videoWrap">
-          {/* 영상이 있으면 iframe 재생, 없으면 배경미지 출력 */}
+          {/* 영상이 있으면 iframe 재생, 없으면 배경이미지 출력 */}
           {hasVideo ? (
             <iframe
               src={`https://www.youtube.com/embed/${youtubeKey}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0`}
@@ -109,12 +114,12 @@ const VideoPopup = ({
 
         <div className="controlWrap">
           <div className="controlLeft">
-            {/* 재생 버튼 */}
+            {/* 재생 버튼 - 시청 목록에서만 이어보기 표시 */}
             <button
-              className={`playBtn ${isWatching ? 'active' : ''}`}
+              className={`playBtn ${showContinueWatching ? 'active' : ''}`}
               onClick={handlePlay}
-              title={isWatching ? '이어보기' : '재생'}>
-              {isWatching && <span className="btnText">이어보기</span>}
+              title={showContinueWatching ? '이어보기' : '재생'}>
+              {showContinueWatching && <span className="btnText">이어보기</span>}
               <span className="btnImg"></span>
             </button>
             {/* 찜하기 버튼 */}
@@ -122,11 +127,13 @@ const VideoPopup = ({
               className={`wishBtn ${isWished ? 'active' : ''}`}
               onClick={handleWishToggle}
               title={isWished ? '찜 목록에서 제거' : '찜 목록에 추가'}></button>
-            {/* 기록 삭제 버튼 */}
-            <button
-              className="deleteBtn"
-              onClick={handleRemove}
-              title="시청 기록에서 삭제"></button>
+            {/* 기록 삭제 버튼 - 시청 목록에서만 표시 */}
+            {showDeleteButton && (
+              <button
+                className="deleteBtn"
+                onClick={handleRemove}
+                title="시청 기록에서 삭제"></button>
+            )}
           </div>
 
           <div className="controlRight">

@@ -57,7 +57,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
       const title = (isMovie ? (item as any).title : (item as any).name) || '';
       const keywordLower = keyword.toLowerCase();
 
-      // 필터명(예: "한국콘텐츠")이 검색창에 입력되어 있을 때는 텍스트 검색을 무시함 (검색 결과가 0이 되는 것 방지)
+      // 필터명이 검색창에 입력되어 있을 때는 텍스트 검색을 무시함 (검색 결과가 0이 되는 것 방지)
       const isFilterTitle = currentFilter && keyword === (currentFilter as any).value;
 
       const textMatch =
@@ -70,26 +70,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
       let filterMatch = true;
 
       if (currentFilter) {
-        // 1. 나라 / 지역 필터 (KR -> ko, US -> en 매핑 포함)
-        if (currentFilter.type === 'country' || currentFilter.type === 'region') {
-          const itemLang = item.original_language?.toLowerCase() || '';
-          const target = currentFilter.value;
-
-          const convertToLang = (val: string) => {
-            if (val === 'KR') return 'ko';
-            if (val === 'US') return 'en';
-            if (val === 'JP') return 'ja';
-            return val.toLowerCase();
-          };
-
-          if (Array.isArray(target)) {
-            filterMatch = target.map((v) => convertToLang(v)).includes(itemLang);
-          } else {
-            filterMatch = itemLang === convertToLang(target);
-          }
-        }
-
-        // 2. 장르 필터 (SF & 판타지: [878, 14] 대응)
+        // 1. 장르 필터 (SF & 판타지: [878, 14] 대응)
         if (currentFilter.type === 'genre') {
           const targetIds = currentFilter.genreId;
           const itemGenres = item.genre_ids || [];

@@ -27,7 +27,10 @@ const MainBanner = ({ num }: MainBannerProps) => {
             </div>
           </div>
         </div>
-        <BannerBtn />
+        <BannerBtn
+          id={banner.id} // TMDB ID값
+          type={banner.type} // 'movie' 또는 'tv'
+        />
       </div>
     </section>
   );
