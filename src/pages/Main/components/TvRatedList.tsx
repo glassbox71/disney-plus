@@ -81,8 +81,29 @@ const TvRatedList = ({ title }: title) => {
       <HeaderTitle mainTitle={title} />
 
       <Swiper
-        slidesPerView={6.2}
-        spaceBetween={20}
+        pagination={{ clickable: true }}
+        breakpoints={{
+          0: {
+            slidesPerView: 2.2,
+            spaceBetween: 8,
+          },
+          281: {
+            slidesPerView: 3.1,
+            spaceBetween: 8,
+          },
+          481: {
+            slidesPerView: 4.1,
+            spaceBetween: 16,
+          },
+          769: {
+            slidesPerView: 5.4,
+            spaceBetween: 16,
+          },
+          1201: {
+            slidesPerView: 6.2,
+            spaceBetween: 16,
+          },
+        }}
         className="mySwiper"
         style={{ overflow: 'visible' }}>
         {RatedTv.slice(0, 10).map((el) => (
