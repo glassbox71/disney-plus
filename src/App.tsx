@@ -29,6 +29,7 @@ import KidsMovie from './pages/KidsMain/KidsMovie';
 import KidsSeries from './pages/KidsMain/KidsSeries';
 import KidsSearch from './pages/KidsMain/components/KidsSearch';
 import IntroPage from './pages/Intro/IntroPage';
+import BottomNav from './pages/BottomNav/BottomNav';
 
 function App() {
   const { initAuth, userData } = useAuthStore();
@@ -102,6 +103,7 @@ function App() {
         <Route path="/auth/redirect" element={<AuthRedirect />} />
         <Route path="/kids/search" element={<KidsSearch />} />
       </Routes>
+      <BottomNav />
       {!shouldHideFooter && <Footer />}
     </div>
   );
