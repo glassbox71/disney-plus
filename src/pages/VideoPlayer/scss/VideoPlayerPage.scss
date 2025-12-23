@@ -314,6 +314,173 @@
       }
     }
 
+    /* VideoPlayerPage.scss 내부에 추가 또는 에피소드 관련 섹션에 삽입 */
+    .episodes.tab {
+      padding: 4rem 4%; // 좌우 여백을 다른 섹션과 통일
+
+      // 시즌 선택 드롭다운
+      .seasonSelector {
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        label {
+          @include rs.font(1.8rem, 500, #fff);
+        }
+
+        select {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: #f9f9f9;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          padding: 12px 24px;
+          font-size: 1.6rem;
+          border-radius: 8px;
+          outline: none;
+          cursor: pointer;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+          }
+
+          option {
+            background-color: #02172a; // 배경색과 통일
+            color: #f9f9f9;
+          }
+        }
+      }
+
+      // 에피소드 리스트: Grid 레이아웃으로 변경
+      .episodeList {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(320px, 1fr)); // 반응형 그리드
+        gap: 30px;
+
+        .episodeItem {
+          display: flex;
+          flex-direction: column; // 세로 카드 형태
+          gap: 16px;
+          padding: 0; // 패딩 제거하고 이미지와 텍스트 배치
+          border-radius: 12px;
+          overflow: hidden;
+          transition: transform 0.3s ease;
+          cursor: pointer;
+
+          &:hover {
+            transform: translateY(-8px); // 살짝 위로 올라오는 효과
+
+            .episodeThumbnail {
+              &::after {
+                opacity: 1; // 호버 시 재생 아이콘 표시용
+              }
+              img {
+                transform: scale(1.05);
+                filter: brightness(0.8);
+              }
+            }
+
+            .episodeInfo h3 {
+              color: #33ddff; // 호버 시 제목 강조
+            }
+          }
+
+          // 에피소드 썸네일 영역
+          .episodeThumbnail {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9; // 표준 영상 비율
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #1a1d29;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: transform 0.4s ease, filter 0.3s ease;
+            }
+
+            // 재생 아이콘 (선택 사항: 가상 요소로 구현)
+            &::after {
+              content: '▶';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              font-size: 3rem;
+              color: #fff;
+              opacity: 0;
+              transition: opacity 0.3s ease;
+              z-index: 2;
+            }
+
+            .episodeNumber {
+              position: absolute;
+              top: 12px;
+              left: 12px;
+              background-color: rgba(0, 0, 0, 0.75);
+              color: #fff;
+              padding: 4px 10px;
+              border-radius: 4px;
+              font-size: 1.4rem;
+              font-weight: 700;
+              backdrop-filter: blur(4px);
+              z-index: 1;
+            }
+          }
+
+          // 에피소드 텍스트 정보 영역
+          .episodeInfo {
+            padding: 0 5px;
+
+            .header-row {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+            }
+
+            h3 {
+              @include rs.font(1.8rem, 600, #f9f9f9);
+              margin-bottom: 6px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .episode-meta {
+              @include rs.font(1.4rem, 400, #a0a0a0);
+              margin-bottom: 10px;
+            }
+
+            .episode-overview {
+              @include rs.font(1.5rem, 400, #cacaca);
+              line-height: 1.6;
+              display: -webkit-box;
+              -webkit-line-clamp: 2; // 가로 카드이므로 2줄로 제한
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+
+    // 스켈레톤 애니메이션 유지
+    @keyframes skeleton-loading {
+      0% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     // 작품정보
     .detailData {
       display: flex;

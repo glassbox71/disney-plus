@@ -19,7 +19,6 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
   onAddWatching: async (item) => {
     // 1. 데이터 검증 (media_type 유무 확인이 가장 중요합니다)
     if (!item.poster_path || !item.id) return;
-
     // media_type이 누락되었을 경우를 대비한 방어 로직
     const rawType = item.media_type || (item as any).type || (item as any).category;
 
@@ -41,7 +40,6 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
     // 2. 문서 ID를 "type-id" 형식으로 생성 (안전성)
     const docId = `${normalizedType}-${item.id}`;
     const ref = doc(db, 'users', user.uid, 'profiles', activeProfileId, 'playlist', docId);
-
     const updateData = {
       ...item,
       media_type: normalizedType, // 타입 정규화해서 저장
@@ -53,9 +51,6 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
       await setDoc(ref, updateData);
 
       // 4. Zustand 상태 업데이트 (기존 목록에 있으면 교체, 없으면 추가)
-      // const isExist = get().watching.some(
-      //   (w) => String(w.id) === String(item.id) && w.media_type === normalizedType
-      // );
       const isExist = get().watching.some(
         (w) => String(w.id) === String(item.id) && w.media_type === normalizedType
       );
@@ -106,7 +101,6 @@ export const useWatchingStore = create<WatchingState>((set, get) => ({
         collection(db, 'users', user.uid, 'profiles', activeProfileId, 'playlist')
       );
 
-      // const data = snap.docs.map((doc) => doc.data() as WatchingItem);
       const data = snap.docs
         .map((doc) => {
           const d = doc.data();

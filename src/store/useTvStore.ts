@@ -47,4 +47,30 @@ export const useTvStore = create<ITVStore>((set) => ({
     set({ videos: data.results });
     return data.results;
   },
+
+  //TODO tv 시리즈 시즌
+  seasons: [],
+
+  // tv 시리즈 시즌
+  onFetchSeasons: async (id: string) => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`
+    );
+    const data = await res.json();
+    console.log('시즌', data);
+    set({ seasons: data.results });
+  },
+
+  // 시즌 에피소드
+  episodes: [],
+
+  // 에피소드를 불러올 메서드
+  onFetchEpisodes: async (id: string, season: string) => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${API_KEY}&language=en-US`
+    );
+    const data = await res.json();
+    console.log('에피소드', data.episodes);
+    set({ episodes: data.results });
+  },
 }));

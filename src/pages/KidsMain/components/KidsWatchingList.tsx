@@ -30,17 +30,23 @@ const WatchList = () => {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    onFetchWatching();
-  }, [onFetchWatching, activeProfile]);
+    if (!activeProfile) return;
 
-  const displayWatching = isKidsPath
-    ? watching.filter((item: any) => {
-        return (
-          !item.adult &&
-          (item.genre_ids?.some((id: number) => [16, 10751].includes(id)) || item.isKids)
-        );
-      })
-    : watching;
+    const fetchWatching = async () => {
+      await onFetchWatching();
+    };
+
+    fetchWatching();
+  }, [activeProfile, onFetchWatching]);
+
+  const displayWatching = watching
+    .filter((item: any) => item.id && item.poster_path)
+    .map((item: any) => ({
+      ...item,
+      media_type: item.media_type || (item.title ? 'movie' : 'tv'),
+    }));
+
+  if (displayWatching.length === 0) return null;
 
   /** 썸네일 hover */
   const handleMouseEnter = (e: React.MouseEvent, el: any) => {

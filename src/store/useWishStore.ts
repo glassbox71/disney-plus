@@ -105,7 +105,7 @@ export const useWishStore = create<WishState>((set, get) => ({
     const map = new Map(current.map((w) => [`${w.media_type}-${w.id}`, w]));
 
     for (const item of items) {
-      // ⭐ 카테고리 변환 처리
+      // 카테고리 변환 처리
       const media_type = item.media_type || (item.category === 'series' ? 'tv' : item.category);
       const key = `${media_type}-${item.id}`;
 

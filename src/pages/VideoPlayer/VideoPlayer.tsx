@@ -26,6 +26,11 @@ const VideoPlayer = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [collectionMovies, setCollectionMovies] = useState<CollectionMovie[]>([]);
 
+  // 에피소드 관련 상태 추가
+  const [selectedSeason, setSelectedSeason] = useState<number>(1);
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [isLoadingEpisodes, setIsLoadingEpisodes] = useState(false);
+
   // 로딩 상태 - 초기값을 true로 설정
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(true); // 연관
   const [isLoadingVideos, setIsLoadingVideos] = useState(true); // 예고편
@@ -41,6 +46,41 @@ const VideoPlayer = () => {
   const navigate = useNavigate();
 
   console.log('player', player);
+
+  // TODO 에피소드 데이터 가져오기
+  const fetchEpisodes = async (seasonNumber: number) => {
+    if (!id) return;
+    setIsLoadingEpisodes(true);
+    try {
+      // 1. 한국어 데이터 요청
+      const res = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}&language=ko-KR`
+      );
+      const data = await res.json();
+
+      // 2. 만약 첫 번째 에피소드의 overview가 비어있다면 영어로 재시도 (선택 사항)
+      if (data.episodes && data.episodes.length > 0 && !data.episodes[0].overview) {
+        const engRes = await fetch(
+          `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`
+        );
+        const engData = await engRes.json();
+        setEpisodes(engData.episodes || []);
+      } else {
+        setEpisodes(data.episodes || []);
+      }
+    } catch (error) {
+      console.error('에피소드 로드 실패:', error);
+      setEpisodes([]);
+    } finally {
+      setIsLoadingEpisodes(false);
+    }
+  };
+
+  // 시즌 선택 핸들러
+  const handleSeasonChange = (seasonNumber: number) => {
+    setSelectedSeason(seasonNumber);
+    fetchEpisodes(seasonNumber);
+  };
 
   // TODO 탭 기능
   const generateTabList = () => {
@@ -93,6 +133,13 @@ const VideoPlayer = () => {
       } else {
         // 컬렉션이 없으면 로딩 종료
         setIsLoadingCollection(false);
+      }
+
+      // TV 시리즈인 경우 첫 번째 시즌의 에피소드 자동 로드
+      if (type === 'tv' && data.seasons && data.seasons.length > 0) {
+        const firstSeason = data.seasons[0].season_number;
+        setSelectedSeason(firstSeason);
+        fetchEpisodes(firstSeason);
       }
     } catch (error) {
       console.error('영화 상세 로드 실패:', error);
@@ -204,13 +251,14 @@ const VideoPlayer = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPlayer();
+    setPlayer(null);
     setRecommendations([]);
     setVideos([]);
     setCollectionMovies([]);
     setIsLoadingRecommendations(true);
     setIsLoadingVideos(true);
     setIsLoadingCollection(true);
+    setEpisodes([]);
 
     // 데이터 호출
     fetchMovieDetails();
@@ -240,7 +288,7 @@ const VideoPlayer = () => {
 
     const watchingItem = {
       id: Number(id),
-      media_type: type, // ⭐ 추가: 시청 목록에서도 타입을 알아야 나중에 불러올 수 있습니다.
+      media_type: type,
       poster_path: player.poster_path,
       backdrop_path: player.backdrop_path || '',
       currentTime: 0,
@@ -254,7 +302,6 @@ const VideoPlayer = () => {
 
   // 찜하기 토글 핸들러
   // 현재 콘텐츠가 찜 목록에 있는지 여부를 판별.
-  // type(media_type)과 id가 모두 일치해야 정확합니다.
   const isWished = wishlist.some(
     (item) => String(item.id) === String(id) && item.media_type === type
   );
@@ -406,20 +453,52 @@ const VideoPlayer = () => {
         <div className="tab-content">
           {/* 에피소드 탭 */}
           {activeTab === '에피소드' && player && 'seasons' in player && (
-            <div className="recommend tab">
-              <ul className="collection-list grid col">
-                {player.seasons?.map((season) => (
-                  <li key={season.id} className="grid-item">
-                    <Link to={`/play/${type}/${season.id}`}>
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500/${season.poster_path}`}
-                        alt={season.name}
-                      />
-                      <p>{season.name}</p>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className="episodes tab">
+              {/* 시즌 선택 드롭다운 */}
+              <div className="seasonSelector">
+                <select
+                  value={selectedSeason}
+                  onChange={(e) => handleSeasonChange(Number(e.target.value))}>
+                  {player.seasons?.map((season: Season) => (
+                    <option key={season.id} value={season.season_number}>
+                      {season.name} ({season.episode_count}개 에피소드)
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 에피소드 리스트 */}
+              <div className="episodeList">
+                {isLoadingEpisodes ? (
+                  <GridSkeleton count={6} />
+                ) : (
+                  episodes.map((episode) => (
+                    <div key={episode.id} className="episodeItem">
+                      <div className="episodeThumbnail">
+                        {episode.still_path ? (
+                          <img
+                            src={`https://image.tmdb.org/t/p/w500${episode.still_path}`}
+                            alt={episode.name}
+                          />
+                        ) : (
+                          <div className="no-image">이미지 없음</div>
+                        )}
+                        <div className="episodeNumber">{episode.episode_number}</div>
+                      </div>
+                      <div className="episodeInfo">
+                        <h3>{episode.name}</h3>
+                        <p className="episode-meta">
+                          {episode.runtime && `${episode.runtime}분`}
+                          {episode.air_date && ` · ${episode.air_date}`}
+                        </p>
+                        <p className="episode-overview">
+                          {episode.overview || '줄거리 정보가 없습니다.'}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           )}
 

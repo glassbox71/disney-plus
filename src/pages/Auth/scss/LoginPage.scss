@@ -1,6 +1,7 @@
 @use '../../../App.scss' as rs;
 .bg {
   height: calc(var(--vh, 1vh) * 100);
+  background: linear-gradient(180deg, #0a1a26 0%, #0c7471 60%, rgba(0, 209, 197, 0.9) 100%);
 
   .authWrap {
     display: flex;
