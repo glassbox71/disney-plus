@@ -29,7 +29,7 @@
       transform: translateY(0%);
       color: rgba(255, 255, 255, 0.6);
       font-family: 'Rubik Doodle Shadow';
-      font-size: clamp(140px, 3vw, 260px);
+      font-size: clamp(80px, 9vw, 260px);
       font-style: normal;
       font-weight: 400;
       line-height: 80%;
@@ -90,16 +90,13 @@
       width: clamp(70%, 75%, 80%);
 
       .movieThumbnail {
-        border: 1px solid red;
+        // border: 1px solid red;
       }
     }
   }
 
   .swiper {
-    border: 1px solid red;
-
-    .swiper-slide {
-    }
+    // border: 1px solid red;
   }
 
   &.kids {

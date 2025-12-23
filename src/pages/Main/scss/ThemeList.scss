@@ -4,31 +4,31 @@ $Theme: disney, pixar, marvel, starwars, NGC, hulu, fx;
 $image-root: '../../../../public/images/main/theme/';
 $Theme-sizes: (
   disney: (
-    width: clamp(56px, 5vw, 113px),
+    width: clamp(46px, 5vw, 113px),
     aspect-ratio: 113 / 30,
   ),
   pixar: (
-    width: clamp(56px, 4.5vw, 103px),
+    width: clamp(46px, 4.5vw, 103px),
     aspect-ratio: 103 / 23,
   ),
   marvel: (
-    width: clamp(56px, 5.5vw, 125px),
+    width: clamp(46px, 5.5vw, 125px),
     aspect-ratio: 125 / 50,
   ),
   starwars: (
-    width: clamp(56px, 4.5vw, 100px),
+    width: clamp(46px, 4.5vw, 100px),
     aspect-ratio: 100 / 50,
   ),
   NGC: (
-    width: clamp(56px, 6vw, 140px),
+    width: clamp(46px, 6vw, 140px),
     aspect-ratio: 140 / 42,
   ),
   hulu: (
-    width: clamp(56px, 4.2vw, 97px),
+    width: clamp(46px, 4.2vw, 97px),
     aspect-ratio: 97 / 50,
   ),
   fx: (
-    width: clamp(56px, 4vw, 92px),
+    width: clamp(46px, 4vw, 92px),
     aspect-ratio: 92 / 50,
   ),
 );
@@ -195,8 +195,10 @@ $Theme-sizes: (
 
 @include rs.respond(tablet) {
   .ThemeWrap .menu {
+    aspect-ratio: 1920/1400;
     flex-direction: row;
     gap: 12px;
+    margin-bottom: 0;
 
     ul {
       height: fit-content;

@@ -22,8 +22,8 @@
 
 .movieList {
   padding-left: 4%;
-  padding-bottom: 80px;
-  // border: 1px solid yellow;
+  padding-bottom: clamp(30px, 8vh, 80px);
+
   max-width: 1920px;
   margin: 0 auto;
   position: relative;
@@ -137,6 +137,6 @@
     margin-top: 0 !important;
   }
   .movieList {
-    padding-bottom: 40px;
+    padding-bottom: clamp(30px, 3vh, 80px);
   }
 }

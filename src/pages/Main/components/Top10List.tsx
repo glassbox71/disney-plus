@@ -69,11 +69,11 @@ const Top10List = ({ title }: title) => {
         pagination={{ clickable: true }}
         breakpoints={{
           0: {
-            slidesPerView: 1.9,
+            slidesPerView: 1.2,
             spaceBetween: 8,
           },
           281: {
-            slidesPerView: 2.1,
+            slidesPerView: 1.9,
             spaceBetween: 8,
           },
           481: {
