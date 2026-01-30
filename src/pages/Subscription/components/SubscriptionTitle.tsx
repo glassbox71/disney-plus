@@ -1,4 +1,4 @@
-import React from 'react'
+
 import '../scss/SubscriptionTitle.scss'
 
 const SubscriptionTitle = () => {

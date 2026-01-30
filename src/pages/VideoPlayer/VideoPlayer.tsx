@@ -15,6 +15,8 @@ import type {
 import { useWatchingStore } from '../../store/useWatchingStore';
 import { useWishStore } from '../../store/useWishStore';
 import { generateProgress } from '../../utils/progress';
+type Episode = any;
+type Season = any;
 
 const VideoPlayer = () => {
   // --- 상태 관리 ---
@@ -386,9 +388,8 @@ const VideoPlayer = () => {
       <div className="playerMain">
         {player && (
           <img
-            src={`https://image.tmdb.org/t/p/original/${
-              player.backdrop_path || player.poster_path
-            }`}
+            src={`https://image.tmdb.org/t/p/original/${player.backdrop_path || player.poster_path
+              }`}
             alt={title}
           />
         )}

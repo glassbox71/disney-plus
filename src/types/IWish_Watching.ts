@@ -34,4 +34,5 @@ export interface WishItem {
   backdrop_path?: string;
   title?: string; // movie
   name?: string; // tv
+  createdAt: number;
 }

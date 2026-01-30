@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import "../scss/PaymentRadioBtn.scss";
 import type { SubPlan } from '../../../store/subscription';
 
