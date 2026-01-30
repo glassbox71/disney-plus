@@ -30,94 +30,63 @@
           display: none;
         }
         .icon {
-          width: 100%;
+          width: 80%;
           aspect-ratio: 1/1;
           background-repeat: no-repeat;
           background-position: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
 
           &.home {
+            background: url('../../../../public/icon/home.svg') no-repeat center center;
+            background-size: cover;
+            max-width: 20px;
             &:hover {
-              &::before {
-                background: url('../../../../public/icon/home-active.svg') no-repeat center center;
-                background-size: cover;
-                width: clamp(20px, 6vw, 32px);
-              }
-            }
-
-            &::before {
-              content: '';
-              background: url('../../../../public/icon/home.svg') no-repeat center center;
+              background: url('../../../../public/icon/home-active.svg') no-repeat center center;
               background-size: cover;
-              width: clamp(20px, 6vw, 32px);
-              aspect-ratio: 1/1;
+              max-width: 20px;
             }
           }
 
           &.heart {
+            background: url('../../../../public/icon/heart.svg') no-repeat center center;
+            background-size: cover;
+            max-width: 20px;
             &:hover {
-              &::before {
-                background: url('../../../../public/icon/heart-active.svg') no-repeat center center;
-                background-size: cover;
-                width: clamp(20px, 6vw, 32px);
-              }
-            }
-
-            &::before {
-              content: '';
-              background: url('../../../../public/icon/heart.svg') no-repeat center center;
+              background: url('../../../../public/icon/heart-active.svg') no-repeat center center;
               background-size: cover;
-              width: clamp(20px, 6vw, 32px);
-              aspect-ratio: 1/1;
+              max-width: 20px;
             }
           }
 
           &.search {
+            background: url('../../../../public/icon/search.svg') no-repeat center center;
+            background-size: cover;
+            max-width: 20px;
             &:hover {
-              &::before {
-                background: url('../../../../public/icon/search-active.svg') no-repeat center center;
-                background-size: cover;
-                width: clamp(20px, 6vw, 32px);
-              }
-            }
-
-            &::before {
-              content: '';
-              background: url('../../../../public/icon/search.svg') no-repeat center center;
+              background: url('../../../../public/icon/search-active.svg') no-repeat center center;
               background-size: cover;
-              width: clamp(20px, 6vw, 32px);
-              aspect-ratio: 1/1;
+              max-width: 20px;
             }
           }
 
           &.setting {
+            background: url('../../../../public/icon/setting.svg') no-repeat center center;
+            background-size: cover;
+            max-width: 20px;
             &:hover {
-              &::before {
-                background: url('../../../../public/icon/setting-active.svg') no-repeat center
-                  center;
-                background-size: cover;
-                width: clamp(20px, 6vw, 32px);
-              }
-            }
-
-            &::before {
-              content: '';
-              background: url('../../../../public/icon/setting.svg') no-repeat center center;
+              background: url('../../../../public/icon/setting-active.svg') no-repeat center center;
               background-size: cover;
-              width: clamp(20px, 6vw, 32px);
-              aspect-ratio: 1/1;
+              max-width: 20px;
             }
           }
 
           &.hamBtn {
+            background: url('../../../../public/icon/hamBar.svg') no-repeat center center;
+            background-size: cover;
+            max-width: 20px;
             &:hover {
-              &::before {
-                background: url('../../../../public/icon/hamBar-active.svg') no-repeat center center;
-                background-size: cover;
-                width: clamp(20px, 6vw, 32px);
-              }
+              background: url('../../../../public/icon/hamBar-active.svg') no-repeat center center;
+              background-size: cover;
+              max-width: 20px;
 
               .sub-nav {
                 display: block;
@@ -138,14 +107,6 @@
                   padding: 10px;
                 }
               }
-            }
-
-            &::before {
-              content: '';
-              background: url('../../../../public/icon/hamBar.svg') no-repeat center center;
-              background-size: cover;
-              width: clamp(20px, 6vw, 32px);
-              aspect-ratio: 1/1;
             }
           }
         }

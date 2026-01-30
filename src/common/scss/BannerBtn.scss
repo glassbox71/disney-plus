@@ -2,7 +2,7 @@
 
 .bannerBtnWrap {
   position: absolute;
-  top: clamp(70%, 40vh, 65%);
+  top: 65%;
   left: 5%;
   transform: translateY(-50%);
   width: 40%;
@@ -10,17 +10,18 @@
   gap: 2rem;
 
   .nowPlay {
-    width: fit-content;
-    aspect-ratio: 168/45;
+    background: #fff;
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: clamp(0, 0, 0) clamp(12px, 0.8vw, 16px);
-    background: #fff;
-    border-radius: 8px;
-    @include rs.font(clamp(14px, 1.4vw, 20px), 500, #333);
     white-space: nowrap;
+    border-radius: 8px;
+    width: 23%;
+    aspect-ratio: 168/45;
+    padding: 0 1.6rem;
+    @include rs.font(2rem, 500, #333);
     box-shadow: 0 2px 6px rgba($color: #000000, $alpha: 0.15);
+    white-space: nowrap;
 
     img {
       width: 20px;
@@ -33,8 +34,8 @@
   }
 
   .moreInfo {
-    @include rs.font(clamp(14px, 1.4vw, 20px), 500, #fff);
-    width: fit-content;
+    @include rs.font(2rem, 500, #fff);
+    width: 20%;
     aspect-ratio: 2.8;
     background: rgba($color: #fff, $alpha: 0.1);
     backdrop-filter: blur(24px);
@@ -42,7 +43,6 @@
     border-radius: 8px;
     text-align: center;
     white-space: nowrap;
-    padding: clamp(0, 0, 0) clamp(12px, 0.8vw, 16px);
 
     &:hover {
       background: rgba(255, 255, 255, 0.3);
@@ -70,11 +70,5 @@
       background-color: rgba(255, 255, 255, 0.2);
       background-position: center;
     }
-  }
-}
-
-@include rs.respond(tablet) {
-  .bannerBtnWrap {
-    display: none;
   }
 }
