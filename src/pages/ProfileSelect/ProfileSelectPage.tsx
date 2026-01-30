@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileTitle from '../ProfileSetting/components/ProfileTitle';
 import { useProfileStore, type Profile } from '../../store/useProfileStore';
 import './scss/ProfileSelectPage.scss';

@@ -7,7 +7,7 @@ import { useProfileStore } from '../../store/useProfileStore';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDepthOpen, setIsDepthOpen] = useState(false);
-  // const [setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLogin, onLogout } = useAuthStore();
   const { profiles, activeProfileId, editActiveProfile } = useProfileStore();
   // const toggleMenu = () => setIsMenuOpen((prev) => !prev);

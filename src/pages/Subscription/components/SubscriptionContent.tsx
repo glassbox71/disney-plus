@@ -1,4 +1,4 @@
-
+import React from 'react'
 import '../scss/SubscriptionContent.scss'
 import { Link } from 'react-router-dom'
 

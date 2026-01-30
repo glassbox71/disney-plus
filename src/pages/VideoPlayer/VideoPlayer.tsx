@@ -15,8 +15,6 @@ import type {
 import { useWatchingStore } from '../../store/useWatchingStore';
 import { useWishStore } from '../../store/useWishStore';
 import { generateProgress } from '../../utils/progress';
-type Episode = any;
-type Season = any;
 
 const VideoPlayer = () => {
   // --- 상태 관리 ---
@@ -319,7 +317,7 @@ const VideoPlayer = () => {
   const handleWishToggle = () => {
     if (!id || !type || !player || !player.poster_path) return;
 
-    // ✅ 즉시 UI 반영
+    // 즉시 UI 반영
     setIsWishActive((prev) => !prev);
 
     const title = 'title' in player ? player.title : player.name;

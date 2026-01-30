@@ -78,8 +78,29 @@ const TvTop10List = ({ title }: title) => {
       <HeaderTitle mainTitle={title} />
 
       <Swiper
-        slidesPerView={4.2}
-        spaceBetween={20}
+        pagination={{ clickable: true }}
+        breakpoints={{
+          0: {
+            slidesPerView: 1.2,
+            spaceBetween: 8,
+          },
+          281: {
+            slidesPerView: 1.8,
+            spaceBetween: 8,
+          },
+          481: {
+            slidesPerView: 2.4,
+            spaceBetween: 16,
+          },
+          769: {
+            slidesPerView: 3.4,
+            spaceBetween: 16,
+          },
+          1201: {
+            slidesPerView: 4.2,
+            spaceBetween: 16,
+          },
+        }}
         className="mySwiper"
         style={{ overflow: 'visible' }}>
         {TopTV.slice(0, 10).map((el, i) => (
